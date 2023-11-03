@@ -31,7 +31,7 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://assets/": "blue",
-"res://custom_classes/": "purple",
 "res://game_objects/": "yellow",
-"res://levels/": "teal"
+"res://levels/": "teal",
+"res://scripts/": "purple"
 }
