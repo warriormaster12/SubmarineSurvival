@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=6 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
+[ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
@@ -29,3 +30,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50371, -0.376108)
 
 [node name="PlayerInputManager" type="Node" parent="."]
 script = ExtResource("1_6s5wv")
+
+[node name="ShipHealthSystem" type="Node" parent="."]
+script = ExtResource("3_aeskj")
