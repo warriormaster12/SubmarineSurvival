@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccoyj870j5nfy"]
+
+[ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
+[ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
+radius = 1.33179
+height = 3.8513
+
+[sub_resource type="BoxMesh" id="BoxMesh_opxx2"]
+size = Vector3(2, 0.3, 0.5)
+
+[node name="PlayerShip" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_kbb78")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_d4mim")
+
+[node name="TestMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.17)
+mesh = SubResource("BoxMesh_opxx2")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50371, -0.376108)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="PlayerInputManager" type="Node" parent="."]
+script = ExtResource("1_6s5wv")
