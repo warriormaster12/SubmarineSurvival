@@ -72,9 +72,11 @@ func determine_damage_amount() -> void:
 	if velocity.length() >= damagable_velocity_threshold:
 		if hit:
 			return
-		var damage_percentage: float = (velocity.length()/max_speed) * 100
-		damage_percentage = clampf(damage_percentage, 0.0, 100.0)
+		var damage_amount: float = (velocity.length()/max_speed)
+		var damage_percentage: float = clampf(damage_amount * 100, 0.0, 100.0)
 		ship_health.set("current_health", ship_health.current_health - damage_percentage)
+		## TODO: don't call add_trauma() directly
+		$ImpactShake.add_trauma(damage_amount)
 		hit = true
 	else: 
 		hit = false

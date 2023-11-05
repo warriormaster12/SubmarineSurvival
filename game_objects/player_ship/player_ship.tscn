@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=13 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
+[ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
@@ -53,6 +54,10 @@ _data = {
 "RESET": SubResource("Animation_kd8wi")
 }
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xa8pk"]
+fractal_octaves = 7
+fractal_lacunarity = 4.0
+
 [node name="PlayerShip" type="CharacterBody3D"]
 motion_mode = 1
 script = ExtResource("1_kbb78")
@@ -96,3 +101,7 @@ mesh = SubResource("BoxMesh_0kejg")
 libraries = {
 "": SubResource("AnimationLibrary_xllek")
 }
+
+[node name="ImpactShake" type="Node" parent="."]
+script = ExtResource("4_euj64")
+noise_texture = SubResource("FastNoiseLite_xa8pk")
