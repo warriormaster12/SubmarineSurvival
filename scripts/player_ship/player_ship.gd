@@ -6,11 +6,13 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 @export var acceleration: float = 5.0
 @export var deceleration: float = 2.0
 ## In degrees
-@export var turn_threshold: float = 12.0
-@export var turn_speed: float = 1.2
+@export_range(0.0, 90.0) var max_turn_angle: float = 25.0
+@export var turn_speed: float = 0.9
 
 @export_group("Misc")
 @export var damagable_velocity_threshold: float = 5.0
+## In degrees
+@export var camera_look_around_angle: float = 40.0
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera3D
@@ -19,6 +21,8 @@ var input_manager: PlayerInputManager = null
 var ship_health: ShipHealthSystem = null
 var direction: Vector3 = Vector3.ZERO
 var direction_up: float = 0.0
+var turn_direction: float = 0.0
+var final_rotation: float = rotation.y
 
 var accel:float = acceleration
 var hit:bool = false
@@ -40,17 +44,15 @@ func _ready() -> void:
 		push_warning("no ship_health has been found under " + name + " node")
 
 func _process(_delta: float) -> void:
-	if direction.length() > 0 || abs(direction_up) > 0:
+	if direction.length() > 0:
 		accel = acceleration
 	else: 
 		accel = deceleration
 func _physics_process(delta: float) -> void:
 	if is_on_wall():
 		determine_damage_amount()
-	var ship_rot:float = global_basis.z.signed_angle_to(head.global_basis.z, Vector3.UP)
-	if abs(ship_rot) >= deg_to_rad(turn_threshold):
-		rotate_y(ship_rot * delta * turn_speed)
-	velocity.y = move_toward(velocity.y, (direction_up + direction.y) * max_speed, delta * accel)
+	rotate_y(deg_to_rad(max_turn_angle) * turn_direction * turn_speed * delta)
+	velocity.y = move_toward(velocity.y, direction_up * max_speed, delta * accel)
 	velocity.z = move_toward(velocity.z, direction.z * max_speed, delta * accel)
 	velocity.x = move_toward(velocity.x, direction.x * max_speed, delta * accel)
 	move_and_slide()
@@ -69,13 +71,15 @@ func determine_damage_amount() -> void:
 		hit = false
 
 ## PlayerInputManager Signals
-func _on_accelerate(dir: Vector2) -> void:
-	direction = Vector3(dir.x, dir.x, dir.x) * -camera.global_basis.z
+func _on_accelerate(dir: Vector3) -> void:
+	direction = Vector3(dir.z, dir.z, dir.z) * -global_basis.z
 	direction_up = dir.y
+	turn_direction = -dir.x
 
 func _on_mouse_stick_motion(relative_pos: Vector2) -> void: 
 	head.rotate_y(deg_to_rad(relative_pos.x))
-	head.rotation.y = clamp(head.rotation.y, deg_to_rad(-15), deg_to_rad(15))
+	var rad_look: float = deg_to_rad(camera_look_around_angle)
+	head.rotation.y = clamp(head.rotation.y, -rad_look, rad_look)
 	camera.rotate_x(deg_to_rad(relative_pos.y))
-	camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-15), deg_to_rad(15))
+	camera.rotation.x = clamp(camera.rotation.x, -rad_look, rad_look)
 ## ~PlayerInputManager Signals

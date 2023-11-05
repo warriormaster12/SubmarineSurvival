@@ -4,7 +4,7 @@ class_name PlayerInputManager # exposes this as its own node when in the "create
 @export_group("Settings")
 @export var sensitivity: float = 0.3
 
-signal on_accelerate(direction: Vector2)
+signal on_accelerate(direction: Vector3)
 signal on_mouse_stick_motion(realitve_pos: Vector2)
 
 func _ready() -> void:
@@ -15,6 +15,10 @@ func _input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_VISIBLE)
 	if event is InputEventMouseMotion:
 		on_mouse_stick_motion.emit(Vector2(-event.relative.x * sensitivity, -event.relative.y * sensitivity))
-	var accel_dir: Vector2 = Input.get_vector("move_b","move_f","move_d","move_u")
+	var accel_dir: Vector3 = Vector3(
+		Input.get_axis("turn_l","turn_r"),
+		Input.get_axis("move_d", "move_u"),
+		Input.get_axis("move_b", "move_f")
+	)
 	on_accelerate.emit(accel_dir)
 
