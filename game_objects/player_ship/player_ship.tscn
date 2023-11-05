@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=11 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -10,6 +10,48 @@ height = 3.8513
 
 [sub_resource type="BoxMesh" id="BoxMesh_opxx2"]
 size = Vector3(2, 0.3, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wkfga"]
+size = Vector3(3.8, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0kejg"]
+
+[sub_resource type="Animation" id="Animation_q3ehf"]
+resource_name = "EngineRoom"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.46, 0.51, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.50371, -0.376108), Vector3(0, 0.742046, -0.376), Vector3(0, 0.742046, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0, 0.742, 0.518)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.139626, 0, 0), Vector3(0, 0, 0), Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kd8wi"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xllek"]
+_data = {
+"EngineRoom": SubResource("Animation_q3ehf"),
+"RESET": SubResource("Animation_kd8wi")
+}
 
 [node name="PlayerShip" type="CharacterBody3D"]
 motion_mode = 1
@@ -23,13 +65,34 @@ shape = SubResource("CapsuleShape3D_d4mim")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.17)
 mesh = SubResource("BoxMesh_opxx2")
 
-[node name="Head" type="Node3D" parent="."]
+[node name="Body" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50371, -0.376108)
 
-[node name="Camera3D" type="Camera3D" parent="Head"]
+[node name="Head" type="Node3D" parent="Body"]
+
+[node name="Camera3D" type="Camera3D" parent="Body/Head"]
 
 [node name="PlayerInputManager" type="Node" parent="."]
 script = ExtResource("1_6s5wv")
 
 [node name="ShipHealthSystem" type="Node" parent="."]
 script = ExtResource("3_aeskj")
+
+[node name="EngineRoom" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 2.81139)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EngineRoom"]
+mesh = SubResource("BoxMesh_wkfga")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="EngineRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50606, 0.625022, 0)
+mesh = SubResource("BoxMesh_0kejg")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="EngineRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.506, 0.625, 0)
+mesh = SubResource("BoxMesh_0kejg")
+
+[node name="EventAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xllek")
+}

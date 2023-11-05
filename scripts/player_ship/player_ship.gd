@@ -14,11 +14,12 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 ## In degrees
 @export var camera_look_around_angle: float = 40.0
 
-@onready var head: Node3D = $Head
-@onready var camera: Camera3D = $Head/Camera3D
+@onready var head: Node3D = $Body/Head
+@onready var camera: Camera3D = $Body/Head/Camera3D
 
 var input_manager: PlayerInputManager = null
 var ship_health: ShipHealthSystem = null
+var anim_player: AnimationPlayer = null
 var direction: Vector3 = Vector3.ZERO
 var direction_up: float = 0.0
 var turn_direction: float = 0.0
@@ -26,6 +27,7 @@ var final_rotation: float = rotation.y
 
 var accel:float = acceleration
 var hit:bool = false
+var cockpit: bool = true
 
 func _ready() -> void:
 	for child in get_children():
@@ -33,15 +35,22 @@ func _ready() -> void:
 			input_manager = child
 		elif child is ShipHealthSystem:
 			ship_health = child
+		elif child is AnimationPlayer:
+			anim_player = child
 
 	if input_manager:
 		input_manager.on_accelerate.connect(_on_accelerate)
 		input_manager.on_mouse_stick_motion.connect(_on_mouse_stick_motion)
+		input_manager.on_switching_room.connect(_on_switching_room)
 	else: 
 		push_warning("no input_manager has been found under " + name + " node")
 	
 	if !ship_health:
 		push_warning("no ship_health has been found under " + name + " node")
+	if anim_player:
+		anim_player.animation_finished.connect(_on_event_anim_finished)
+	else:
+		push_warning("no anim_player has been found under " + name + " node")
 
 func _process(_delta: float) -> void:
 	if direction.length() > 0:
@@ -82,4 +91,31 @@ func _on_mouse_stick_motion(relative_pos: Vector2) -> void:
 	head.rotation.y = clamp(head.rotation.y, -rad_look, rad_look)
 	camera.rotate_x(deg_to_rad(relative_pos.y))
 	camera.rotation.x = clamp(camera.rotation.x, -rad_look, rad_look)
+
+func _on_switching_room() -> void:
+	if anim_player.is_playing():
+		return
+	input_manager.enable_movement = false
+	input_manager.enable_mouse_stick_motion = false
+	var camera_tween: Tween = create_tween().set_parallel(true)
+	camera_tween.tween_property(camera, "rotation", Vector3.ZERO, 0.2)
+	camera_tween.tween_property(head, "rotation", Vector3.ZERO, 0.2)
+	camera_tween.set_trans(Tween.TRANS_LINEAR)
+	await camera_tween.finished
+	if cockpit:
+		anim_player.play("EngineRoom")
+		cockpit = false
+	else: 
+		anim_player.play_backwards("EngineRoom")
+		cockpit = true
 ## ~PlayerInputManager Signals
+
+## EventAnimPlayer Signals
+func _on_event_anim_finished(_anim_name: StringName) -> void:
+	if !cockpit:
+		input_manager.enable_mouse_stick_motion = true
+	else: 
+		input_manager.enable_mouse_stick_motion = true
+		input_manager.enable_movement = true
+
+## ~EventAnimPlayer Signals
