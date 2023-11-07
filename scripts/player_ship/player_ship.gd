@@ -12,10 +12,10 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 @export_group("Misc")
 @export var damagable_velocity_threshold: float = 5.0
 ## In degrees
-@export var camera_look_around_angle: float = 40.0
+@export_range(0.0, 90.0) var camera_look_around_angle: float = 40.0
 
 @onready var head: Node3D = $Body/Head
-@onready var camera: Camera3D = $Body/Head/Camera3D
+@onready var camera_pivot: Node3D = $Body/Head/CameraPivot
 
 var input_manager: PlayerInputManager = null
 var ship_health: ShipHealthSystem = null
@@ -88,11 +88,11 @@ func _on_accelerate(dir: Vector3) -> void:
 	turn_direction = -dir.x
 
 func _on_mouse_stick_motion(relative_pos: Vector2) -> void: 
-	head.rotate_y(deg_to_rad(relative_pos.x))
 	var rad_look: float = deg_to_rad(camera_look_around_angle)
+	head.rotate_y(deg_to_rad(relative_pos.x))
 	head.rotation.y = clamp(head.rotation.y, -rad_look, rad_look)
-	camera.rotate_x(deg_to_rad(relative_pos.y))
-	camera.rotation.x = clamp(camera.rotation.x, -rad_look, rad_look)
+	camera_pivot.rotate_x(deg_to_rad(relative_pos.y))
+	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -rad_look, rad_look)
 
 func _on_switching_room() -> void:
 	if anim_player.is_playing():
@@ -100,7 +100,7 @@ func _on_switching_room() -> void:
 	input_manager.enable_movement = false
 	input_manager.enable_mouse_stick_motion = false
 	var camera_tween: Tween = create_tween().set_parallel(true)
-	camera_tween.tween_property(camera, "rotation", Vector3.ZERO, 0.2)
+	camera_tween.tween_property(camera_pivot, "rotation", Vector3.ZERO, 0.2)
 	camera_tween.tween_property(head, "rotation", Vector3.ZERO, 0.2)
 	camera_tween.set_trans(Tween.TRANS_LINEAR)
 	await camera_tween.finished
