@@ -14,16 +14,21 @@ var time: float = 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	time += delta
 	trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
-	var current_camera: Camera3D = get_viewport().get_camera_3d()
-	current_camera.rotation_degrees = Vector3(
-		init_rot.x + max_angle.x * get_shake_intensity() * get_noise_from_seed(0),
-		init_rot.y + max_angle.x * get_shake_intensity() * get_noise_from_seed(1),
-		init_rot.z + max_angle.x * get_shake_intensity() * get_noise_from_seed(2)
-	)
+	if (trauma > 0.0):
+		time += delta
+		var current_camera: Camera3D = get_viewport().get_camera_3d()
+		current_camera.rotation_degrees = Vector3(
+			init_rot.x + max_angle.x * get_shake_intensity() * get_noise_from_seed(0),
+			init_rot.y + max_angle.x * get_shake_intensity() * get_noise_from_seed(1),
+			init_rot.z + max_angle.z * get_shake_intensity() * get_noise_from_seed(2)
+		)
+	else: 
+		time = 0.0
 
 func add_trauma(amount: float) -> void:
+	var current_camera: Camera3D = get_viewport().get_camera_3d()
+	init_rot = current_camera.rotation_degrees
 	trauma = clampf(trauma + amount, 0.0, 1.0)
 
 func get_shake_intensity() -> float:
