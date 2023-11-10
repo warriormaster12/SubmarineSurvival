@@ -1,0 +1,123 @@
+[gd_resource type="VisualShader" load_steps=11 format=3 uid="uid://m88kptx5oaje"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_y4vgh"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_yb11f"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_q4t7i"]
+parameter_name = "EmissionPower"
+hint = 1
+max = 16.0
+default_value_enabled = true
+default_value = 1.0
+
+[sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_bxv82"]
+default_input_values = [2, false, 3, 5.0]
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_j2vob"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_w8kun"]
+input_name = "normal"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_5mprw"]
+input_name = "view"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_06cel"]
+parameter_name = "FersnelColor"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_o68fr"]
+parameter_name = "FersnelPower"
+hint = 1
+max = 20.0
+default_value_enabled = true
+default_value = 5.0
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_ocqo8"]
+parameter_name = "FersnelEnabled"
+default_value_enabled = true
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform vec4 FersnelColor : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+uniform float FersnelPower : hint_range(0, 20) = 5;
+uniform bool FersnelEnabled = false;
+uniform float EmissionPower : hint_range(0, 16) = 1;
+
+
+
+void fragment() {
+// ColorParameter:7
+	vec4 n_out7p0 = FersnelColor;
+
+
+// Input:5
+	vec3 n_out5p0 = NORMAL;
+
+
+// Input:6
+	vec3 n_out6p0 = VIEW;
+
+
+// FloatParameter:8
+	float n_out8p0 = FersnelPower;
+
+
+// Fresnel:2
+	float n_out2p0 = pow(1.0 - clamp(dot(n_out5p0, n_out6p0), 0.0, 1.0), n_out8p0);
+
+
+// BooleanParameter:9
+	bool n_out9p0 = FersnelEnabled;
+
+
+// FloatOp:10
+	float n_out10p0 = n_out2p0 * (n_out9p0 ? 1.0 : 0.0);
+
+
+// VectorOp:4
+	vec3 n_out4p0 = vec3(n_out7p0.xyz) * vec3(n_out10p0);
+
+
+// FloatParameter:12
+	float n_out12p0 = EmissionPower;
+
+
+// VectorOp:11
+	vec3 n_out11p0 = n_out4p0 * vec3(n_out12p0);
+
+
+// Output:0
+	EMISSION = n_out11p0;
+
+
+}
+"
+nodes/fragment/0/position = Vector2(880, 180)
+nodes/fragment/2/node = SubResource("VisualShaderNodeFresnel_bxv82")
+nodes/fragment/2/position = Vector2(-200, 340)
+nodes/fragment/4/node = SubResource("VisualShaderNodeVectorOp_j2vob")
+nodes/fragment/4/position = Vector2(340, 220)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_w8kun")
+nodes/fragment/5/position = Vector2(-580, 280)
+nodes/fragment/6/node = SubResource("VisualShaderNodeInput_5mprw")
+nodes/fragment/6/position = Vector2(-600, 380)
+nodes/fragment/7/node = SubResource("VisualShaderNodeColorParameter_06cel")
+nodes/fragment/7/position = Vector2(-280, 100)
+nodes/fragment/8/node = SubResource("VisualShaderNodeFloatParameter_o68fr")
+nodes/fragment/8/position = Vector2(-560, 480)
+nodes/fragment/9/node = SubResource("VisualShaderNodeBooleanParameter_ocqo8")
+nodes/fragment/9/position = Vector2(-280, 540)
+nodes/fragment/10/node = SubResource("VisualShaderNodeFloatOp_y4vgh")
+nodes/fragment/10/position = Vector2(60, 340)
+nodes/fragment/11/node = SubResource("VisualShaderNodeVectorOp_yb11f")
+nodes/fragment/11/position = Vector2(620, 240)
+nodes/fragment/12/node = SubResource("VisualShaderNodeFloatParameter_q4t7i")
+nodes/fragment/12/position = Vector2(280, 400)
+nodes/fragment/connections = PackedInt32Array(5, 0, 2, 0, 6, 0, 2, 1, 7, 0, 4, 0, 8, 0, 2, 3, 2, 0, 10, 0, 10, 0, 4, 1, 9, 0, 10, 1, 4, 0, 11, 0, 11, 0, 0, 5, 12, 0, 11, 1)
+metadata/_edit_res_path = "res://assets/custom_shaders/object_interaction.tres"

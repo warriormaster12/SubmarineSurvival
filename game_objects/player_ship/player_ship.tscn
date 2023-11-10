@@ -1,66 +1,16 @@
-[gd_scene load_steps=29 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=32 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
+[ext_resource type="Script" path="res://scripts/player_ship/player_camera.gd" id="2_jrwu0"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
+[ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
+[ext_resource type="Texture2D" uid="uid://cxatiudcdjx1d" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
 height = 3.8513
-
-[sub_resource type="Animation" id="Animation_q3ehf"]
-resource_name = "EngineRoom"
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.46, 0.51, 0.66, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0.50371, -0.376108), Vector3(0, 0.742046, -0.376), Vector3(0, 0.742046, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0.4, 0.742, 0.094), Vector3(0, 0.742, 0.814)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Body:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-0.139626, 0, 0), Vector3(0, 0, 0), Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_kd8wi"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0.504, -0.376)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xllek"]
-_data = {
-"EngineRoom": SubResource("Animation_q3ehf"),
-"RESET": SubResource("Animation_kd8wi")
-}
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xa8pk"]
-fractal_octaves = 7
-fractal_lacunarity = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hjc8"]
 
@@ -271,6 +221,59 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gh7u")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xa8pk"]
+fractal_octaves = 7
+fractal_lacunarity = 4.0
+
+[sub_resource type="Animation" id="Animation_q3ehf"]
+resource_name = "EngineRoom"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.46, 0.51, 0.66, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.50371, -0.376108), Vector3(0, 0.742046, -0.376), Vector3(0, 0.742046, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0.4, 0.742, -0.376), Vector3(0.4, 0.742, 0.094), Vector3(0, 0.742, 0.814)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.139626, 0, 0), Vector3(0, 0, 0), Vector3(0, -3.14159, 0), Vector3(0, -3.14159, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kd8wi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.504, -0.376)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xllek"]
+_data = {
+"EngineRoom": SubResource("Animation_q3ehf"),
+"RESET": SubResource("Animation_kd8wi")
+}
+
 [node name="PlayerShip" type="CharacterBody3D"]
 motion_mode = 1
 script = ExtResource("1_kbb78")
@@ -287,21 +290,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.504, -0.376)
 [node name="CameraPivot" type="Node3D" parent="Body/Head"]
 
 [node name="Camera3D" type="Camera3D" parent="Body/Head/CameraPivot"]
-
-[node name="PlayerInputManager" type="Node" parent="."]
-script = ExtResource("1_6s5wv")
-
-[node name="ShipHealthSystem" type="Node" parent="."]
-script = ExtResource("3_aeskj")
-
-[node name="EventAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_xllek")
-}
-
-[node name="ImpactShake" type="Node" parent="."]
-script = ExtResource("4_euj64")
-noise_texture = SubResource("FastNoiseLite_xa8pk")
+script = ExtResource("2_jrwu0")
 
 [node name="placeholder_submarine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 1.605)
@@ -332,3 +321,54 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.516172, 2.54566)
 mesh = SubResource("ArrayMesh_iuhp1")
 skeleton = NodePath("")
+
+[node name="RepairObjectContainer" type="Node3D" parent="."]
+
+[node name="Engine" parent="RepairObjectContainer" node_paths=PackedStringArray("health_system") instance=ExtResource("3_m5kls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.687028, 0.45999, 4.13164)
+health_system = NodePath("../../ShipHealthSystem")
+
+[node name="WaterPump" parent="RepairObjectContainer" node_paths=PackedStringArray("health_system") instance=ExtResource("3_m5kls")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.735729, 0.45999, 4.13164)
+health_system = NodePath("../../ShipHealthSystem")
+
+[node name="2DHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crosshair" type="TextureRect" parent="2DHUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("5_32iis")
+
+[node name="PlayerInputManager" type="Node" parent="."]
+script = ExtResource("1_6s5wv")
+
+[node name="ShipHealthSystem" type="Node" parent="."]
+script = ExtResource("3_aeskj")
+health = 300.0
+
+[node name="ImpactShake" type="Node" parent="."]
+script = ExtResource("4_euj64")
+noise_texture = SubResource("FastNoiseLite_xa8pk")
+
+[node name="EventAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xllek")
+}
