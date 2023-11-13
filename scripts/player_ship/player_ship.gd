@@ -16,6 +16,7 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 
 @onready var head: Node3D = $Body/Head
 @onready var camera_pivot: Node3D = $Body/Head/CameraPivot
+@onready var repair_object_container: Node3D = $RepairObjectContainer
 
 var input_manager: PlayerInputManager = null
 var ship_health: ShipHealthSystem = null
@@ -37,7 +38,11 @@ func _ready() -> void:
 			ship_health = child
 		elif child is AnimationPlayer:
 			anim_player = child
-
+	for child in repair_object_container.get_children():
+		if child is FixableObject:
+			child.on_repair_status_changed.connect(_on_repair_status_changed)
+		else:
+			push_warning("RepairObjectContainer can only have FixableObjects")
 	if input_manager:
 		input_manager.on_accelerate.connect(_on_accelerate)
 		input_manager.on_mouse_stick_motion.connect(_on_mouse_stick_motion)
@@ -121,3 +126,18 @@ func _on_event_anim_finished(_anim_name: StringName) -> void:
 		input_manager.enable_movement = true
 
 ## ~EventAnimPlayer Signals
+
+## FixableObject Signals
+func _on_repair_status_changed(node_name: String, status: String) -> void:
+	match node_name:
+		"Engine":
+			if status == "functional":
+				max_speed = 5.0
+			elif status == "critical":
+				max_speed = 0.0
+			else:
+				max_speed = 10.0
+		"WaterPump":
+			if status == "functional":
+				pass
+## ~FixableObject Signals

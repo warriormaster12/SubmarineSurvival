@@ -15,6 +15,8 @@ background_mode = 2
 sky = SubResource("Sky_v80nu")
 tonemap_mode = 2
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.133333, 0.705882, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yipvc"]
 albedo_texture = ExtResource("1_1pagy")
@@ -28,6 +30,7 @@ environment = SubResource("Environment_icgf0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_color = Color(0.533333, 0.72549, 1, 1)
 shadow_enabled = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
