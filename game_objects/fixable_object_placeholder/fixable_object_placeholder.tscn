@@ -38,8 +38,9 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_1bo7x")
 
 [node name="FixableObject" type="StaticBody3D"]
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_raadg")
-repair_rate = 0.05
 repair_conditions = {
 "critical": 0.15,
 "functional": 0.9,

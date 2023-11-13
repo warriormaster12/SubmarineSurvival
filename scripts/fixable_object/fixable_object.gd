@@ -1,8 +1,9 @@
 extends StaticBody3D
 class_name FixableObject
 
-@export_range(0.0, 1.0) var repair_rate: float = 0.25
-@export var repair_duration: float = 2.0
+@export_range(0.0, 1.0) var repair_degradation_rate: float = 0.05
+## In seconds
+@export var repair_duration: float = 50.0
 @export var health_system: ShipHealthSystem = null
 ## Don't add new key/value pair from the Inspector
 @export var repair_conditions: Dictionary = {
@@ -16,8 +17,8 @@ var material: ShaderMaterial = null
 var health: float = 1.0
 var current_status: String = "good"
 var repairing: bool = false
-var can_repair: bool = false
-var timer: float = 0.0
+
+@onready var new_health: float = health - repair_degradation_rate
 
 signal on_repair_status_changed(node_name: String, status: String)
 
@@ -41,31 +42,31 @@ func _ready() -> void:
 	else:
 		health_system.on_health_changed.connect(_on_health_changed)
 
-func _process(delta: float) -> void:
-	can_repair = true if current_status != "good" else false
-	if repairing && can_repair:
-		timer += delta
-		if timer < repair_duration:
-			health += repair_rate
-			health = clampf(health, 0.0, 1.0)
-
-		%ProgressBarUI.value = (timer/repair_duration) * 100
 
 func set_hover_state(state: bool)->void:
 	if material:
 		material.set_shader_parameter("FersnelEnabled", state)
 
 func repair_object(state: bool)->void:
-	repairing = state
-	if progress_bar_mesh:
-		progress_bar_mesh.visible = state && can_repair
-	if !state:
-		%ProgressBarUI.value = 0.0
-		timer = 0.0
+	repairing = state && health < new_health
+	if repairing:
+		var amount_to_add:float = 1/repair_duration
+		health += amount_to_add
+		health = clampf(health, 0.0, new_health)
+		%ProgressBarUI.value = health * 100
+		progress_bar_mesh.visible = true
+		health_system.set("current_health", health_system.current_health + health * 100)
+		if health == new_health:
+			repairing = false
+			new_health -= repair_degradation_rate
+		await get_tree().create_timer(amount_to_add).timeout
+	else: 
+		progress_bar_mesh.visible = false
 
 ## HealthSystem Signals
-func _on_health_changed(value: float) -> void:
-	health = value/health_system.health
+func _on_health_changed(value: float, depleting: bool) -> void:
+	if !repairing && depleting:
+		health = value/health_system.health
 	var temp_status:String = current_status
 	for val: float in repair_conditions.values():
 		if health < val:

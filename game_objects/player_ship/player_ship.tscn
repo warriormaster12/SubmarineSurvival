@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
-[ext_resource type="Script" path="res://scripts/player_ship/player_camera.gd" id="2_jrwu0"]
+[ext_resource type="Script" path="res://scripts/player_ship/player_camera.gd" id="2_6ovel"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
@@ -289,8 +289,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.504, -0.376)
 
 [node name="CameraPivot" type="Node3D" parent="Body/Head"]
 
-[node name="Camera3D" type="Camera3D" parent="Body/Head/CameraPivot"]
-script = ExtResource("2_jrwu0")
+[node name="PlayerCamera" type="Camera3D" parent="Body/Head/CameraPivot"]
+script = ExtResource("2_6ovel")
 
 [node name="placeholder_submarine" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 1.605)
