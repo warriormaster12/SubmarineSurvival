@@ -18,7 +18,7 @@ var path_follow: PathFollow3D = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if area_trigger:
-		area_trigger.body_entered.connect(_on_body_entered)
+		area_trigger.body_entered.connect(_on_body_entered, CONNECT_ONE_SHOT)
 	else: 
 		spawn_object()
 
@@ -47,3 +47,4 @@ func _process(_delta: float) -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if triggerer != null && body == triggerer:
 		spawn_object()
+		area_trigger.queue_free()
