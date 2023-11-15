@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpoa56jp3gy3a"]
+[gd_scene load_steps=10 format=3 uid="uid://cpoa56jp3gy3a"]
 
 [ext_resource type="Texture2D" uid="uid://btw7c7iq4qe56" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
+[ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,13 +16,22 @@ background_mode = 2
 sky = SubResource("Sky_v80nu")
 tonemap_mode = 2
 glow_enabled = true
-volumetric_fog_enabled = true
 volumetric_fog_albedo = Color(0.133333, 0.705882, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yipvc"]
 albedo_texture = ExtResource("1_1pagy")
 uv1_scale = Vector3(0.2, 0.2, 0.2)
 uv1_triplanar = true
+
+[sub_resource type="Curve3D" id="Curve3D_2eghe"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 53.9917, 0, -9.66263, 3.61266, 1.30554, -14.895, -3.61266, -1.30554, 14.895, 45.7033, 4.57764e-05, 56.5421, 21.3164, 1.24776, -4.83826, -21.3164, -1.24776, 4.83826, -6.17648, 0, 90.1669, 10.0988, -1.00827, 12.1101, -10.0988, 1.00827, -12.1101, -71.5277, 0, 82.7304, 0, 0, 0, 0, 0, 0, -88.8795, 0, 4.53435, 0, 0, 0, 0, 0, 0, -80.5416, 0, -30.6201, 0, 0, 0, 0, 0, 0, -68.1754, 0, -61.6792, 0, 0, 0, 0, 0, 0, -13.4625, 0, -71.3344, 0, 0, 0, 0, 0, 0, 42.0089, 4.57764e-05, -63.8343, 0, 0, 0, 0, 0, 0, 51.1549, 4.57764e-05, -36.881, 0, 0, 0, 0, 0, 0, 53.9917, 0, -9.66263),
+"tilts": PackedFloat32Array(0.019119, 0, 0, -0.107982, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 11
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13xhp"]
+size = Vector3(30, 10, 30)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -30,7 +40,6 @@ environment = SubResource("Environment_icgf0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-light_color = Color(0.533333, 0.72549, 1, 1)
 shadow_enabled = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
@@ -42,3 +51,22 @@ size = Vector3(200, 0.2, 200)
 
 [node name="PlayerShip" parent="." instance=ExtResource("2_iappa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.36907, 21.7648, 57.3505)
+
+[node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("area_trigger", "triggerer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6179, 28.7453, 0)
+curve = SubResource("Curve3D_2eghe")
+script = ExtResource("3_rpivr")
+object_to_spawn = "res://game_objects/ai_ship/ai_ship.tscn"
+area_trigger = NodePath("../Area3D")
+triggerer = NodePath("../PlayerShip")
+loop = true
+rotation_mode = 1
+metadata/_edit_group_ = true
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26365, 25.9074, 0)
+monitorable = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_13xhp")
