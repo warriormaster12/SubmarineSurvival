@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dbxfixjmyhap4"]
+[gd_scene load_steps=23 format=3 uid="uid://dbxfixjmyhap4"]
 
 [ext_resource type="Script" path="res://scripts/ai_ship/ai_ship.gd" id="1_3lfkj"]
 
@@ -215,8 +215,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gh7u")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_mjx1q"]
+size = Vector3(4.90112, 3.36432, 24.165)
+
 [node name="AIShip" type="StaticBody3D"]
 script = ExtResource("1_3lfkj")
+speed = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1.66459)
@@ -251,3 +255,12 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.516172, 2.54566)
 mesh = SubResource("ArrayMesh_1eovj")
 skeleton = NodePath("")
+
+[node name="EngineAffectTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.29392)
+monitorable = false
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EngineAffectTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0321045, 0.230072, 11.5825)
+shape = SubResource("BoxShape3D_mjx1q")

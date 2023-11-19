@@ -274,7 +274,7 @@ _data = {
 "RESET": SubResource("Animation_kd8wi")
 }
 
-[node name="PlayerShip" type="CharacterBody3D"]
+[node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_kbb78")
 
