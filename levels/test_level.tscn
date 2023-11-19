@@ -52,12 +52,11 @@ size = Vector3(200, 0.2, 200)
 [node name="PlayerShip" parent="." instance=ExtResource("2_iappa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.36907, 21.7648, 57.3505)
 
-[node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("area_trigger", "triggerer")]
+[node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("triggerer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6179, 28.7453, 0)
 curve = SubResource("Curve3D_2eghe")
 script = ExtResource("3_rpivr")
 object_to_spawn = "res://game_objects/ai_ship/ai_ship.tscn"
-area_trigger = NodePath("../Area3D")
 triggerer = NodePath("../PlayerShip")
 loop = true
 rotation_mode = 1

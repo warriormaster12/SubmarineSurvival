@@ -14,6 +14,9 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 ## In degrees
 @export_range(0.0, 90.0) var camera_look_around_angle: float = 40.0
 
+@export_group("Ship Specs")
+@export var mass:float = 4.0
+
 @onready var head: Node3D = $Body/Head
 @onready var camera_pivot: Node3D = $Body/Head/CameraPivot
 @onready var repair_object_container: Node3D = $RepairObjectContainer
@@ -57,11 +60,6 @@ func _ready() -> void:
 	else:
 		push_warning("no anim_player has been found under " + name + " node")
 
-func _process(_delta: float) -> void:
-	if direction.length() > 0:
-		accel = acceleration
-	else: 
-		accel = deceleration
 func _physics_process(delta: float) -> void:
 	if is_on_wall():
 		determine_damage_amount()
@@ -80,6 +78,7 @@ func determine_damage_amount() -> void:
 		var damage_amount: float = (velocity.length()/max_speed)
 		var damage_percentage: float = clampf(damage_amount * 100, 0.0, 100.0)
 		ship_health.set("current_health", ship_health.current_health - damage_percentage)
+		velocity = -velocity / mass
 		## TODO: don't call add_trauma() directly
 		$ImpactShake.add_trauma(damage_amount)
 		hit = true
@@ -88,6 +87,10 @@ func determine_damage_amount() -> void:
 
 ## PlayerInputManager Signals
 func _on_accelerate(dir: Vector3) -> void:
+	if dir.length():
+		accel = acceleration
+	else: 
+		accel = deceleration
 	direction = Vector3(dir.z, dir.z, dir.z) * -global_basis.z
 	direction_up = dir.y
 	turn_direction = -dir.x
