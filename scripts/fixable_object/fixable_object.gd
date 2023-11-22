@@ -21,6 +21,7 @@ var repairing: bool = false
 @onready var new_health: float = health - repair_degradation_rate
 
 signal on_repair_status_changed(node_name: String, status: String)
+signal on_health_changed(node_name: String, health: float)
 
 func _ready() -> void:
 	for child in get_children():
@@ -75,5 +76,6 @@ func _on_health_changed(value: float, depleting: bool) -> void:
 	if current_status != temp_status:
 		current_status = temp_status
 		on_repair_status_changed.emit(name, current_status)
+	on_health_changed.emit(name, health)
 
 ## ~HealthSystem Signals

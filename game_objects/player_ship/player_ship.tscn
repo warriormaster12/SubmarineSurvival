@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=36 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
 [ext_resource type="Texture2D" uid="uid://cxatiudcdjx1d" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
@@ -280,9 +281,23 @@ _data = {
 "RESET": SubResource("Animation_kd8wi")
 }
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ybyae"]
+viewport_path = NodePath("ShipStatsMonitor/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lw5yy"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_ybyae")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2id3t"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_lw5yy")
+
 [node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_kbb78")
+damagable_velocity_threshold = 4.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -380,3 +395,20 @@ noise_texture = SubResource("FastNoiseLite_xa8pk")
 libraries = {
 "": SubResource("AnimationLibrary_xllek")
 }
+
+[node name="ShipStatsMonitor" type="MeshInstance3D" parent="." node_paths=PackedStringArray("repair_object_container", "root_control")]
+transform = Transform3D(0.939693, -0.029809, 0.340719, 0, 0.996195, 0.0871557, -0.34202, -0.0818996, 0.936117, -0.473, -0.211, -1.356)
+mesh = SubResource("QuadMesh_2id3t")
+script = ExtResource("8_qv5sm")
+repair_object_container = NodePath("../RepairObjectContainer")
+root_control = NodePath("SubViewport/ShipStats")
+
+[node name="SubViewport" type="SubViewport" parent="ShipStatsMonitor"]
+transparent_bg = true
+
+[node name="ShipStats" type="VBoxContainer" parent="ShipStatsMonitor/SubViewport"]
+
+[node name="Label" type="Label" parent="ShipStatsMonitor/SubViewport/ShipStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Ship Status"
