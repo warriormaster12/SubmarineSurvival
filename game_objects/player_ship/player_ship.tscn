@@ -1,8 +1,9 @@
-[gd_scene load_steps=32 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=33 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_camera.gd" id="2_6ovel"]
+[ext_resource type="Shader" path="res://game_objects/player_ship/player_ship_windowShader.gdshader" id="3_7xpae"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
@@ -114,10 +115,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_tmwu0")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myowh"]
-transparency = 1
-albedo_color = Color(0.701961, 0.909804, 1, 0.223529)
-refraction_scale = 0.18
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jhxlu"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_7xpae")
+shader_parameter/tint = Color(0.701961, 0.705882, 0.823529, 1)
+shader_parameter/wave_speed = 0.8
+shader_parameter/wave_freq = 10.0
+shader_parameter/wave_width = 1.0
+shader_parameter/blur = 0.15
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcly5"]
 
@@ -309,7 +315,9 @@ mesh = SubResource("ArrayMesh_vupl0")
 skeleton = NodePath("")
 
 [node name="window" type="MeshInstance3D" parent="placeholder_submarine"]
-material_override = SubResource("StandardMaterial3D_myowh")
+material_override = SubResource("ShaderMaterial_jhxlu")
+transparency = 1.0
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_1sq80")
 skeleton = NodePath("")
 
