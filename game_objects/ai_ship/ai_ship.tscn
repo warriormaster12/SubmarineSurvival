@@ -216,7 +216,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1gh7u")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mjx1q"]
-size = Vector3(4.90112, 3.36432, 24.165)
+size = Vector3(7.87695, 5.08974, 24.165)
 
 [node name="AIShip" type="StaticBody3D"]
 script = ExtResource("1_3lfkj")
@@ -262,5 +262,5 @@ monitorable = false
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EngineAffectTrigger"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0321045, 0.230072, 11.5825)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.345042, 0.568398, 11.5825)
 shape = SubResource("BoxShape3D_mjx1q")
