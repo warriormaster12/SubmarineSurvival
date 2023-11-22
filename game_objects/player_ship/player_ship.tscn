@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=37 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
