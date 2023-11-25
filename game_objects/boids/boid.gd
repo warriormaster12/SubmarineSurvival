@@ -9,8 +9,21 @@ var vel : Vector3
 var turn_direction : float = 0.0
 var direction: Vector3 = Vector3.ZERO
 
+var flockHeading : Vector3
+var flockCentre : Vector3
+var avoidanceHeading : Vector3
+var numFlockmates : int
+
+var numBoids : int
+var viewRadius : float = 100
+var avoidRadius : float = 80
+
+var _position : Vector3
+var separationHeading : Vector3
+
 
 func _ready() -> void:
+	direction = global_transform.basis.z
 	get_parent().boids.append(self)
 
 
@@ -21,21 +34,9 @@ func _physics_process(delta: float) -> void:
 	basis = basis.slerp(target_basis, 0.5)
 	
 	move_and_slide()
-	AvoidOthers()
+	#AvoidOthers()
 	CheckForBounds()
 
-
-
-
-var numBoids : int
-var viewRadius : float = 100
-var avoidRadius : float = 80
-
-var _position : Vector3
-var flockHeading : Vector3
-var flockCentre : Vector3
-var separationHeading : Vector3
-var numFlockmates : int
 
 func AvoidOthers() -> void:
 	var parent : Node = get_parent()
@@ -55,11 +56,6 @@ func AvoidOthers() -> void:
 			flockCentre += boidB._position
 			if (sqrDst < avoidRadius * avoidRadius):
 				separationHeading -= offset / sqrDst
-
-
-
-
-
 
 
 

@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://cxatiudcdjx1d" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://b2axmd66xqedv" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]

@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpoa56jp3gy3a"]
+[gd_scene load_steps=12 format=3 uid="uid://cpoa56jp3gy3a"]
 
-[ext_resource type="Texture2D" uid="uid://btw7c7iq4qe56" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
+[ext_resource type="Texture2D" uid="uid://cjc2sbjceut7u" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
+[ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="4_aspl6"]
+[ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="4_eks40"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -69,3 +71,150 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_13xhp")
+
+[node name="Fishies" type="Node" parent="."]
+script = ExtResource("4_aspl6")
+
+[node name="Boid" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -3.81654, 21.6038, 31.0354)
+
+[node name="Boid2" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 3.90706, 21.6038, 27.8722)
+
+[node name="Boid3" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 0.0970097, 21.6038, 25.8078)
+
+[node name="Boid4" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 0.797424, 21.6038, 30.8921)
+
+[node name="Boid5" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -4.48181, 21.6038, 27.5514)
+
+[node name="Boid6" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -2.15141, 21.6038, 20.5093)
+
+[node name="Boid7" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -5.10909, 21.6038, 29.6631)
+
+[node name="Boid8" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 2.61452, 21.6038, 26.5)
+
+[node name="Boid9" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -1.19553, 21.6038, 24.4356)
+
+[node name="Boid10" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -0.49512, 21.6038, 29.5198)
+
+[node name="Boid11" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -5.77436, 21.6038, 26.1792)
+
+[node name="Boid12" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -3.44396, 21.6038, 19.137)
+
+[node name="Boid13" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -18.929, 25.9566, 26.869)
+
+[node name="Boid14" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -11.2054, 25.9566, 23.7058)
+
+[node name="Boid15" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -15.0154, 25.9566, 21.6414)
+
+[node name="Boid16" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -14.315, 25.9566, 26.7257)
+
+[node name="Boid17" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -19.5942, 25.9566, 23.385)
+
+[node name="Boid18" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -17.2638, 25.9566, 16.3429)
+
+[node name="Boid19" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -20.2215, 25.9566, 25.4967)
+
+[node name="Boid20" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -12.4979, 25.9566, 22.3336)
+
+[node name="Boid21" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -16.3079, 25.9566, 20.2692)
+
+[node name="Boid22" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -15.6075, 25.9566, 25.3534)
+
+[node name="Boid23" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -20.8868, 25.9566, 22.0128)
+
+[node name="Boid24" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -18.5564, 25.9566, 14.9706)
+
+[node name="Boid25" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, 16.1015, 25.9566, 18.7648)
+
+[node name="Boid26" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 23.8251, 25.9566, 15.6016)
+
+[node name="Boid27" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 20.0151, 25.9566, 13.5372)
+
+[node name="Boid28" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 20.7155, 25.9566, 18.6215)
+
+[node name="Boid29" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 15.4362, 25.9566, 15.2808)
+
+[node name="Boid30" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 17.7666, 25.9566, 8.23874)
+
+[node name="Boid31" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, 14.809, 25.9566, 17.3925)
+
+[node name="Boid32" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 22.5326, 25.9566, 14.2294)
+
+[node name="Boid33" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 18.7225, 25.9566, 12.165)
+
+[node name="Boid34" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 19.4229, 25.9566, 17.2492)
+
+[node name="Boid35" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 14.1437, 25.9566, 13.9086)
+
+[node name="Boid36" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 16.4741, 25.9566, 6.86644)
+
+[node name="Boid37" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -2.56287, 25.9566, 8.63151)
+
+[node name="Boid38" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 5.16073, 25.9566, 5.46831)
+
+[node name="Boid39" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 1.35068, 25.9566, 3.40391)
+
+[node name="Boid40" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 2.0511, 25.9566, 8.48821)
+
+[node name="Boid41" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -3.22814, 25.9566, 5.14751)
+
+[node name="Boid42" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -0.897739, 25.9566, -1.89459)
+
+[node name="Boid43" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(0.127411, 0, 0.99185, 0, 1, 0, -0.99185, 0, 0.127411, -3.85542, 25.9566, 7.25921)
+
+[node name="Boid44" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 3.86819, 25.9566, 4.09611)
+
+[node name="Boid45" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 0.0581417, 25.9566, 2.03171)
+
+[node name="Boid46" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, 0.758553, 25.9566, 7.11591)
+
+[node name="Boid47" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -4.52069, 25.9566, 3.77531)
+
+[node name="Boid48" parent="Fishies" instance=ExtResource("4_eks40")]
+transform = Transform3D(-0.997051, 0, 0.0767364, 0, 1, 0, -0.0767364, 0, -0.997051, -2.19029, 25.9566, -3.26689)
