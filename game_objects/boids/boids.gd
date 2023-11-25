@@ -84,11 +84,32 @@ func _thread_boid_calculations() -> void:
 		# create storage buffer
 		var input := []
 		for i in numBoids:
-			var arr := ([boidData[i].position.x, boidData[i].position.y, boidData[i].position.z, boidData[i].direction.x, boidData[i].direction.y, boidData[i].direction.z, numBoids,  0,0,0,  0,0,0,  0,0,0,  0])
-			input.append_array(arr)
-		var input_bytes := PackedFloat32Array(input).to_byte_array()
-		#print("allVariablesList: ",input,",  PEEEEEEEEEEE BEEEEEEEEEEE AAAAAAAAAAAAA: ",pba)
-		storage_buffer = rd.storage_buffer_create(numBoids * 17 * 4, input_bytes)
+			var arr := ([boidData[i].position, boidData[i].direction, boidData[i].flockHeading, boidData[i].flockCentre, boidData[i].avoidanceHeading, boidData[i].numFlockmates])
+			input.append(arr)
+		
+		var NEWEST_LIST_BYTES := PackedByteArray()
+		NEWEST_LIST_BYTES.resize(input.size() * 32)
+		for i in input.size():
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.x)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.y)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.z)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.x)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.y)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.z)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.x)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.y)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.z)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.x)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.y)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.z)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.x)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.y)
+			NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.z)
+			NEWEST_LIST_BYTES.encode_s32(i * 32, boidData[i].numFlockmates)
+		
+		#var input_bytes := PackedFloat32Array(input).to_byte_array()
+		storage_buffer = rd.storage_buffer_create(NEWEST_LIST_BYTES.size(), NEWEST_LIST_BYTES)
+		
 		mutex.unlock()
 		
 		# create uniform set using the storage buffer
@@ -103,7 +124,7 @@ func _thread_boid_calculations() -> void:
 		var compute_list := rd.compute_list_begin()
 		rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
 		rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
-		rd.compute_list_dispatch(compute_list, 2, 1, 1)
+		rd.compute_list_dispatch(compute_list, 1, 1, 1)
 		rd.compute_list_end()
 		
 		rd.submit()
@@ -111,6 +132,8 @@ func _thread_boid_calculations() -> void:
 		
 		var byte_data := rd.buffer_get_data(storage_buffer)
 		var output := byte_data.to_float32_array()
+		
+		#print("O  U  T  P  U  T   NRO-1: ", output)
 		
 		mutex.lock()
 
@@ -124,7 +147,7 @@ func _thread_boid_calculations() -> void:
 		var pb := PackedByteArray()
 		rd.buffer_update(storage_buffer, 0, pb.size(), pb)
 		
-		print("O  U  T  P  U  T  : ", output)
+		#print("O  U  T  P  U  T  NRO-2: ", output)
 
 func _exit_tree() -> void:
 	mutex.lock()
