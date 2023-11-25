@@ -28,6 +28,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	return
 	velocity = Vector3(get_global_transform().basis.z.normalized() * delta * speeeeed)
 	var target_vector : Vector3 = global_position.direction_to(-separationHeading)
 	var target_basis : Basis = Basis.looking_at(-separationHeading)
