@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cpoa56jp3gy3a"]
 
-[ext_resource type="Texture2D" uid="uid://btw7c7iq4qe56" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
+[ext_resource type="Texture2D" uid="uid://brdehj7esvl3y" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
 
