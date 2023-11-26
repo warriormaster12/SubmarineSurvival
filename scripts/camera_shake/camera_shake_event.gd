@@ -28,7 +28,6 @@ func _process(delta: float) -> void:
 
 func add_trauma(amount: float) -> void:
 	var current_camera: Camera3D = get_viewport().get_camera_3d()
-	init_rot = current_camera.rotation_degrees
 	trauma = clampf(trauma + amount, 0.0, 1.0)
 
 func get_shake_intensity() -> float:

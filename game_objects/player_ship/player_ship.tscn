@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=45 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -7,10 +7,14 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://bykgx7fokrawj" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://d4ird1qg6ifg4" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
 [ext_resource type="Script" path="res://scripts/player_ship/label_resource.gd" id="11_cbkuv"]
+
+[sub_resource type="Curve" id="Curve_eh0kh"]
+_data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
@@ -324,6 +328,7 @@ is_length = false
 [node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_kbb78")
+damage_curve = SubResource("Curve_eh0kh")
 damagable_velocity_threshold = 4.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -416,6 +421,12 @@ health = 300.0
 
 [node name="ImpactShake" type="Node" parent="."]
 script = ExtResource("4_euj64")
+noise_texture = SubResource("FastNoiseLite_xa8pk")
+
+[node name="PressureShake" type="Node" parent="."]
+script = ExtResource("4_euj64")
+trauma_reduction_rate = 0.2
+max_angle = Vector3(5, 5, 2)
 noise_texture = SubResource("FastNoiseLite_xa8pk")
 
 [node name="EventAnimationPlayer" type="AnimationPlayer" parent="."]
