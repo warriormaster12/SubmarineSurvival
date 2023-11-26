@@ -15,6 +15,10 @@ run/main_scene="res://levels/test_level.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+LoadingScreen="*res://ui/objects/loading_screen.tscn"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
@@ -34,7 +38,8 @@ folder_colors={
 "res://assets/": "blue",
 "res://game_objects/": "yellow",
 "res://levels/": "teal",
-"res://scripts/": "purple"
+"res://scripts/": "purple",
+"res://ui/": "orange"
 }
 
 [input]

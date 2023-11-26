@@ -10,7 +10,12 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 @export var turn_speed: float = 0.9
 
 @export_group("Misc")
+@export var damage_curve: Curve = null
 @export var damagable_velocity_threshold: float = 5.0
+@export var sea_level:Marker3D = null
+@export var safe_height: float = 500
+@export var death_height: float = 800
+
 ## In degrees
 @export_range(0.0, 90.0) var camera_look_around_angle: float = 40.0
 
@@ -61,6 +66,7 @@ func _ready() -> void:
 		push_warning("no anim_player has been found under " + name + " node")
 
 func _physics_process(delta: float) -> void:
+	calculate_height_damage()
 	if is_on_wall():
 		determine_damage_amount()
 	rotate_y(deg_to_rad(max_turn_angle) * turn_direction * turn_speed * delta)
@@ -84,6 +90,16 @@ func determine_damage_amount() -> void:
 		hit = true
 	else: 
 		hit = false
+
+func calculate_height_damage() -> void:
+	if !sea_level || !damage_curve:
+		push_warning("add sea_level and damage curve in properties")
+		return
+	var current_height: float = sea_level.global_position.y - global_position.y
+	if current_height > safe_height:
+		var damage_amount: float = damage_curve.sample(current_height/death_height)
+		ship_health.set("current_health", ship_health.current_health - damage_amount)
+		$PressureShake.add_trauma(damage_amount)
 
 ## PlayerInputManager Signals
 func _on_accelerate(dir: Vector3) -> void:
