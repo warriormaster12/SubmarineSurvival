@@ -5,6 +5,9 @@ var limits_z : Vector2 = Vector2(-80, 80)
 var limits_y : Vector2 = Vector2(3, 80)
 
 var speeeeed : float = 800
+var minSpeed : float = 2.0
+var maxSpeed : float = 5.0
+var maxSteerForce : float = 3.0
 var vel : Vector3
 var turn_direction : float = 0.0
 var direction: Vector3 = Vector3.ZERO
@@ -15,8 +18,8 @@ var avoidanceHeading : Vector3
 var numFlockmates : int
 
 var numBoids : int
-var viewRadius : float = 100
-var avoidRadius : float = 80
+var viewRadius : float = 1
+var avoidRadius : float = 2.5
 
 var _position : Vector3
 var separationHeading : Vector3
@@ -24,41 +27,55 @@ var separationHeading : Vector3
 
 func _ready() -> void:
 	direction = global_transform.basis.z
+	velocity = direction * minSpeed
 	get_parent().boids.append(self)
 
 
-func _physics_process(delta: float) -> void:
-	return
-	velocity = Vector3(get_global_transform().basis.z.normalized() * delta * speeeeed)
-	var target_vector : Vector3 = global_position.direction_to(-separationHeading)
-	var target_basis : Basis = Basis.looking_at(-separationHeading)
-	basis = basis.slerp(target_basis, 0.5)
+func UpdateBoid() -> void:
+	var acceleration := Vector3.ZERO
 	
+	if (numFlockmates != 0):
+		flockCentre /= numFlockmates
+		
+		var offsetToFlockmatesCentre := (flockCentre - position)
+		
+		var alignmentForce := SteerTowards (flockHeading) * 1 #settings.alignWeight;
+		var cohesionForce := SteerTowards (offsetToFlockmatesCentre) * 1 #settings.cohesionWeight;
+		var seperationForce := SteerTowards (avoidanceHeading) * 1 #settings.seperateWeight;
+	
+		acceleration += alignmentForce
+		acceleration += cohesionForce
+		acceleration += seperationForce
+	
+	#if (IsHeadingForCollision ()) {
+		#Vector3 collisionAvoidDir = ObstacleRays ();
+		#Vector3 collisionAvoidForce = SteerTowards (collisionAvoidDir) * settings.avoidCollisionWeight;
+		#acceleration += collisionAvoidForce;
+	#}
+	velocity += acceleration * get_physics_process_delta_time()
+	var v := velocity.length()
+	var speed : float = 0
+	if v == null:
+		speed = minSpeed
+	else:
+		speed = v
+	var dir : Vector3 = velocity / speed
+	velocity = dir * speed
+	
+	look_at(dir)
 	move_and_slide()
-	#AvoidOthers()
+	
+	#cachedTransform.position += velocity * delta
+	#cachedTransform.forward = dir;
+	#position = cachedTransform.position;
+	#forward = dir;
+	
 	CheckForBounds()
 
 
-func AvoidOthers() -> void:
-	var parent : Node = get_parent()
-	if (numBoids == 0):
-		numBoids = parent.boids.size()
-		
-	for indexB in numBoids:
-		if (parent.boids[indexB] == self):
-			continue
-		
-		var boidB : Object = parent.boids[indexB];
-		var offset : Vector3 = boidB.transform.origin - transform.origin
-		var sqrDst : float = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z
-		if (sqrDst < viewRadius * viewRadius):
-			numFlockmates += 1
-			flockHeading += boidB.direction
-			flockCentre += boidB._position
-			if (sqrDst < avoidRadius * avoidRadius):
-				separationHeading -= offset / sqrDst
-
-
+func SteerTowards(vector : Vector3) -> Vector3:
+	var v : Vector3 = vector.normalized() * maxSpeed - velocity
+	return v.limit_length(maxSteerForce)
 
 
 func CheckForBounds() -> void:
@@ -76,4 +93,3 @@ func CheckForBounds() -> void:
 		transform.origin.y = limits_y.y
 	elif (transform.origin.y > limits_y.y):
 		transform.origin.y = limits_y.x
-	

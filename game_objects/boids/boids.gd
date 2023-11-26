@@ -29,24 +29,36 @@ var boids : Array = []
 var boidData : Array = []
 var numBoids : int
 
+var calculating : bool = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# using the rendering device to handle the compute commands
-	rd = RenderingServer.create_local_rendering_device()
+	rd = RenderingServer.get_rendering_device()
 	# create shader and pipeline
 	var shader_file := load("res://game_objects/boids/boids_compute.glsl")
 	var shader_spirv : RDShaderSPIRV = shader_file.get_spirv()
 	shader = rd.shader_create_from_spirv(shader_spirv)
 	pipeline = rd.compute_pipeline_create(shader)
+	
+	calculating = true
 	StartCalculations()
-	boid_calculations()
+
+
+func _process(delta: float) -> void:
+	if calculating:
+		return
+	
+	calculating = true
+	StartCalculations()
+
 
 func StartCalculations() -> void:
 	numBoids = boids.size()
 	if (numBoids == 0):
 		return
-		
+	
 	boidData.clear()
 	for i in numBoids:
 		boidData.append(BoidData.new())
@@ -54,40 +66,46 @@ func StartCalculations() -> void:
 	for i in boidData.size():
 		boidData[i].position = boids[i].position
 		boidData[i].direction = boids[i].direction
-	
+		boidData[i].flockHeading = Vector3.ZERO
+		boidData[i].flockCentre = Vector3.ZERO
+		boidData[i].avoidanceHeading = Vector3.ZERO
+		boidData[i].numFlockmates = 0
+		
+	boid_calculations()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func boid_calculations() -> void:
-	# ~ R E A L   S T U F F ~   H A P P E N I N G   H E R E   O M G
 	# create storage buffer
 	var input := []
 	for i in numBoids:
 		var arr := ([boidData[i].position, boidData[i].direction, boidData[i].flockHeading, boidData[i].flockCentre, boidData[i].avoidanceHeading, boidData[i].numFlockmates])
 		input.append(arr)
 	
-	var NEWEST_LIST_BYTES := PackedByteArray()
-	NEWEST_LIST_BYTES.resize(input.size() * 32)
+	var boidDataList := PackedByteArray()
+	boidDataList.resize(input.size() * 80)
 	for i in input.size():
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.x)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.y)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].position.z)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.x)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.y)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].direction.z)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.x)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.y)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockHeading.z)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.x)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.y)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].flockCentre.z)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.x)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.y)
-		NEWEST_LIST_BYTES.encode_float(i * 32, boidData[i].avoidanceHeading.z)
-		NEWEST_LIST_BYTES.encode_s32(i * 32, boidData[i].numFlockmates)
+		print("index ",i,":   ",boidData[i].position,"  ",boidData[i].direction,"  ",boidData[i].flockHeading,"  ", boidData[i].flockCentre, "  ", boidData[i].avoidanceHeading,"  ", boidData[i].numFlockmates)
+		boidDataList.encode_float(i * 80, boidData[i].position.x)
+		boidDataList.encode_float(i * 80 + 5, boidData[i].position.y)
+		boidDataList.encode_float(i * 80 + 10, boidData[i].position.z)
+		boidDataList.encode_float(i * 80 + 15, boidData[i].direction.x)
+		boidDataList.encode_float(i * 80 + 20, boidData[i].direction.y)
+		boidDataList.encode_float(i * 80 + 25, boidData[i].direction.z)
+		boidDataList.encode_float(i * 80 + 30, boidData[i].flockHeading.x)
+		boidDataList.encode_float(i * 80 + 35, boidData[i].flockHeading.y)
+		boidDataList.encode_float(i * 80 + 40, boidData[i].flockHeading.z)
+		boidDataList.encode_float(i * 80 + 45, boidData[i].flockCentre.x)
+		boidDataList.encode_float(i * 80 + 50, boidData[i].flockCentre.y)
+		boidDataList.encode_float(i * 80 + 55, boidData[i].flockCentre.z)
+		boidDataList.encode_float(i * 80 + 60, boidData[i].avoidanceHeading.x)
+		boidDataList.encode_float(i * 80 + 65, boidData[i].avoidanceHeading.y)
+		boidDataList.encode_float(i * 80 + 70, boidData[i].avoidanceHeading.z)
+		boidDataList.encode_s8(i * 80 + 75, boidData[i].numFlockmates)
 	
-	#var input_bytes := PackedFloat32Array(input).to_byte_array()
-	storage_buffer = rd.storage_buffer_create(NEWEST_LIST_BYTES.size(), NEWEST_LIST_BYTES)
-	
+	if (!storage_buffer.is_valid()):
+		storage_buffer = rd.storage_buffer_create(boidDataList.size(), boidDataList)	
+	else:
+		rd.buffer_update(storage_buffer, 0, boidDataList.size(), boidDataList)
 	
 	# create uniform set using the storage buffer
 	var u := RDUniform.new()
@@ -96,43 +114,54 @@ func boid_calculations() -> void:
 	u.add_id(storage_buffer)
 	uniform_set = rd.uniform_set_create([u], shader, 0)
 	
-	# E N D   O F   ~ R E A L   S T U F F ~
+	#koita riittääkö tän alla olevan paskan updateeminen sen sijaan, että inputtaa
+	#joka kerta boidien datat eka.
+	# vvvvvvvvvvvvv
+	
 	# start compute
 	var compute_list := rd.compute_list_begin()
 	rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
 	rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
-	rd.compute_list_dispatch(compute_list, 1, 1, 1)
+	rd.compute_list_dispatch(compute_list, 48, 1, 1)
 	rd.compute_list_end()
 	
-	rd.submit()
-	rd.sync()
+	#rd.submit()
+	#rd.sync()
+	#  ^^^^^^^^^^^^^
 	
 	
 	var byte_data := rd.buffer_get_data(storage_buffer)
-	var output := byte_data.to_float32_array()
+	#var outputList : Array[BoidData] = []
 	
-	#print("O  U  T  P  U  T   NRO-1: ", output)
-
+	#rd.buffer_update(storage_buffer, 0, boidDataList.size(), boidDataList)
 	
-	#for i in boidData.size():
-	#	boids[i].position = output[i].position
-	#	boids[i].direction = boidData[i].direction
-	#	boids[i].flockHeading = boidData[i].flockHeading
-	#	boids[i].flockCentre = boidData[i].flockCentre
-	#	boids[i].numFlockmates = boidData[i].numFlockmates
-	#var pb := PackedByteArray()
-	#rd.buffer_update(storage_buffer, 0, pb.size(), pb)
+	for i in int(byte_data.size() / 80):
+		#var boidd : BoidData = BoidData.new()
+		boids[i]._position = Vector3(byte_data.decode_float(i * 80), byte_data.decode_float(i * 80 + 5), byte_data.decode_float(i * 80 + 10))
+		boids[i].direction = Vector3(byte_data.decode_float(i * 80 + 15), byte_data.decode_float(i * 80 + 20), byte_data.decode_float(i * 80 + 25))
+		boids[i].flockHeading = Vector3(byte_data.decode_float(i * 80 + 30), byte_data.decode_float(i * 80 + 35), byte_data.decode_float(i * 80 + 40))
+		boids[i].flockCentre = Vector3(byte_data.decode_float(i * 80 + 45), byte_data.decode_float(i * 80 + 50), byte_data.decode_float(i * 80 + 55))
+		boids[i].avoidanceHeading = Vector3(byte_data.decode_float(i * 80 + 60), byte_data.decode_float(i * 80 + 65), byte_data.decode_float(i * 80 + 70))
+		boids[i].numFlockmates = byte_data.decode_s8(i * 80 + 75)
+		boids[i].UpdateBoid()
+		#print("boid",i,":  DATA 1: ",byte_data.decode_float(i * 64)," DATA 2: ",byte_data.decode_float(i * 64 +4)," DATA 3: ",byte_data.decode_float(i * 64 +8)," DATA 4: ",byte_data.decode_float(i * 64 +12),"DATA 5: ",byte_data.decode_float(i * 64 +16)," DATA 6: ",byte_data.decode_float(i * 64 +20)," DATA 7: ",byte_data.decode_float(i * 64 +24)," DATA 8: ",byte_data.decode_float(i * 64 +28)," DATA 9: ",byte_data.decode_float(i * 64 +32)," DATA 10: ",byte_data.decode_float(i * 64 +36)," DATA 11: ",byte_data.decode_float(i * 64 +40)," DATA 12: ",byte_data.decode_float(i * 64 +44)," DATA 13: ",byte_data.decode_float(i * 64 +48)," DATA 14: ",byte_data.decode_float(i * 64 +52)," DATA 15: ",byte_data.decode_float(i * 64 +56)," DATA 16: ",byte_data.decode_float(i * 64 +60))
+		
+		#boidd.position = Vector3(byte_data.decode_float(i * 64), byte_data.decode_float(i * 64 + 4), byte_data.decode_float(i * 64 + 8))
+		#boidd.direction = Vector3(byte_data.decode_float(i * 64 + 12), byte_data.decode_float(i * 64 + 16), byte_data.decode_float(i * 64 + 20))
+		#boidd.flockHeading = Vector3(byte_data.decode_float(i * 64 + 24), byte_data.decode_float(i * 64 + 28), byte_data.decode_float(i * 64 + 32))
+		#boidd.flockCentre = Vector3(byte_data.decode_float(i * 64 + 36), byte_data.decode_float(i * 64 + 40), byte_data.decode_float(i * 64 + 44))
+		#boidd.avoidanceHeading = Vector3(byte_data.decode_float(i * 64 + 48), byte_data.decode_float(i * 64 + 52), byte_data.decode_float(i * 64 + 56))
+		#boidd.numFlockmates = byte_data.decode_s32(i * 64 + 60)
+		#outputList.append(boidd)
+		#print(boidd.position," ",boidd.direction," ",boidd.flockHeading," ",boidd.flockCentre," ",boidd.avoidanceHeading," ",boidd.numFlockmates)
 	
-	#print("O  U  T  P  U  T  NRO-2: ", output)
-	
-
-
+	calculating = false
 
 
 class BoidData:
-	var position : Vector3
-	var direction : Vector3
-	var flockHeading : Vector3
-	var flockCentre : Vector3
-	var avoidanceHeading : Vector3
-	var numFlockmates : int
+	var position : Vector3 = Vector3.ZERO
+	var direction : Vector3 = Vector3.ZERO
+	var flockHeading : Vector3 = Vector3.ZERO
+	var flockCentre : Vector3 = Vector3.ZERO
+	var avoidanceHeading : Vector3 = Vector3.ZERO
+	var numFlockmates : int = 0
