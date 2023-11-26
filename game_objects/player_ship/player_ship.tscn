@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d4ird1qg6ifg4" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
-[ext_resource type="Script" path="res://scripts/player_ship/label_resource.gd" id="11_cbkuv"]
+[ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -314,13 +314,13 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ftij2")
 
 [sub_resource type="Resource" id="Resource_wehvb"]
-script = ExtResource("11_cbkuv")
+script = ExtResource("11_5bw4h")
 label_name = "Velocity"
 variable = "velocity"
 is_length = true
 
 [sub_resource type="Resource" id="Resource_dhnpa"]
-script = ExtResource("11_cbkuv")
+script = ExtResource("11_5bw4h")
 label_name = "Position"
 variable = "global_position"
 is_length = false
@@ -456,7 +456,7 @@ transform = Transform3D(0.939693, 0.029809, -0.340719, 0, 0.996195, 0.0871558, 0
 mesh = SubResource("QuadMesh_0t3ua")
 script = ExtResource("10_0t26h")
 root_control = NodePath("SubViewport/OtherStats")
-label_resources = Array[ExtResource("11_cbkuv")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
+label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
 
 [node name="SubViewport" type="SubViewport" parent="InfoMeter"]
 transparent_bg = true
