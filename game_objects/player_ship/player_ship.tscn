@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=45 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -7,8 +7,14 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://b2axmd66xqedv" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://d4ird1qg6ifg4" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
+[ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
+[ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
+
+[sub_resource type="Curve" id="Curve_eh0kh"]
+_data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d4mim"]
 radius = 1.33179
@@ -281,22 +287,48 @@ _data = {
 "RESET": SubResource("Animation_kd8wi")
 }
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ybyae"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_34u4v"]
 viewport_path = NodePath("ShipStatsMonitor/SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lw5yy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3n2ic"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
-albedo_texture = SubResource("ViewportTexture_ybyae")
+albedo_texture = SubResource("ViewportTexture_34u4v")
 
 [sub_resource type="QuadMesh" id="QuadMesh_2id3t"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_lw5yy")
+material = SubResource("StandardMaterial3D_3n2ic")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ukedv"]
+viewport_path = NodePath("InfoMeter/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftij2"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_ukedv")
+
+[sub_resource type="QuadMesh" id="QuadMesh_0t3ua"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ftij2")
+
+[sub_resource type="Resource" id="Resource_wehvb"]
+script = ExtResource("11_5bw4h")
+label_name = "Velocity"
+variable = "velocity"
+is_length = true
+
+[sub_resource type="Resource" id="Resource_dhnpa"]
+script = ExtResource("11_5bw4h")
+label_name = "Position"
+variable = "global_position"
+is_length = false
 
 [node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("1_kbb78")
+damage_curve = SubResource("Curve_eh0kh")
 damagable_velocity_threshold = 4.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -391,6 +423,12 @@ health = 300.0
 script = ExtResource("4_euj64")
 noise_texture = SubResource("FastNoiseLite_xa8pk")
 
+[node name="PressureShake" type="Node" parent="."]
+script = ExtResource("4_euj64")
+trauma_reduction_rate = 0.2
+max_angle = Vector3(5, 5, 2)
+noise_texture = SubResource("FastNoiseLite_xa8pk")
+
 [node name="EventAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_xllek")
@@ -412,3 +450,20 @@ transparent_bg = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 38
 text = "Ship Status"
+
+[node name="InfoMeter" type="MeshInstance3D" parent="." node_paths=PackedStringArray("root_control")]
+transform = Transform3D(0.939693, 0.029809, -0.340719, 0, 0.996195, 0.0871558, 0.34202, -0.0818996, 0.936117, 0.8, -0.211, -1.236)
+mesh = SubResource("QuadMesh_0t3ua")
+script = ExtResource("10_0t26h")
+root_control = NodePath("SubViewport/OtherStats")
+label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
+
+[node name="SubViewport" type="SubViewport" parent="InfoMeter"]
+transparent_bg = true
+
+[node name="OtherStats" type="VBoxContainer" parent="InfoMeter/SubViewport"]
+
+[node name="Label" type="Label" parent="InfoMeter/SubViewport/OtherStats"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 38
+text = "Stats"

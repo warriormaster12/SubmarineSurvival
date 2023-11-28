@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cpoa56jp3gy3a"]
+[gd_scene load_steps=14 format=3 uid="uid://cpoa56jp3gy3a"]
 
-[ext_resource type="Texture2D" uid="uid://cjc2sbjceut7u" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
+[ext_resource type="Texture2D" uid="uid://j8iwcjjqvw10" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
-[ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="4_fjdoq"]
-[ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="4_nle1s"]
+[ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_7e5pr"]
+[ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_fsr7c"]
+[ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="5_rn738"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -35,6 +36,13 @@ point_count = 11
 [sub_resource type="BoxShape3D" id="BoxShape3D_13xhp"]
 size = Vector3(30, 10, 30)
 
+[sub_resource type="Resource" id="Resource_7d3uk"]
+script = ExtResource("5_fsr7c")
+node_path = NodePath("GameOverScreen")
+event_name = "_on_health_depleted"
+visible_on_ready = false
+execute_function = "play_game_over"
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -51,8 +59,11 @@ use_collision = true
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 size = Vector3(200, 0.2, 200)
 
-[node name="PlayerShip" parent="." instance=ExtResource("2_iappa")]
+[node name="PlayerShip" parent="." node_paths=PackedStringArray("sea_level") instance=ExtResource("2_iappa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.36907, 21.7648, 57.3505)
+sea_level = NodePath("../SeaLevel")
+safe_height = 30.0
+death_height = 80.0
 
 [node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("triggerer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6179, 28.7453, 0)
@@ -71,306 +82,3 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_13xhp")
-
-[node name="fishes" type="Node" parent="."]
-script = ExtResource("4_nle1s")
-
-[node name="Boid" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.56368, 1.94057, 20.0925)
-
-[node name="Boid2" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, -0.412905, 0.872973, 0.259668, -0.738988, -0.487768, 0.464735, -2.98245, 11.7189, 29.2741)
-
-[node name="Boid3" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, -0.246874, 0.652813, 0.716163, -0.21275, -0.757519, 0.617172, -15.7622, 11.7189, 34.2488)
-
-[node name="Boid4" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -9.39881, 11.7189, 23.0808)
-
-[node name="Boid5" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -10.4283, 11.7189, 6.42521)
-
-[node name="Boid6" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 1.2254, 11.7189, 13.6542)
-
-[node name="Boid7" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -22.4464, 16.4455, 22.271)
-
-[node name="Boid8" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -6.9897, 16.4455, 15.9814)
-
-[node name="Boid9" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -10.1229, 16.4455, 29.3325)
-
-[node name="Boid10" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.8161, 15.9834, 26.5005)
-
-[node name="Boid11" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, 25.7504, 15.9834, 35.6822)
-
-[node name="Boid12" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, 12.9707, 15.9834, 40.6568)
-
-[node name="Boid13" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, 19.3341, 15.9834, 29.4888)
-
-[node name="Boid14" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, 18.3045, 15.9834, 12.8332)
-
-[node name="Boid15" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 29.9583, 15.9834, 20.0622)
-
-[node name="Boid16" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, 6.28647, 20.71, 28.679)
-
-[node name="Boid17" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 21.7432, 20.71, 22.3895)
-
-[node name="Boid18" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 18.61, 20.71, 35.7406)
-
-[node name="Boid19" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 13.5667, 20.71, 37.581)
-
-[node name="Boid20" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 10.4335, 20.71, 50.9321)
-
-[node name="Boid21" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.306, 16.2246, 30.798)
-
-[node name="Boid22" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, -39.3717, 16.2246, 39.9797)
-
-[node name="Boid23" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -52.1514, 16.2246, 44.9543)
-
-[node name="Boid24" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -45.7881, 16.2246, 33.7863)
-
-[node name="Boid25" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -46.8176, 16.2246, 17.1307)
-
-[node name="Boid26" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, -35.1639, 16.2246, 24.3597)
-
-[node name="Boid27" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -58.8357, 20.9512, 32.9765)
-
-[node name="Boid28" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -43.379, 20.9512, 26.687)
-
-[node name="Boid29" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -46.5122, 20.9512, 40.0381)
-
-[node name="Boid30" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5732, 20.4891, 37.206)
-
-[node name="Boid31" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, -10.6388, 20.4891, 46.3877)
-
-[node name="Boid32" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -23.4186, 20.4891, 51.3623)
-
-[node name="Boid33" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -17.0552, 20.4891, 40.1943)
-
-[node name="Boid34" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -18.0847, 20.4891, 23.5388)
-
-[node name="Boid35" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, -6.43099, 20.4891, 30.7678)
-
-[node name="Boid36" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -30.1028, 25.2157, 39.3846)
-
-[node name="Boid37" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -14.6461, 25.2157, 33.095)
-
-[node name="Boid38" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -17.7793, 25.2157, 46.4461)
-
-[node name="Boid39" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -22.8226, 25.2157, 48.2866)
-
-[node name="Boid40" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -25.9558, 25.2157, 61.6376)
-
-[node name="Boid41" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.00478, 17.7673, -24.0104)
-
-[node name="Boid42" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, 11.9295, 17.7673, -14.8288)
-
-[node name="Boid43" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -0.850178, 17.7673, -9.85411)
-
-[node name="Boid44" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, 5.51319, 17.7673, -21.0221)
-
-[node name="Boid45" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, 4.48365, 17.7673, -37.6777)
-
-[node name="Boid46" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 16.1374, 17.7673, -30.4487)
-
-[node name="Boid47" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -7.5344, 22.4939, -21.8319)
-
-[node name="Boid48" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 7.9223, 22.4939, -28.1215)
-
-[node name="Boid49" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 4.78911, 22.4939, -14.7704)
-
-[node name="Boid50" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.7281, 22.0318, -17.6024)
-
-[node name="Boid51" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, 40.6624, 22.0318, -8.42073)
-
-[node name="Boid52" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, 27.8827, 22.0318, -3.44608)
-
-[node name="Boid53" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, 34.2461, 22.0318, -14.6141)
-
-[node name="Boid54" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, 33.2165, 22.0318, -31.2697)
-
-[node name="Boid55" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 44.8703, 22.0318, -24.0407)
-
-[node name="Boid56" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, 21.1985, 26.7584, -15.4239)
-
-[node name="Boid57" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 36.6552, 26.7584, -21.7134)
-
-[node name="Boid58" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 33.522, 26.7584, -8.36234)
-
-[node name="Boid59" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 28.4787, 26.7584, -6.52187)
-
-[node name="Boid60" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 25.3455, 26.7584, 6.82922)
-
-[node name="Boid61" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.394, 22.273, -13.3049)
-
-[node name="Boid62" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, -24.4597, 22.273, -4.12323)
-
-[node name="Boid63" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -37.2394, 22.273, 0.851414)
-
-[node name="Boid64" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -30.8761, 22.273, -10.3166)
-
-[node name="Boid65" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -31.9056, 22.273, -26.9722)
-
-[node name="Boid66" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, -20.2519, 22.273, -19.7432)
-
-[node name="Boid67" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -43.9237, 26.9996, -11.1264)
-
-[node name="Boid68" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -28.467, 26.9996, -17.4159)
-
-[node name="Boid69" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -31.6002, 26.9996, -4.06484)
-
-[node name="Boid70" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.66117, 26.5374, -6.89687)
-
-[node name="Boid71" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, 4.27315, 26.5374, 2.2848)
-
-[node name="Boid72" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -8.50657, 26.5374, 7.25945)
-
-[node name="Boid73" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -2.14321, 26.5374, -3.90855)
-
-[node name="Boid74" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -3.17274, 26.5374, -20.5641)
-
-[node name="Boid75" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 8.48101, 26.5374, -13.3351)
-
-[node name="Boid76" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -15.1908, 31.264, -4.71834)
-
-[node name="Boid77" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 0.265905, 31.264, -11.0079)
-
-[node name="Boid78" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -2.86728, 31.264, 2.34319)
-
-[node name="Boid79" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -7.91058, 31.264, 4.18366)
-
-[node name="Boid80" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -11.0438, 31.264, 17.5347)
-
-[node name="Boid81" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 34.0088, 36.2022, 33.9589)
-
-[node name="Boid82" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.7307, 31.7168, 13.8248)
-
-[node name="Boid83" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, -15.7964, 31.7168, 23.0065)
-
-[node name="Boid84" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, -28.5761, 31.7168, 27.9811)
-
-[node name="Boid85" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, -22.2128, 31.7168, 16.8131)
-
-[node name="Boid86" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, -23.2423, 31.7168, 0.157526)
-
-[node name="Boid87" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, -11.5886, 31.7168, 7.38653)
-
-[node name="Boid88" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -35.2604, 36.4434, 16.0033)
-
-[node name="Boid89" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, -19.8037, 36.4434, 9.71375)
-
-[node name="Boid90" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, -22.9369, 36.4434, 23.0648)
-
-[node name="Boid91" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.997866, 35.9813, 20.2328)
-
-[node name="Boid92" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.532359, 0, 0.846519, 0, 1, 0, -0.846519, 0, 0.532359, 12.9365, 35.9813, 29.4145)
-
-[node name="Boid93" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.945405, 0, 0.325898, 0, 1, 0, -0.325898, 0, 0.945405, 0.156733, 35.9813, 34.3891)
-
-[node name="Boid94" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.600685, 0, 0.799486, 0, 1, 0, -0.799486, 0, -0.600685, 6.5201, 35.9813, 23.2211)
-
-[node name="Boid95" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.99656, 0, -0.0828778, 0, 1, 0, 0.0828778, 0, -0.99656, 5.49056, 35.9813, 6.56556)
-
-[node name="Boid96" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.828442, 0, 0.560075, 0, 1, 0, -0.560075, 0, -0.828442, 17.1443, 35.9813, 13.7946)
-
-[node name="Boid97" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.566061, 0, 0.824363, 0, 1, 0, -0.824363, 0, 0.566061, -6.52749, 40.7079, 22.4113)
-
-[node name="Boid98" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 8.92921, 40.7079, 16.1218)
-
-[node name="Boid99" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(0.266498, 0, 0.963835, 0, 1, 0, -0.963835, 0, 0.266498, 5.79602, 40.7079, 29.4729)
-
-[node name="Boid100" parent="fishes" instance=ExtResource("4_fjdoq")]
-transform = Transform3D(-0.396491, 0, 0.918038, 0, 1, 0, -0.918038, 0, -0.396491, 0.75272, 40.7079, 31.3133)
