@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1g2jyfdeests"]
+
+[sub_resource type="Curve" id="Curve_yqya1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.43724, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_3ah3y"]
+curve = SubResource("Curve_yqya1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4d04b"]
+lifetime_randomness = 1.0
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 9.0
+gravity = Vector3(0, 9, 0)
+damping_min = 1.0
+damping_max = 1.0
+scale_min = 0.03
+scale_max = 0.3
+scale_curve = SubResource("CurveTexture_3ah3y")
+turbulence_enabled = true
+turbulence_noise_scale = 0.3
+turbulence_influence_min = 0.05
+turbulence_influence_max = 0.15
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwuq5"]
+transparency = 1
+albedo_color = Color(0.635294, 0.733333, 0.854902, 0.419608)
+metallic_specular = 0.38
+roughness = 0.24
+roughness_texture_channel = 2
+
+[sub_resource type="SphereMesh" id="SphereMesh_67u5e"]
+material = SubResource("StandardMaterial3D_rwuq5")
+radial_segments = 10
+rings = 4
+
+[node name="ParticleBubbles" type="GPUParticles3D"]
+amount = 300
+lifetime = 100.0
+randomness = 1.0
+trail_lifetime = 1.0
+process_material = SubResource("ParticleProcessMaterial_4d04b")
+draw_pass_1 = SubResource("SphereMesh_67u5e")

@@ -1,67 +1,102 @@
 extends CharacterBody3D
 
-var limits_x : Vector2 = Vector2(-80, 80) 
-var limits_z : Vector2 = Vector2(-80, 80)
-var limits_y : Vector2 = Vector2(3, 80)
+var limits_x : Vector2 = Vector2(-50, 50) 
+var limits_z : Vector2 = Vector2(-50, 50)
+var limits_y : Vector2 = Vector2(-10, 50)
 
-var speeeeed : float = 800
+# boid settings
+var minSpeed : float = 15
+var maxSpeed : float = 30
+var maxSteerForce : float = 10
+var collisionAvoidDistance : float = 5
+var avoidCollisionWeight : float = 1
+var alignWeight : float = 2
+var cohesionWeight : float = 0.8
+var separationWeight : float = 1
+var vapinanPaino : float = 0.1
+
+
 var vel : Vector3
 var turn_direction : float = 0.0
 var direction: Vector3 = Vector3.ZERO
+var flockHeading : Vector3
+var flockCentre : Vector3
+var avoidanceHeading : Vector3
+var numFlockmates : int
+var numBoids : int
+var _position : Vector3
+var separationHeading : Vector3
+var parent : Node
 
 
 func _ready() -> void:
-	get_parent().boids.append(self)
+	set_collision_mask_value(1, false)
+	set_collision_mask_value(2, true)
+	parent = get_parent()
+	direction = global_transform.basis.z
+	velocity = direction * minSpeed
+	parent.boids.append(self)
 
 
-func _physics_process(delta: float) -> void:
-	velocity = Vector3(get_global_transform().basis.z.normalized() * delta * speeeeed)
-	var target_vector : Vector3 = global_position.direction_to(-separationHeading)
-	var target_basis : Basis = Basis.looking_at(-separationHeading)
-	basis = basis.slerp(target_basis, 0.5)
+func UpdateBoid() -> void:
+	var acceleration := Vector3.ZERO
 	
+	if (numFlockmates != 0):
+		flockCentre /= numFlockmates
+		
+		var offsetToFlockmatesCentre := (flockCentre - position)
+		
+		var alignmentForce := SteerTowards (flockHeading) * alignWeight;
+		var cohesionForce := SteerTowards (offsetToFlockmatesCentre) * cohesionWeight;
+		var seperationForce := SteerTowards (avoidanceHeading) * separationWeight;
+		
+		acceleration += alignmentForce
+		acceleration += cohesionForce
+		acceleration += seperationForce
+	
+	if IsHeadingForCollision():
+		var collisionAvoidDir := ObstacleRays()
+		var collisionAvoidForce := SteerTowards(collisionAvoidDir) * avoidCollisionWeight
+		acceleration += collisionAvoidForce
+	
+	velocity += acceleration * get_physics_process_delta_time()
+	var speed : float = clamp(velocity.length(), minSpeed, maxSpeed)
+	var dir : Vector3 = velocity / speed
+	velocity = (dir * speed).clamp(dir * minSpeed, dir * maxSpeed)
+	
+	look_at(lerp(_position - transform.basis.z, _position - dir, vapinanPaino))
+	#Arrow.transform.interpolate_with(new_transform, speed * delta)
 	move_and_slide()
-	AvoidOthers()
 	CheckForBounds()
 
 
+func IsHeadingForCollision() -> bool:
+	var space_state := get_world_3d().direct_space_state
+	var query := PhysicsRayQueryParameters3D.create(global_position, global_position - transform.basis.z * collisionAvoidDistance, collision_mask, [self])
+	var result := space_state.intersect_ray(query)
+	if result.is_empty():
+		return false
+	else:
+		#print("me: ",self.name,", other: ", result.collider.name)
+		return true
 
 
-var numBoids : int
-var viewRadius : float = 100
-var avoidRadius : float = 80
-
-var _position : Vector3
-var flockHeading : Vector3
-var flockCentre : Vector3
-var separationHeading : Vector3
-var numFlockmates : int
-
-func AvoidOthers() -> void:
-	var parent : Node = get_parent()
-	if (numBoids == 0):
-		numBoids = parent.boids.size()
-		
-	for indexB in numBoids:
-		if (parent.boids[indexB] == self):
-			continue
-		
-		var boidB : Object = parent.boids[indexB];
-		var offset : Vector3 = boidB.transform.origin - transform.origin
-		var sqrDst : float = offset.x * offset.x + offset.y * offset.y + offset.z * offset.z
-		if (sqrDst < viewRadius * viewRadius):
-			numFlockmates += 1
-			flockHeading += boidB.direction
-			flockCentre += boidB._position
-			if (sqrDst < avoidRadius * avoidRadius):
-				separationHeading -= offset / sqrDst
+func ObstacleRays() -> Vector3:
+	var rayDirections : Array = parent.rayDirections
+	for i in rayDirections.size():
+		var dir : Vector3 = transform.basis.inverse() * rayDirections[i]
+		var space_state := get_world_3d().direct_space_state
+		var query := PhysicsRayQueryParameters3D.create(global_position, global_position + dir * collisionAvoidDistance, collision_mask, [self])
+		var result := space_state.intersect_ray(query)
+		if result.is_empty():
+			return dir
+	
+	return -transform.basis.z
 
 
-
-
-
-
-
+func SteerTowards(vector : Vector3) -> Vector3:
+	var v : Vector3 = vector.normalized() * maxSpeed - velocity
+	return v.limit_length(maxSteerForce)
 
 
 func CheckForBounds() -> void:
@@ -79,4 +114,3 @@ func CheckForBounds() -> void:
 		transform.origin.y = limits_y.y
 	elif (transform.origin.y > limits_y.y):
 		transform.origin.y = limits_y.x
-	
