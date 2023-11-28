@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_camera.gd" id="2_6ovel"]
-[ext_resource type="Shader" path="res://game_objects/player_ship/player_ship_windowShader.gdshader" id="3_7xpae"]
+[ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader.gdshader" id="3_7xpae"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]

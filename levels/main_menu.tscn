@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=3 uid="uid://c2gh5c6i0k1oy"]
+
+[ext_resource type="Material" uid="uid://cs7nfms6w1de5" path="res://assets/third-party/poly-haven/rock_ground_02/materials/rock_ground_02.material" id="1_xwi3p"]
+[ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="2_wyaac"]
+[ext_resource type="PackedScene" uid="uid://b8ox0l4qs4imq" path="res://ui/objects/main_menu_ui.tscn" id="3_c8ttn"]
+[ext_resource type="PackedScene" uid="uid://d1g2jyfdeests" path="res://game_objects/particleEffects/particle_bubbles.tscn" id="4_p7v5r"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_x26jn"]
+sky_material = SubResource("ProceduralSkyMaterial_88ekv")
+
+[sub_resource type="Environment" id="Environment_wdjti"]
+background_mode = 2
+sky = SubResource("Sky_x26jn")
+tonemap_mode = 3
+tonemap_exposure = 1.25
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2127
+volumetric_fog_albedo = Color(0.466667, 0.788235, 1, 1)
+volumetric_fog_detail_spread = 1.36604
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0en7f"]
+material = ExtResource("1_xwi3p")
+size = Vector2(20, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ajvg6"]
+shader = ExtResource("2_wyaac")
+shader_parameter/tint = Color(0, 0.582581, 0.898438, 1)
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_freq = 15.0
+shader_parameter/wave_width = 0.5
+shader_parameter/blur = 0.15
+
+[node name="MainMenu" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wdjti")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("PlaneMesh_0en7f")
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1, 7.431)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_color = Color(0.901961, 0.901961, 0.901961, 1)
+light_energy = 0.2
+shadow_enabled = true
+
+[node name="Label3D" type="Label3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.901, 4.013)
+shaded = true
+no_depth_test = true
+text = "Sumarine Survival"
+font_size = 60
+outline_size = 0
+uppercase = true
+
+[node name="ParticleEffects" type="Node3D" parent="Node3D"]
+
+[node name="ParticleBubbles" parent="Node3D/ParticleEffects" instance=ExtResource("4_p7v5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4823, 1.19209e-07, 2.36201)
+
+[node name="ParticleBubbles2" parent="Node3D/ParticleEffects" instance=ExtResource("4_p7v5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18079, 1.19209e-07, 0.296598)
+
+[node name="ParticleBubbles3" parent="Node3D/ParticleEffects" instance=ExtResource("4_p7v5r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.69462, 1.19209e-07, 1.94142)
+
+[node name="MainMenuUI" parent="." instance=ExtResource("3_c8ttn")]
+starting_level = "res://levels/test_level.tscn"
+
+[node name="PostProcessEffects3D" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="PostProcessEffects3D"]
+material = SubResource("ShaderMaterial_ajvg6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
