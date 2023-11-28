@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cvpg7ls7guvpm"]
+[gd_scene load_steps=11 format=3 uid="uid://bc8igea6al38r"]
 
-[ext_resource type="Texture2D" uid="uid://bkrtapru71egr" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_ne5ip"]
+[ext_resource type="Texture2D" uid="uid://dynfrc8vwaeok" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_0evh2"]
 
 [sub_resource type="Gradient" id="Gradient_o6goh"]
 offsets = PackedFloat32Array(0, 0.60396, 1)
@@ -33,10 +33,10 @@ particle_flag_align_y = true
 emission_shape = 1
 emission_sphere_radius = 1.0
 direction = Vector3(0, 1, 0)
-spread = 29.652
+spread = 10.0
 initial_velocity_min = 40.0
 initial_velocity_max = 80.0
-gravity = Vector3(0, 2, 0)
+gravity = Vector3(0, -100, 0)
 linear_accel_min = 10.0
 linear_accel_max = 50.0
 scale_max = 2.0
@@ -58,7 +58,7 @@ blend_mode = 1
 cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("1_ne5ip")
+albedo_texture = ExtResource("1_0evh2")
 
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_whnbn"]
 material = SubResource("StandardMaterial3D_gqjat")
@@ -66,11 +66,10 @@ sections = 2
 section_segments = 4
 
 [node name="particle_sparks" type="GPUParticles3D"]
-amount = 10
-amount_ratio = 0.351
-lifetime = 0.2
+amount = 100
+lifetime = 2.0
 preprocess = 0.04
-explosiveness = 0.24
+explosiveness = 0.97
 randomness = 0.37
 trail_lifetime = 3.0
 process_material = SubResource("ParticleProcessMaterial_eptfh")

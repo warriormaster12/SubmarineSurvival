@@ -1,18 +1,19 @@
 extends CharacterBody3D
 
-var limits_x : Vector2 = Vector2(-80, 80) 
-var limits_z : Vector2 = Vector2(-80, 80)
-var limits_y : Vector2 = Vector2(-10, 80)
+var limits_x : Vector2 = Vector2(-50, 50) 
+var limits_z : Vector2 = Vector2(-50, 50)
+var limits_y : Vector2 = Vector2(-10, 50)
 
 # boid settings
 var minSpeed : float = 15
 var maxSpeed : float = 30
-var maxSteerForce : float = 1
+var maxSteerForce : float = 10
 var collisionAvoidDistance : float = 5
-var avoidCollisionWeight : float = 2
-var alignWeight : float = 0.7
-var cohesionWeight : float = 0.6
+var avoidCollisionWeight : float = 1
+var alignWeight : float = 2
+var cohesionWeight : float = 0.8
 var separationWeight : float = 1
+var vapinanPaino : float = 0.1
 
 
 var vel : Vector3
@@ -63,7 +64,8 @@ func UpdateBoid() -> void:
 	var dir : Vector3 = velocity / speed
 	velocity = (dir * speed).clamp(dir * minSpeed, dir * maxSpeed)
 	
-	look_at(_position - dir)
+	look_at(lerp(_position - transform.basis.z, _position - dir, vapinanPaino))
+	#Arrow.transform.interpolate_with(new_transform, speed * delta)
 	move_and_slide()
 	CheckForBounds()
 

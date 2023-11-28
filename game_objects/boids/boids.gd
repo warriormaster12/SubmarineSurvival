@@ -5,8 +5,8 @@ var minSpeed : float = 2
 var maxSpeed : float = 5
 var perceptionRadius : float = 2.5
 var avoidanceRadius : float = 1
-var maxSteerForce : float = 3
-var alignWeight : float = 1
+var maxSteerForce : float = 100
+var alignWeight : float = 0.6
 var cohesionWeight : float = 1
 var separateWeight : float = 1
 var targetWeight : float = 1
@@ -89,7 +89,7 @@ func boid_calculations() -> void:
 		boidDataList.encode_float(i * 80 + 24, boidData[i].direction.z)
 		
 	if (!storage_buffer.is_valid()):
-		storage_buffer = rd.storage_buffer_create(boidDataList.size(), boidDataList)	
+		storage_buffer = rd.storage_buffer_create(boidDataList.size(), boidDataList)
 	else:
 		rd.buffer_update(storage_buffer, 0, boidDataList.size(), boidDataList)
 	
@@ -123,19 +123,19 @@ func boid_calculations() -> void:
 	calculating = false
 
 
-class BoidData:													# index offsets:
-	var position : Vector4 = Vector4.ZERO						# 0  4  8  (12 = unused)
-	var direction : Vector4 = Vector4.ZERO						# 16 20 24 (28 = unused)
-	var flockHeading : Vector4 = Vector4.ZERO					# 32 36 40 (44 = unused)
-	var flockCentre : Vector4 = Vector4.ZERO					# 48 52 56 (60 = unused)
-	var avoidanceHeadingAndFlockmates : Vector4 = Vector4.ZERO	# 64 68 72 (76 = flockmates)
+class BoidData: 												# index offsets:
+	var position : Vector4 = Vector4.ZERO   					# 0  4  8  (12 = unused)
+	var direction : Vector4 = Vector4.ZERO  					# 16 20 24 (28 = unused)
+	var flockHeading : Vector4 = Vector4.ZERO   				# 32 36 40 (44 = unused)
+	var flockCentre : Vector4 = Vector4.ZERO    				# 48 52 56 (60 = unused)
+	var avoidanceHeadingAndFlockmates : Vector4 = Vector4.ZERO  # 64 68 72 (76 = flockmates)
 
 
 
 #  R A Y S   F O R   O B S T A C L E   A V O I D A N C E :
 var rayDirections : Array
 
-var numViewDirections : float = 30
+var numViewDirections : float = 100
 var goldenRatio : float = (1 + sqrt(5)) / 2
 var angleIncrement : float = PI * 2 * goldenRatio
 func CalculateRayDirections() -> void:
