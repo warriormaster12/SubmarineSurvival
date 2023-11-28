@@ -5,14 +5,14 @@ var limits_z : Vector2 = Vector2(-50, 50)
 var limits_y : Vector2 = Vector2(-10, 50)
 
 # boid settings
-var minSpeed : float = 15
-var maxSpeed : float = 30
+var minSpeed : float = 9
+var maxSpeed : float = 15
 var maxSteerForce : float = 10
 var collisionAvoidDistance : float = 5
-var avoidCollisionWeight : float = 1
-var alignWeight : float = 2
-var cohesionWeight : float = 0.8
-var separationWeight : float = 1
+var avoidCollisionWeight : float = 5
+var alignWeight : float = 0#2
+var cohesionWeight : float = 0#0.8
+var separationWeight : float = 0#1
 var vapinanPaino : float = 0.1
 
 
