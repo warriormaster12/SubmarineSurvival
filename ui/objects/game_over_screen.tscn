@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://om1dn4kokhlj"]
+[gd_scene load_steps=8 format=3 uid="uid://om1dn4kokhlj"]
 
 [ext_resource type="Theme" uid="uid://csjjraenq4jr2" path="res://ui/themes/ui_theme.tres" id="1_uiutc"]
 [ext_resource type="Script" path="res://scripts/ui/game_over_screen.gd" id="2_wxtwb"]
+[ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="3_qqksn"]
 
 [sub_resource type="Animation" id="Animation_7yxw2"]
 resource_name = "FadeIn"
@@ -62,6 +63,14 @@ _data = {
 "FadeIn": SubResource("Animation_7yxw2"),
 "RESET": SubResource("Animation_t68j4")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qin8"]
+shader = ExtResource("3_qqksn")
+shader_parameter/tint = Color(0.054902, 0.654902, 1, 1)
+shader_parameter/wave_speed = 0.45
+shader_parameter/wave_freq = 15.0
+shader_parameter/wave_width = 0.25
+shader_parameter/blur = 0.15
 
 [node name="GameOverScreen" type="Control"]
 layout_mode = 3
@@ -130,6 +139,25 @@ text = "Try Again"
 libraries = {
 "": SubResource("AnimationLibrary_hy70f")
 }
+
+[node name="PostProcessEffects3D" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="PostProcessEffects3D"]
+material = SubResource("ShaderMaterial_6qin8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="pressed" from="VBoxContainer/Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/RestartButton" to="." method="_on_restart_button_pressed"]

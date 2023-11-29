@@ -11,9 +11,9 @@ extends Control
 
 
 func _ready() -> void:
-	for menu in sub_menus:
-		menu.visible = false
-		menu.visibility_changed.connect(_on_visibility_changed)
+	for sub_menu in sub_menus:
+		sub_menu.visible = false
+		sub_menu.visibility_changed.connect(_on_visibility_changed)
 	foreground.color.a = 1.0
 	buttons.position.x = -buttons.size.x
 	anim_player.play("FadeIn")
@@ -67,8 +67,8 @@ func _on_quit_game_button_pressed() -> void:
 
 func _on_visibility_changed() -> void:
 	var sub_menu_visible: bool = false
-	for menu in sub_menus:
-		if menu.visible:
+	for sub_menu in sub_menus:
+		if sub_menu.visible:
 			sub_menu_visible = true
 			break
 	if !sub_menu_visible:

@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cpoa56jp3gy3a"]
+[gd_scene load_steps=14 format=3 uid="uid://cpoa56jp3gy3a"]
 
 [ext_resource type="Texture2D" uid="uid://j8iwcjjqvw10" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
+[ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_pr6ch"]
+[ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_1qv80"]
+[ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="5_sy43o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,6 +35,13 @@ point_count = 11
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13xhp"]
 size = Vector3(30, 10, 30)
+
+[sub_resource type="Resource" id="Resource_lvh1w"]
+script = ExtResource("5_1qv80")
+node_path = NodePath("GameOverScreen")
+event_name = "_on_health_depleted"
+visible_on_ready = false
+execute_function = "play_game_over"
 
 [node name="TestLevel" type="Node3D"]
 
@@ -75,3 +85,9 @@ shape = SubResource("BoxShape3D_13xhp")
 
 [node name="SeaLevel" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 43.7267, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("4_pr6ch")
+ui_elements = Array[ExtResource("5_1qv80")]([SubResource("Resource_lvh1w")])
+
+[node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource("5_sy43o")]
