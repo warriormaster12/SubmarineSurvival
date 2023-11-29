@@ -1,17 +1,19 @@
-[gd_scene load_steps=29 format=3 uid="uid://dxyqeq8ut4a2j"]
+[gd_scene load_steps=32 format=3 uid="uid://dxyqeq8ut4a2j"]
 
-[ext_resource type="Texture2D" uid="uid://4khj81vm4jlx" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_tlst2"]
+[ext_resource type="Texture2D" uid="uid://c4v0i3v2e3mse" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_tlst2"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_68cuj"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_6as3g"]
-[ext_resource type="Texture2D" uid="uid://og0bvg863c26" path="res://assets/textures/submarine_col_texture.png" id="4_dv8kv"]
-[ext_resource type="Texture2D" uid="uid://bn4plae7c5m8h" path="res://assets/textures/submarine_normal_texture.png" id="5_yh5kr"]
-[ext_resource type="ArrayMesh" uid="uid://c16w12igm8mev" path="res://assets/models/submarine/submarine.obj" id="6_fivtt"]
-[ext_resource type="Texture2D" uid="uid://dhk6txtd1d1jl" path="res://assets/textures/floor_tex_col.png" id="7_t8k4w"]
-[ext_resource type="ArrayMesh" uid="uid://cr2831ge63i31" path="res://assets/models/submarine/floor.obj" id="8_ia5ha"]
-[ext_resource type="Texture2D" uid="uid://dgs2qc85gocuc" path="res://assets/textures/chair_tex_col.png" id="9_ipmew"]
-[ext_resource type="Texture2D" uid="uid://c8xjrui5hqy2a" path="res://assets/textures/chair_tex_normal.png" id="10_ryn32"]
-[ext_resource type="Texture2D" uid="uid://bbtposop6vjyy" path="res://assets/textures/tex_monitor_02_col.png" id="11_kfs42"]
-[ext_resource type="Texture2D" uid="uid://crn8l1sg5id07" path="res://assets/textures/tex_monitor_02_normal.png" id="12_kc7xb"]
+[ext_resource type="Texture2D" uid="uid://djgip5rawmdqt" path="res://assets/textures/submarine_col_texture.png" id="4_dv8kv"]
+[ext_resource type="Texture2D" uid="uid://bd2v02wfiuskc" path="res://assets/textures/submarine_normal_texture.png" id="5_yh5kr"]
+[ext_resource type="ArrayMesh" uid="uid://brsu4xsblh1ty" path="res://assets/models/submarine/submarine.obj" id="6_fivtt"]
+[ext_resource type="Texture2D" uid="uid://7pryhfaoe5p2" path="res://assets/textures/floor_tex_col.png" id="7_t8k4w"]
+[ext_resource type="ArrayMesh" uid="uid://caivosq3jherb" path="res://assets/models/submarine/floor.obj" id="8_ia5ha"]
+[ext_resource type="Texture2D" uid="uid://d1gokef0g133h" path="res://assets/textures/chair_tex_col.png" id="9_ipmew"]
+[ext_resource type="Texture2D" uid="uid://1ms67ttuymlh" path="res://assets/textures/chair_tex_normal.png" id="10_ryn32"]
+[ext_resource type="Texture2D" uid="uid://ysx6vgsdtgyq" path="res://assets/textures/tex_monitor_02_col.png" id="11_kfs42"]
+[ext_resource type="Texture2D" uid="uid://dyq6itvqpbbmm" path="res://assets/textures/tex_monitor_02_normal.png" id="12_kc7xb"]
+[ext_resource type="Texture2D" uid="uid://do4mhepq0bdco" path="res://assets/textures/rudder_col_tex.png" id="13_a0y8g"]
+[ext_resource type="ArrayMesh" uid="uid://pv6830ka21vo" path="res://assets/models/rudder/rudder.obj" id="14_3jdw2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -125,6 +127,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d7t22")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iemwq"]
+albedo_texture = ExtResource("13_a0y8g")
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -198,3 +203,8 @@ transform = Transform3D(0.736499, -0.527478, 0.423482, 0, 0.626046, 0.779786, -0
 material_override = SubResource("StandardMaterial3D_bdl7r")
 mesh = SubResource("ArrayMesh_67wr4")
 skeleton = NodePath("")
+
+[node name="Rudder" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111523, 0.850839, 3.01507)
+material_override = SubResource("StandardMaterial3D_iemwq")
+mesh = ExtResource("14_3jdw2")
