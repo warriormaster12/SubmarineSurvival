@@ -51,10 +51,10 @@ func _on_settings_button_pressed() -> void:
 
 
 func _on_how_to_play_button_pressed() -> void:
-	for menu in sub_menus:
-		if menu.name == "HowToPlay":
+	for sub_menu in sub_menus:
+		if sub_menu.name == "HowToPlay":
 			await show_menu(false).finished
-			menu.visible = true
+			sub_menu.visible = true
 			break
 
 
