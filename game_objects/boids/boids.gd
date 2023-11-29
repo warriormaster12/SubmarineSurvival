@@ -135,7 +135,7 @@ class BoidData: 												# index offsets:
 #  R A Y S   F O R   O B S T A C L E   A V O I D A N C E :
 var rayDirections : Array
 
-var numViewDirections : float = 100
+var numViewDirections : float = 50
 var goldenRatio : float = (1 + sqrt(5)) / 2
 var angleIncrement : float = PI * 2 * goldenRatio
 func CalculateRayDirections() -> void:
@@ -148,4 +148,3 @@ func CalculateRayDirections() -> void:
 		var y := sin(inclination) * sin(azimuth)
 		var z := cos(inclination)
 		rayDirections.append(Vector3(x,y,z))
-

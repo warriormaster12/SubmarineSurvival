@@ -5,14 +5,14 @@ var limits_z : Vector2 = Vector2(-50, 50)
 var limits_y : Vector2 = Vector2(-10, 50)
 
 # boid settings
-var minSpeed : float = 9
-var maxSpeed : float = 15
-var maxSteerForce : float = 10
-var collisionAvoidDistance : float = 5
-var avoidCollisionWeight : float = 5
-var alignWeight : float = 0#2
-var cohesionWeight : float = 0#0.8
-var separationWeight : float = 0#1
+var minSpeed : float = 10
+var maxSpeed : float = 17
+var maxSteerForce : float = 5
+var collisionAvoidDistance : float = 7
+var avoidCollisionWeight : float = 1.3
+var alignWeight : float = 0.7
+var cohesionWeight : float = 0.5
+var separationWeight : float = 0.8
 var vapinanPaino : float = 0.1
 
 
@@ -28,6 +28,7 @@ var _position : Vector3
 var separationHeading : Vector3
 var parent : Node
 
+var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	set_collision_mask_value(1, false)
@@ -59,6 +60,18 @@ func UpdateBoid() -> void:
 		var collisionAvoidForce := SteerTowards(collisionAvoidDir) * avoidCollisionWeight
 		acceleration += collisionAvoidForce
 	
+	var pow := rng.randf_range(1.0, 3.0)
+	var rand := rng.randf_range(0.0, 100.0)
+	if (rand > 99.75):
+		velocity += transform.basis.y * (pow * 1.3)
+	elif (rand > 99.50):
+		velocity += transform.basis.x * pow
+	elif (rand > 99.25):
+		velocity -= transform.basis.x * pow
+	elif (rand > 99):
+		velocity -= transform.basis.y * pow
+	
+	
 	velocity += acceleration * get_physics_process_delta_time()
 	var speed : float = clamp(velocity.length(), minSpeed, maxSpeed)
 	var dir : Vector3 = velocity / speed
@@ -72,19 +85,18 @@ func UpdateBoid() -> void:
 
 func IsHeadingForCollision() -> bool:
 	var space_state := get_world_3d().direct_space_state
-	var query := PhysicsRayQueryParameters3D.create(global_position, global_position - transform.basis.z * collisionAvoidDistance, collision_mask, [self])
+	var query := PhysicsRayQueryParameters3D.create(global_position, global_position - (-transform.basis.z * collisionAvoidDistance), collision_mask, [self])
 	var result := space_state.intersect_ray(query)
 	if result.is_empty():
 		return false
 	else:
-		#print("me: ",self.name,", other: ", result.collider.name)
 		return true
 
 
 func ObstacleRays() -> Vector3:
 	var rayDirections : Array = parent.rayDirections
 	for i in rayDirections.size():
-		var dir : Vector3 = transform.basis.inverse() * rayDirections[i]
+		var dir : Vector3 = (transform.basis.x + transform.basis.y + transform.basis.z) * rayDirections[i]
 		var space_state := get_world_3d().direct_space_state
 		var query := PhysicsRayQueryParameters3D.create(global_position, global_position + dir * collisionAvoidDistance, collision_mask, [self])
 		var result := space_state.intersect_ray(query)
