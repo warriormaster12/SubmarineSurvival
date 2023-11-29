@@ -1,25 +1,19 @@
-[gd_scene load_steps=62 format=3 uid="uid://b5j5xbvdmddvq"]
+[gd_scene load_steps=49 format=3 uid="uid://c4magrao3ii0g"]
 
-[ext_resource type="Texture2D" uid="uid://btw7c7iq4qe56" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_kve1w"]
+[ext_resource type="Texture2D" uid="uid://j8iwcjjqvw10" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_kve1w"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_ipp3t"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_se416"]
-[ext_resource type="Texture2D" uid="uid://2s0sohlfbsd3" path="res://assets/textures/tex_monitor_01_col.png" id="4_4tcck"]
-[ext_resource type="Texture2D" uid="uid://3fuh6eepyegk" path="res://assets/textures/tex_monitor_01_normal.png" id="5_mvyqt"]
-[ext_resource type="Texture2D" uid="uid://mh8ljrwdjur0" path="res://assets/textures/chair_tex_col.png" id="7_tcp58"]
-[ext_resource type="Texture2D" uid="uid://di5ydln76blh4" path="res://assets/textures/chair_tex_normal.png" id="8_xwhfy"]
-[ext_resource type="Texture2D" uid="uid://b8ufmttxg224q" path="res://assets/textures/small_rock_col_01.png" id="10_5kdhv"]
-[ext_resource type="Texture2D" uid="uid://0kvvk5nwsnpt" path="res://assets/textures/small_rock_normal_01.png" id="11_esdpg"]
-[ext_resource type="Texture2D" uid="uid://dr4w8gn73suw1" path="res://assets/textures/small_rock_col_02.png" id="13_m1osn"]
-[ext_resource type="Texture2D" uid="uid://dwqyhx1i56kf5" path="res://assets/textures/small_rock_normal_02.png" id="14_eqexy"]
-[ext_resource type="Texture2D" uid="uid://dgs46iawrijr5" path="res://assets/textures/small_rock_col_04.png" id="16_l35or"]
-[ext_resource type="Texture2D" uid="uid://iken8m3e4g0q" path="res://assets/textures/small_rock_normal_04.png" id="17_sufpc"]
-[ext_resource type="Texture2D" uid="uid://cy2du4vxlux31" path="res://assets/textures/small_rock_col_05.png" id="19_1ux43"]
-[ext_resource type="Texture2D" uid="uid://dv3f71jy20mfi" path="res://assets/textures/small_rock_normal_05.png" id="20_2gjwo"]
-[ext_resource type="Texture2D" uid="uid://21eh5bx76g2x" path="res://assets/textures/small_rock_col_03.png" id="22_3u0bx"]
-[ext_resource type="Texture2D" uid="uid://viyv3i7nyxhr" path="res://assets/textures/small_rock_normal_03.png" id="23_bg0yg"]
-[ext_resource type="ArrayMesh" uid="uid://i67pkdqtm8ds" path="res://assets/models/crate/crate.obj" id="25_qckh1"]
-[ext_resource type="Texture2D" uid="uid://4wvcl1k6ggg0" path="res://assets/textures/tex_wunderbaum_col.png" id="27_tog7s"]
-[ext_resource type="ArrayMesh" uid="uid://h3v23asys3tn" path="res://assets/models/wunderbaum/wunderbaum.obj" id="28_uplnu"]
+[ext_resource type="Texture2D" uid="uid://b6bb0ugphukvb" path="res://assets/textures/tex_monitor_01_col.png" id="4_4tcck"]
+[ext_resource type="Material" uid="uid://bw4vea8yywwa" path="res://assets/materials/wunderbaum.material" id="5_47dsx"]
+[ext_resource type="Texture2D" uid="uid://m548pddjstag" path="res://assets/textures/tex_monitor_01_normal.png" id="5_mvyqt"]
+[ext_resource type="Material" uid="uid://d05lsn2lkdns0" path="res://assets/materials/chair.material" id="7_gayoe"]
+[ext_resource type="Material" uid="uid://v1luteifvjn8" path="res://assets/materials/small_rock_01.material" id="11_37y5s"]
+[ext_resource type="Material" uid="uid://corra2jljaitu" path="res://assets/materials/small_rock_02.material" id="12_u7xtd"]
+[ext_resource type="Material" uid="uid://duhuydcqcly40" path="res://assets/materials/small_rock_03.material" id="14_t0owo"]
+[ext_resource type="Material" uid="uid://n2l03ono5fvq" path="res://assets/materials/small_rock_04.material" id="14_ufv52"]
+[ext_resource type="Material" uid="uid://dv66gcey5ioit" path="res://assets/materials/small_rock_05.material" id="15_j5d62"]
+[ext_resource type="ArrayMesh" uid="uid://dk6yptraxl5rl" path="res://assets/models/crate/crate.obj" id="25_qckh1"]
+[ext_resource type="ArrayMesh" uid="uid://b0r8fosu07kle" path="res://assets/models/wunderbaum/wunderbaum.obj" id="28_uplnu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -49,16 +43,6 @@ point_count = 11
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13xhp"]
 size = Vector3(30, 10, 30)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bwp1"]
-transparency = 1
-cull_mode = 2
-albedo_texture = ExtResource("27_tog7s")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nffuo"]
-albedo_texture = ExtResource("7_tcp58")
-normal_enabled = true
-normal_texture = ExtResource("8_xwhfy")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tj3pe"]
 
@@ -178,11 +162,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_l1pih")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lett"]
-albedo_texture = ExtResource("10_5kdhv")
-normal_enabled = true
-normal_texture = ExtResource("11_esdpg")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gn8f5"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_op6gd"]
@@ -216,11 +195,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_op6gd")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gyp7g"]
-albedo_texture = ExtResource("13_m1osn")
-normal_enabled = true
-normal_texture = ExtResource("14_eqexy")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7l8p3"]
 
@@ -290,16 +264,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_vb451")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_03dw6"]
-albedo_texture = ExtResource("22_3u0bx")
-normal_enabled = true
-normal_texture = ExtResource("23_bg0yg")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dvt1"]
-albedo_texture = ExtResource("16_l35or")
-normal_enabled = true
-normal_texture = ExtResource("17_sufpc")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lb4h6"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_kgxvx"]
@@ -333,11 +297,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_kgxvx")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_llmof"]
-albedo_texture = ExtResource("19_1ux43")
-normal_enabled = true
-normal_texture = ExtResource("20_2gjwo")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pnmbw"]
 
@@ -417,14 +376,14 @@ mesh = ExtResource("25_qckh1")
 
 [node name="Wunderbaum" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00413626, 0.1, 1.40087)
-material_override = SubResource("StandardMaterial3D_1bwp1")
+material_override = ExtResource("5_47dsx")
 mesh = ExtResource("28_uplnu")
 
 [node name="chair" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00375241, 0.1, 0.00776863)
 
 [node name="chair2" type="MeshInstance3D" parent="chair"]
-material_override = SubResource("StandardMaterial3D_nffuo")
+material_override = ExtResource("7_gayoe")
 mesh = SubResource("ArrayMesh_8bfij")
 skeleton = NodePath("")
 
@@ -453,7 +412,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.974319, 0.1, 0.496588)
 
 [node name="smallRock_012" type="MeshInstance3D" parent="smallRock_01"]
-material_override = SubResource("StandardMaterial3D_1lett")
+material_override = ExtResource("11_37y5s")
 mesh = SubResource("ArrayMesh_85s1m")
 skeleton = NodePath("")
 
@@ -462,7 +421,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.27324, 0.0999999, -0.31153
 
 [node name="smallRock_022" type="MeshInstance3D" parent="smallRock_02"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296743, 0, 0)
-material_override = SubResource("StandardMaterial3D_gyp7g")
+material_override = ExtResource("12_u7xtd")
 mesh = SubResource("ArrayMesh_r3biu")
 skeleton = NodePath("")
 
@@ -472,13 +431,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.64411, 0.1, 0.219928)
 [node name="smallRock_032" type="MeshInstance3D" parent="smallRock_03"]
 mesh = SubResource("ArrayMesh_1ptrg")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_03dw6")
+surface_material_override/0 = ExtResource("14_t0owo")
 
 [node name="smallRock_04" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68288, 0.0999997, -0.442775)
 
 [node name="smallRock_042" type="MeshInstance3D" parent="smallRock_04"]
-material_override = SubResource("StandardMaterial3D_5dvt1")
+material_override = ExtResource("14_ufv52")
 mesh = SubResource("ArrayMesh_f4v2d")
 skeleton = NodePath("")
 
@@ -486,6 +445,6 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.34241, 0.0999997, -1.00765)
 
 [node name="smallRock_052" type="MeshInstance3D" parent="smallRock_05"]
-material_override = SubResource("StandardMaterial3D_llmof")
+material_override = ExtResource("15_j5d62")
 mesh = SubResource("ArrayMesh_kdoxt")
 skeleton = NodePath("")
