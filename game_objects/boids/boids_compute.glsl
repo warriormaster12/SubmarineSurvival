@@ -15,8 +15,8 @@ layout(set = 0, binding = 0, std430) restrict buffer Buffer {
     Boid boids[];
 } my_buffer;
 
-float viewRadius = 10;
-float avoidRadius = 4;
+float viewRadius = 6;
+float avoidRadius = 2;
 
 
 void main()
