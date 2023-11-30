@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dlrfga1lbhuns" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
+[ext_resource type="Script" path="res://levels/DropOffZone.gd" id="4_d4bhy"]
 [ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_pr6ch"]
 [ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_1qv80"]
 [ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="5_sy43o"]
@@ -78,6 +79,7 @@ metadata/_edit_group_ = true
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26365, 25.9074, 0)
 monitorable = false
+script = ExtResource("4_d4bhy")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
@@ -91,3 +93,5 @@ script = ExtResource("4_pr6ch")
 ui_elements = Array[ExtResource("5_1qv80")]([SubResource("Resource_lvh1w")])
 
 [node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource("5_sy43o")]
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

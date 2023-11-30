@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bc8igea6al38r"]
 
-[ext_resource type="Texture2D" uid="uid://d445sig4ffbt" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_0evh2"]
+[ext_resource type="Texture2D" uid="uid://dynfrc8vwaeok" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_0evh2"]
 
 [sub_resource type="Gradient" id="Gradient_o6goh"]
 offsets = PackedFloat32Array(0, 0.60396, 1)

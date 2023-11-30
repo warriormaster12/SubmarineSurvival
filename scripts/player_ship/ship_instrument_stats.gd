@@ -33,4 +33,3 @@ func update_labels() -> void:
 
 func _process(_delta: float) -> void:
 	update_labels()
-
