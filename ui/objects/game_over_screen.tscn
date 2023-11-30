@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://om1dn4kokhlj"]
+[gd_scene load_steps=10 format=3 uid="uid://om1dn4kokhlj"]
 
 [ext_resource type="Theme" uid="uid://csjjraenq4jr2" path="res://ui/themes/ui_theme.tres" id="1_uiutc"]
 [ext_resource type="Script" path="res://scripts/ui/game_over_screen.gd" id="2_wxtwb"]
 [ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="3_qqksn"]
+[ext_resource type="AudioStream" uid="uid://conkllqx0gk5f" path="res://assets/audio/sfx/explosion.wav" id="4_w67l8"]
+[ext_resource type="AudioStream" uid="uid://csfbmy2srj47c" path="res://assets/audio/music/game_over.ogg" id="5_knsw7"]
 
 [sub_resource type="Animation" id="Animation_7yxw2"]
 resource_name = "FadeIn"
@@ -158,6 +160,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_w67l8")
+
+[node name="GameOverPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_knsw7")
 
 [connection signal="pressed" from="VBoxContainer/Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/RestartButton" to="." method="_on_restart_button_pressed"]
