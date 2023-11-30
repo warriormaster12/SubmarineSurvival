@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2gh5c6i0k1oy"]
+[gd_scene load_steps=12 format=3 uid="uid://c2gh5c6i0k1oy"]
 
+[ext_resource type="Script" path="res://scripts/audio/fade_in.gd" id="1_jqls0"]
 [ext_resource type="Material" uid="uid://cs7nfms6w1de5" path="res://assets/third-party/poly-haven/rock_ground_02/materials/rock_ground_02.material" id="1_xwi3p"]
 [ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="2_wyaac"]
 [ext_resource type="PackedScene" uid="uid://b8ox0l4qs4imq" path="res://ui/objects/main_menu_ui.tscn" id="3_c8ttn"]
 [ext_resource type="PackedScene" uid="uid://d1g2jyfdeests" path="res://game_objects/particleEffects/particle_bubbles.tscn" id="4_p7v5r"]
+[ext_resource type="AudioStream" uid="uid://dtjimdh1qu5ob" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -39,6 +41,10 @@ shader_parameter/blur = 0.15
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wdjti")
+
+[node name="Fade In" type="Node" parent="." node_paths=PackedStringArray("background_music")]
+script = ExtResource("1_jqls0")
+background_music = NodePath("../AudioStreamPlayer")
 
 [node name="Node3D" type="Node3D" parent="."]
 
@@ -95,3 +101,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_hsmcd")
