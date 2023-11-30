@@ -1,8 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dkand3bj28mbr"]
 
 [ext_resource type="Script" path="res://game_objects/boids/boid.gd" id="1_6regs"]
-
-[sub_resource type="PrismMesh" id="PrismMesh_vc1m4"]
+[ext_resource type="PackedScene" uid="uid://sy0vqin841qe" path="res://assets/models/barnacleBufferBoi/barnacleBoi.tscn" id="2_p0bc7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0cclb"]
 size = Vector3(0.249023, 0.129883, 0.511719)
@@ -10,10 +9,9 @@ size = Vector3(0.249023, 0.129883, 0.511719)
 [node name="Boid" type="CharacterBody3D"]
 script = ExtResource("1_6regs")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4.37114e-08, -8.74228e-08, -0.4, -1, -8.74228e-08, 1.74846e-08, -4.37114e-08, 2, -1.74846e-08, 0, 0, 0)
-mesh = SubResource("PrismMesh_vc1m4")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, -0.0522461)
 shape = SubResource("BoxShape3D_0cclb")
+
+[node name="barnacle_model" parent="." instance=ExtResource("2_p0bc7")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, -0.309723)
