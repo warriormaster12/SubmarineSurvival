@@ -64,6 +64,9 @@ func _ready() -> void:
 		anim_player.animation_finished.connect(_on_event_anim_finished)
 	else:
 		push_warning("no anim_player has been found under " + name + " node")
+	
+	if !sea_level || !damage_curve:
+		push_warning("add sea_level and damage curve in properties")
 
 func _physics_process(delta: float) -> void:
 	calculate_height_damage()
@@ -93,7 +96,6 @@ func determine_damage_amount() -> void:
 
 func calculate_height_damage() -> void:
 	if !sea_level || !damage_curve:
-		push_warning("add sea_level and damage curve in properties")
 		return
 	var current_height: float = sea_level.global_position.y - global_position.y
 	if current_height > safe_height:

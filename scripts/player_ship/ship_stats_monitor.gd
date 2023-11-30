@@ -14,7 +14,7 @@ func _ready() -> void:
 			var label := Label.new()
 			label.name = child.name + "Label"
 			label.text = child.name + ": " + str(child.health * 100) + "%"
-			label.add_theme_font_size_override("font_size", 38)
+			label.add_theme_font_size_override("font_size", 18)
 			fixable_labels.push_back(label)
 			root_control.add_child(label)
 			child.on_health_changed.connect(_on_health_changed)

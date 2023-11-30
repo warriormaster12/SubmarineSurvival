@@ -17,7 +17,7 @@ func _ready() -> void:
 	for label_resource in label_resources: 
 		var label := Label.new()
 		label.name = label_resource.label_name
-		label.add_theme_font_size_override("font_size", 38)
+		label.add_theme_font_size_override("font_size", 18)
 		root_control.add_child(label)
 		labels.push_back(label)
 
