@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=58 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -24,6 +24,12 @@
 [ext_resource type="Texture2D" uid="uid://d4ibpg38bvf5l" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
 [ext_resource type="ArrayMesh" uid="uid://df108wl4n1yel" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
 [ext_resource type="Shader" path="res://assets/custom_shaders/crt_monitor.gdshader" id="22_eqess"]
+[ext_resource type="AudioStream" uid="uid://bhi56aivtimua" path="res://assets/audio/sfx/motor_start.wav" id="25_7hwa6"]
+[ext_resource type="AudioStream" uid="uid://kyc44snl3brr" path="res://assets/audio/sfx/motor_running.wav" id="26_mjhlx"]
+[ext_resource type="AudioStream" uid="uid://lbk840m264uy" path="res://assets/audio/sfx/motor_stop.wav" id="27_cp6d4"]
+[ext_resource type="AudioStream" uid="uid://cl838ta1u7n7y" path="res://assets/audio/sfx/idle_submarine.wav" id="28_ohj7b"]
+[ext_resource type="AudioStream" uid="uid://ddm85yycwtrp4" path="res://assets/audio/sfx/rumble.wav" id="29_em8vu"]
+[ext_resource type="AudioStream" uid="uid://cvwckgbfntt3s" path="res://assets/audio/sfx/rumblethump.wav" id="30_tcget"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -250,12 +256,18 @@ is_length = false
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iemwq"]
 albedo_texture = ExtResource("20_pisrg")
 
-[node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
+[node name="PlayerShip" type="CharacterBody3D" node_paths=PackedStringArray("start_player", "running_player", "stop_player", "idle_player", "rumble_player", "collision_player") groups=["player"]]
 collision_layer = 3
 motion_mode = 1
 script = ExtResource("1_kbb78")
 damage_curve = SubResource("Curve_eh0kh")
 damagable_velocity_threshold = 4.0
+start_player = NodePath("MotorStart")
+running_player = NodePath("MotorRunning")
+stop_player = NodePath("MotorStop")
+idle_player = NodePath("IdleSubmarine")
+rumble_player = NodePath("Rumble")
+collision_player = NodePath("Collision")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -468,3 +480,27 @@ light_energy = 10.0
 light_volumetric_fog_energy = 0.2
 spot_range = 110.155
 spot_angle = 36.2138
+
+[node name="MotorStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_7hwa6")
+bus = &"Submarine"
+
+[node name="MotorRunning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_mjhlx")
+bus = &"Submarine"
+
+[node name="MotorStop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("27_cp6d4")
+bus = &"Submarine"
+
+[node name="IdleSubmarine" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_ohj7b")
+bus = &"Submarine"
+
+[node name="Rumble" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("29_em8vu")
+bus = &"Other VFX"
+
+[node name="Collision" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("30_tcget")
+bus = &"Other VFX"

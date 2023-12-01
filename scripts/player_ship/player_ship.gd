@@ -22,6 +22,15 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 @export_group("Ship Specs")
 @export var mass:float = 4.0
 
+enum engine_states{idle,starting,running,stopping}
+var engine_state: engine_states = engine_states.idle
+@export var start_player: AudioStreamPlayer 
+@export var running_player: AudioStreamPlayer 
+@export var stop_player: AudioStreamPlayer 
+@export var idle_player: AudioStreamPlayer 
+@export var rumble_player: AudioStreamPlayer
+@export var collision_player: AudioStreamPlayer
+
 @onready var head: Node3D = $Body/Head
 @onready var camera_pivot: Node3D = $Body/Head/CameraPivot
 @onready var repair_object_container: Node3D = $RepairObjectContainer
@@ -69,10 +78,15 @@ func _ready() -> void:
 	if !sea_level || !damage_curve:
 		push_warning("add sea_level and damage curve in properties")
 
+func _process(delta: float) -> void:
+	handle_engine_sounds()
+
 func _physics_process(delta: float) -> void:
 	calculate_height_damage()
 	if is_on_wall():
 		determine_damage_amount()
+		print($ImpactShake.trauma)
+		collision_player.play()
 	rotate_y(deg_to_rad(max_turn_angle) * turn_direction * turn_speed * delta)
 	velocity.y = move_toward(velocity.y, direction_up * max_speed, delta * accel)
 	velocity.z = move_toward(velocity.z, direction.z * max_speed, delta * accel)
@@ -103,12 +117,66 @@ func calculate_height_damage() -> void:
 		var damage_amount: float = damage_curve.sample(current_height/death_height)
 		ship_health.set("current_health", ship_health.current_health - damage_amount)
 		$PressureShake.add_trauma(damage_amount)
+		rumble_player.play()
+
+var stopped: bool = true
+var started: bool = true
+
+func handle_engine_sounds() -> void:
+	#print("handle_engine ", engine_state, ", stopped ", stopped, ", started ", started)
+	if engine_state == engine_states.idle:
+		if !stopped:
+			if !stop_player.playing:
+				start_engine_clip(engine_states.stopping)
+			elif stop_player.get_playback_position() >= stop_player.stream.get_length() - 0.1:
+				stopped = true
+				print("stop")
+		elif !idle_player.playing:
+			start_engine_clip(engine_states.idle)
+	elif engine_state == engine_states.running:
+		if !started:
+			if !start_player.playing:
+				start_engine_clip(engine_states.starting)
+			elif start_player.get_playback_position() >= start_player.stream.get_length() - 0.1:
+				started = true
+		elif !running_player.playing:
+			start_engine_clip(engine_states.running)
+
+func start_engine_clip(state: engine_states) -> void:
+	if state == engine_states.idle:
+		start_player.stop()
+		running_player.stop()
+		stop_player.stop()
+		idle_player.play()
+	if state == engine_states.starting:
+		start_player.play()
+		running_player.stop()
+		stop_player.stop()
+		idle_player.stop()
+	if state == engine_states.running:
+		start_player.stop()
+		running_player.play()
+		stop_player.stop()
+		idle_player.stop()
+	if state == engine_states.stopping:
+		start_player.stop()
+		running_player.stop()
+		stop_player.play()
+		idle_player.stop()
 
 ## PlayerInputManager Signals
 func _on_accelerate(dir: Vector3) -> void:
 	if dir.length():
+		if engine_state == engine_states.idle:
+			started = false
+			stopped = false
+		engine_state = engine_states.running
 		accel = acceleration
 	else: 
+		if engine_state == engine_states.running:
+			stopped = false
+			started = false
+		engine_state = engine_states.idle
 		accel = deceleration
 	direction = Vector3(dir.z, dir.z, dir.z) * -global_basis.z
 	direction_up = dir.y
