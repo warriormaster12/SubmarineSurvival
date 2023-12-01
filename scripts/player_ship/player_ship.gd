@@ -168,9 +168,9 @@ func _on_repair_status_changed(node_name: String, status: String) -> void:
 # objectives
 var currentTarget:int = 0
 var currentDropOffZone:Vector3 = Vector3.ZERO
-var dropOffZone1:Vector3 = Vector3(1,1,1)
-var dropOffZone2:Vector3 = Vector3(2,2,2)
-var dropOffZone3:Vector3 = Vector3(3,3,3)
+var dropOffZone1:Vector3 = Vector3(178.50,445.60,-2400.50)
+var dropOffZone2:Vector3 = Vector3(0,0,0)
+var dropOffZone3:Vector3 = Vector3(0,0,0)
 func GetNextCoordinates() -> Vector3:
 	if currentTarget == 0:
 		currentTarget = 1

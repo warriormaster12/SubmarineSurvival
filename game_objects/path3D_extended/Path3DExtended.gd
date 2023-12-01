@@ -44,6 +44,7 @@ func _process(_delta: float) -> void:
 	if path_follow:
 		if path_follow.progress_ratio >= 1.0 && !loop:
 			queue_free()
+			print("path loppui")
 func _on_body_entered(body: Node3D) -> void:
 	if triggerer != null && body == triggerer:
 		spawn_object()

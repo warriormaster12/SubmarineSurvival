@@ -6,23 +6,23 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://o2k5dfnsbo4o" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://21b6acnlika0" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
-[ext_resource type="Texture2D" uid="uid://bo8gbummt75cm" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
+[ext_resource type="Texture2D" uid="uid://853lcs603j5v" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
-[ext_resource type="Texture2D" uid="uid://dw2khvvru84bo" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
+[ext_resource type="Texture2D" uid="uid://byga0mctgmen2" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
 [ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
-[ext_resource type="ArrayMesh" uid="uid://boqntv1q28idm" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
-[ext_resource type="Texture2D" uid="uid://53t3wjovakir" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
-[ext_resource type="ArrayMesh" uid="uid://dy0kjju24kroo" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
-[ext_resource type="Texture2D" uid="uid://dt5sjce8f6rx3" path="res://assets/textures/chair_tex_col.png" id="14_j2xnu"]
-[ext_resource type="Texture2D" uid="uid://hxb7hss4auba" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
-[ext_resource type="Texture2D" uid="uid://kobhd2f7w3di" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
-[ext_resource type="Texture2D" uid="uid://7ge7wlbprq7c" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
+[ext_resource type="ArrayMesh" uid="uid://byjqjf1f6sf8i" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
+[ext_resource type="Texture2D" uid="uid://unjycp322uvr" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
+[ext_resource type="ArrayMesh" uid="uid://3jsdro1x8nd0" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
+[ext_resource type="Texture2D" uid="uid://dwlfds5lxm8aa" path="res://assets/textures/chair_tex_col.png" id="14_j2xnu"]
+[ext_resource type="Texture2D" uid="uid://dicclmr3gxg3" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
+[ext_resource type="Texture2D" uid="uid://d1kav2lc2s3dq" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
+[ext_resource type="Texture2D" uid="uid://dtd03g3lrnj1j" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
 [ext_resource type="Shader" uid="uid://crph8283mhdfy" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
-[ext_resource type="Texture2D" uid="uid://cybqnnwampm54" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
-[ext_resource type="Texture2D" uid="uid://ddhv7o51q6rsx" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
-[ext_resource type="ArrayMesh" uid="uid://b2mas4s818crh" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
+[ext_resource type="Texture2D" uid="uid://c38i0ll3kyup" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
+[ext_resource type="Texture2D" uid="uid://cmf4otbc5ngtp" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
+[ext_resource type="ArrayMesh" uid="uid://b8j8dr4tqteoy" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -226,6 +226,7 @@ is_length = false
 albedo_texture = ExtResource("20_pisrg")
 
 [node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
+collision_layer = 3
 motion_mode = 1
 script = ExtResource("1_kbb78")
 damage_curve = SubResource("Curve_eh0kh")
@@ -396,3 +397,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111523, 0.850839, 3.01507)
 material_override = SubResource("StandardMaterial3D_iemwq")
 mesh = ExtResource("21_0rll5")
 skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.987735, 0.156141, 0, -0.156141, 0.987735, 0, -0.975066, -1.49469)
+light_energy = 10.0
+light_volumetric_fog_energy = 0.2
+spot_range = 110.155
+spot_angle = 36.2138

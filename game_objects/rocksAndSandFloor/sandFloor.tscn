@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=3 uid="uid://brsaqquagr6g0"]
+
+[ext_resource type="Shader" path="res://game_objects/rocksAndSandFloor/sandFloor_shader.gdshader" id="1_4pnv0"]
+[ext_resource type="Script" path="res://game_objects/rocksAndSandFloor/Terrain.gd" id="1_fbpwr"]
+[ext_resource type="Texture2D" uid="uid://cl30l1o6h04sv" path="res://assets/models/sandFloor/sandfloor_texture_heightmap.exr" id="1_xe3sp"]
+[ext_resource type="Texture2D" uid="uid://d1akwb4epvujy" path="res://assets/models/sandFloor/aerial_beach_01_diff_4k.jpg" id="2_kw0h4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p0kdy"]
+render_priority = 0
+shader = ExtResource("1_4pnv0")
+shader_parameter/height_ratio = 0.1
+shader_parameter/_a = ExtResource("2_kw0h4")
+shader_parameter/heightmap = ExtResource("1_xe3sp")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1rcas"]
+subdivide_width = 50
+subdivide_depth = 50
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_yqax7"]
+
+[node name="SandFloor" type="MeshInstance3D"]
+material_override = SubResource("ShaderMaterial_p0kdy")
+mesh = SubResource("PlaneMesh_1rcas")
+script = ExtResource("1_fbpwr")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("HeightMapShape3D_yqax7")
