@@ -6,12 +6,13 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://d4ird1qg6ifg4" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://21b6acnlika0" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
-[ext_resource type="Texture2D" uid="uid://lmfmka3d7dyx" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
+[ext_resource type="Texture2D" uid="uid://853lcs603j5v" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
-[ext_resource type="Texture2D" uid="uid://dvdlbo3yqbaab" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
+[ext_resource type="Texture2D" uid="uid://byga0mctgmen2" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
 [ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
+
 [ext_resource type="ArrayMesh" uid="uid://bgle6snisxc8o" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
 [ext_resource type="Texture2D" uid="uid://eb03ypuakdim" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
 [ext_resource type="ArrayMesh" uid="uid://bnu5j26kdokwq" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
@@ -241,10 +242,17 @@ label_name = "Position"
 variable = "global_position"
 is_length = false
 
+[sub_resource type="Resource" id="Resource_2kk5b"]
+script = ExtResource("11_5bw4h")
+label_name = "Destination"
+variable = "currentDropOffZone"
+is_length = false
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iemwq"]
 albedo_texture = ExtResource("20_pisrg")
 
 [node name="PlayerShip" type="CharacterBody3D" groups=["player"]]
+collision_layer = 3
 motion_mode = 1
 script = ExtResource("1_kbb78")
 damage_curve = SubResource("Curve_eh0kh")
@@ -401,6 +409,7 @@ material_override = SubResource("ShaderMaterial_jsa4q")
 mesh = SubResource("ArrayMesh_67wr4")
 skeleton = NodePath("")
 script = ExtResource("10_0t26h")
+
 root_control = NodePath("SubViewport/Container/OtherStats")
 label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
 
@@ -449,3 +458,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111523, 0.850839, 3.01507)
 material_override = SubResource("StandardMaterial3D_iemwq")
 mesh = ExtResource("21_0rll5")
 skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.987735, 0.156141, 0, -0.156141, 0.987735, 0, -0.975066, -1.49469)
+light_energy = 10.0
+light_volumetric_fog_energy = 0.2
+spot_range = 110.155
+spot_angle = 36.2138

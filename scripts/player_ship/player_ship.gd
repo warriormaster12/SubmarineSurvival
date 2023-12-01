@@ -39,6 +39,7 @@ var hit:bool = false
 var cockpit: bool = true
 
 func _ready() -> void:
+	GetNextCoordinates()
 	for child in get_children():
 		if child is PlayerInputManager:
 			input_manager = child
@@ -162,3 +163,28 @@ func _on_repair_status_changed(node_name: String, status: String) -> void:
 			if status == "functional":
 				pass
 ## ~FixableObject Signals
+
+
+# objectives
+var currentTarget:int = 0
+var currentDropOffZone:Vector3 = Vector3.ZERO
+var dropOffZone1:Vector3 = Vector3(178.50,445.60,-2400.50)
+var dropOffZone2:Vector3 = Vector3(0,0,0)
+var dropOffZone3:Vector3 = Vector3(0,0,0)
+func GetNextCoordinates() -> Vector3:
+	if currentTarget == 0:
+		currentTarget = 1
+		currentDropOffZone = dropOffZone1
+		return dropOffZone1
+		
+	elif currentTarget == 1:
+		currentTarget = 2
+		currentDropOffZone = dropOffZone2
+		return dropOffZone2
+		
+	elif currentTarget == 2:
+		currentTarget = 3
+		currentDropOffZone = dropOffZone3
+		return dropOffZone3
+	
+	return Vector3.ZERO

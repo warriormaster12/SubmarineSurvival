@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://dnjbpjceaksbs"]
+[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://crph8283mhdfy"]
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_81oft"]
 parameter_name = "MaskTexture"
