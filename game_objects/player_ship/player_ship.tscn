@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=60 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -30,6 +30,8 @@
 [ext_resource type="AudioStream" uid="uid://cl838ta1u7n7y" path="res://assets/audio/sfx/idle_submarine.wav" id="28_ohj7b"]
 [ext_resource type="AudioStream" uid="uid://ddm85yycwtrp4" path="res://assets/audio/sfx/rumble.wav" id="29_em8vu"]
 [ext_resource type="AudioStream" uid="uid://cvwckgbfntt3s" path="res://assets/audio/sfx/rumblethump.wav" id="30_tcget"]
+[ext_resource type="Script" path="res://scripts/player_ship/alarm.gd" id="31_w2xe0"]
+[ext_resource type="AudioStream" uid="uid://d4ivyynixcgu2" path="res://assets/audio/sfx/warning.mp3" id="32_aweg8"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -157,6 +159,8 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("18_jxx4g")
 shader_parameter/Albedo = Color(1, 1, 1, 1)
+shader_parameter/EmissionColor = Color(0, 0.658824, 1, 1)
+shader_parameter/EmissionPower = 2.0
 shader_parameter/NormalStrength = 1.0
 shader_parameter/MaskTexture = SubResource("CompressedTexture2D_f8r0q")
 shader_parameter/ViewportTexture = SubResource("ViewportTexture_tmilf")
@@ -229,6 +233,8 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("18_jxx4g")
 shader_parameter/Albedo = Color(1, 1, 1, 1)
+shader_parameter/EmissionColor = Color(0, 0.658824, 1, 1)
+shader_parameter/EmissionPower = 2.0
 shader_parameter/NormalStrength = 1.0
 shader_parameter/MaskTexture = ExtResource("19_incl2")
 shader_parameter/ViewportTexture = SubResource("ViewportTexture_solfh")
@@ -262,6 +268,7 @@ motion_mode = 1
 script = ExtResource("1_kbb78")
 damage_curve = SubResource("Curve_eh0kh")
 damagable_velocity_threshold = 4.0
+camera_look_around_angle = 50.0
 start_player = NodePath("MotorStart")
 running_player = NodePath("MotorRunning")
 stop_player = NodePath("MotorStop")
@@ -380,6 +387,12 @@ script = ExtResource("8_qv5sm")
 repair_object_container = NodePath("../../../RepairObjectContainer")
 root_control = NodePath("SubViewport/Container/ShipStats")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Submarine/monitor_02/monitor_022"]
+light_color = Color(0.556863, 1, 0.968627, 1)
+light_energy = 0.5
+shadow_enabled = true
+omni_range = 1.033
+
 [node name="SubViewport" type="SubViewport" parent="Submarine/monitor_02/monitor_022"]
 transparent_bg = true
 size = Vector2i(1024, 1024)
@@ -423,6 +436,12 @@ skeleton = NodePath("")
 script = ExtResource("10_0t26h")
 root_control = NodePath("SubViewport/Container/OtherStats")
 label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa"), SubResource("Resource_ujn37")])
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Submarine/monitor_03/monitor_022"]
+light_color = Color(0.556863, 1, 0.968627, 1)
+light_energy = 0.5
+shadow_enabled = true
+omni_range = 1.033
 
 [node name="SubViewport" type="SubViewport" parent="Submarine/monitor_03/monitor_022"]
 transparent_bg = true
@@ -504,3 +523,34 @@ bus = &"Other VFX"
 [node name="Collision" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("30_tcget")
 bus = &"Other VFX"
+
+[node name="Lights" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45869e-07, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.464634, 2.8687)
+light_color = Color(0.756863, 0.6, 0.517647, 1)
+light_energy = 1.23
+light_indirect_energy = 1.125
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+omni_range = 1.732
+omni_attenuation = 0.757858
+
+[node name="AlarmLight" type="Node3D" parent="." node_paths=PackedStringArray("repair_container")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24424, 1.33613)
+script = ExtResource("31_w2xe0")
+repair_container = NodePath("../RepairObjectContainer")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="AlarmLight"]
+transform = Transform3D(1, 0, 0, 0, 0.965645, 0.259864, 0, -0.259864, 0.965645, 0, 0, 0)
+light_color = Color(1, 0.376471, 0.337255, 1)
+light_energy = 4.5
+shadow_enabled = true
+spot_attenuation = 0.683023
+spot_angle = 25.0
+spot_angle_attenuation = 2.73208
+
+[node name="Alarm" type="AudioStreamPlayer" parent="AlarmLight"]
+stream = ExtResource("32_aweg8")
+bus = &"Submarine"
