@@ -65,7 +65,13 @@ func repair_object(state: bool)->void:
 		progress_bar_mesh.visible = false
 
 func _process(_delta: float) -> void:
-	$particle_sparks.emitting = current_status == "critical"
+	if current_status == "critical":
+		if $Timer.is_stopped():
+			$Timer.start()
+	else:
+		$Timer.stop()
+		$AudioStreamPlayer.stop()
+		$particle_sparks.emitting = false
 ## HealthSystem Signals
 func _on_health_changed(value: float, depleting: bool) -> void:
 	if !repairing && depleting:
@@ -81,3 +87,12 @@ func _on_health_changed(value: float, depleting: bool) -> void:
 	on_health_changed.emit(name, health)
 
 ## ~HealthSystem Signals
+
+
+
+
+
+
+func _on_timer_timeout() -> void:
+	$particle_sparks.emitting = true
+	$AudioStreamPlayer.play()

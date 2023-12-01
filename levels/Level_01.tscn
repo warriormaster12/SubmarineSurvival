@@ -1,25 +1,22 @@
 [gd_scene load_steps=42 format=3 uid="uid://cj72igpbnyd1p"]
 
-[ext_resource type="Texture2D" uid="uid://c3enfo5hvb1h3" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_178m7"]
-
+[ext_resource type="Texture2D" uid="uid://55mijdy51qsa" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_178m7"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_m40j8"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_nmn8i"]
 [ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_8lys7"]
 [ext_resource type="Script" path="res://levels/DropOffZone.gd" id="4_j0usv"]
 [ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_d2ubu"]
 [ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="6_vn1tk"]
-
-[ext_resource type="PackedScene" uid="uid://d3104um1ibeme" path="res://assets/models/smallRocks/smallRock_01.gltf" id="7_240ru"]
-[ext_resource type="PackedScene" uid="uid://op57n3v24j18" path="res://assets/models/smallRocks/smallRock_02.gltf" id="8_u25nd"]
-[ext_resource type="PackedScene" uid="uid://bydmg5txbqndh" path="res://assets/models/smallRocks/smallRock_03.gltf" id="9_7msly"]
-[ext_resource type="PackedScene" uid="uid://c424yrkrxhsom" path="res://assets/models/smallRocks/smallRock_04.gltf" id="10_ni2bt"]
-[ext_resource type="PackedScene" uid="uid://8su3im3wmj08" path="res://assets/models/smallRocks/smallRock_05.gltf" id="11_m7l1e"]
-
+[ext_resource type="PackedScene" uid="uid://c7q46aoilu0a2" path="res://assets/models/smallRocks/smallRock_01.gltf" id="7_240ru"]
+[ext_resource type="PackedScene" uid="uid://buuoc7ur06avw" path="res://assets/models/smallRocks/smallRock_02.gltf" id="8_u25nd"]
+[ext_resource type="PackedScene" uid="uid://bupg1kw4cxvut" path="res://assets/models/smallRocks/smallRock_03.gltf" id="9_7msly"]
+[ext_resource type="PackedScene" uid="uid://cgvegihoa6qak" path="res://assets/models/smallRocks/smallRock_04.gltf" id="10_ni2bt"]
+[ext_resource type="PackedScene" uid="uid://celhg15sb5g48" path="res://assets/models/smallRocks/smallRock_05.gltf" id="11_m7l1e"]
 [ext_resource type="PackedScene" uid="uid://cqxmbphlqp7ae" path="res://game_objects/rocksAndSandFloor/rocks_pillar01.tscn" id="12_r33s1"]
-[ext_resource type="PackedScene" uid="uid://dipxlg4hsuik3" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
-[ext_resource type="PackedScene" uid="uid://dms7wqky4mrk2" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
+[ext_resource type="PackedScene" uid="uid://vtynv1wcebcl" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
+[ext_resource type="PackedScene" uid="uid://06hhehxkg30r" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
 [ext_resource type="PackedScene" uid="uid://dqpjs37rh8tl8" path="res://game_objects/rocksAndSandFloor/rocks_pillar02.tscn" id="15_o5hki"]
-[ext_resource type="PackedScene" uid="uid://mvt73hbkviga" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
+[ext_resource type="PackedScene" uid="uid://b44f7b51d6j76" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
 [ext_resource type="PackedScene" uid="uid://di35xnk6xvcdh" path="res://game_objects/rocksAndSandFloor/rocks_slab01.tscn" id="17_e1okg"]
 [ext_resource type="PackedScene" uid="uid://6vgyu4je2h6c" path="res://game_objects/rocksAndSandFloor/rocks_pillar04.tscn" id="18_n15yk"]
 [ext_resource type="PackedScene" uid="uid://c4sjulpqygvag" path="res://game_objects/rocksAndSandFloor/rocks_pillar03.tscn" id="19_b3786"]
@@ -136,11 +133,12 @@ material_override = SubResource("StandardMaterial3D_yipvc")
 use_collision = true
 collision_layer = 3
 
-[node name="PlayerShip" parent="." node_paths=PackedStringArray("sea_level") instance=ExtResource("2_m40j8")]
+[node name="PlayerShip" parent="." node_paths=PackedStringArray("sea_level", "drop_of_zones") instance=ExtResource("2_m40j8")]
 transform = Transform3D(0.996835, 0, -0.0795031, 0, 1, 0, 0.0795031, 0, 0.996835, -11.3041, 4.23618, 84.8799)
 sea_level = NodePath("../other_enviro/Marker3D")
 safe_height = 30.0
 death_height = 70.0
+drop_of_zones = [NodePath("../Area3D")]
 
 [node name="BigShipPaths" type="Node" parent="."]
 
@@ -243,6 +241,14 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.4229, -0.850128, 1.73694)
 shape = SubResource("BoxShape3D_13xhp")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.698, 0, 12.2413)
+light_color = Color(1, 0.976471, 0.631373, 1)
+light_energy = 16.0
+light_volumetric_fog_energy = 0.0
+omni_range = 290.132
+omni_attenuation = 0.00182233
 
 [node name="SeaLevel" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 43.7267, 0)
@@ -894,17 +900,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.8414, 105.376, -2048.6)
 collision_layer = 3
 
 [node name="SpotLight3D" type="SpotLight3D" parent="other_enviro/house_residential01"]
-transform = Transform3D(0.993649, -0.0429024, 0.104027, -0.112527, -0.378842, 0.918595, 0, -0.924466, -0.381264, -72.6604, 167.216, 19.2706)
+transform = Transform3D(-0.185248, 0.000937165, -0.982691, 0.979852, 0.0761483, -0.184641, 0.0746573, -0.997096, -0.0150246, -72.6604, 167.216, 19.2706)
 light_energy = 100.0
 light_volumetric_fog_energy = 0.3
 spot_range = 222.815
+spot_attenuation = 0.267943
 spot_angle = 20.1506
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="other_enviro/house_residential01"]
-transform = Transform3D(0.97619, 0.0827026, -0.200532, 0.216917, -0.372186, 0.902455, 3.35356e-09, -0.924466, -0.381264, 66.7633, 167.216, 34.3167)
-light_energy = 100.0
+transform = Transform3D(-0.0096184, 0.41871, 0.908069, -0.960072, 0.250042, -0.125464, -0.279589, -0.873018, 0.399587, 66.7633, 167.216, 34.3167)
+light_energy = 95.36
 light_volumetric_fog_energy = 0.3
 spot_range = 222.815
+spot_attenuation = 0.5
 spot_angle = 20.1506
 
 [node name="house_domeTop01" parent="other_enviro" instance=ExtResource("23_s1oib")]
@@ -1084,3 +1092,5 @@ transform = Transform3D(-2.13427e-07, 4.70735e-08, 5, 4.88265, -1.07692, 2.18557
 
 [node name="RocksPillar43" parent="other_enviro" instance=ExtResource("28_qcp1v")]
 transform = Transform3D(0.38664, 3.72529e-08, 4.98503, 4.86242, -1.10213, -0.37713, 1.09883, 4.87702, -0.0852252, -2610.59, 458.707, -1752.3)
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

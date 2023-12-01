@@ -6,15 +6,12 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-
 [ext_resource type="Texture2D" uid="uid://ptm17sfpr6rh" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
-
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
-[ext_resource type="Texture2D" uid="uid://853lcs603j5v" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
+[ext_resource type="Texture2D" uid="uid://lmfmka3d7dyx" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
-[ext_resource type="Texture2D" uid="uid://byga0mctgmen2" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
+[ext_resource type="Texture2D" uid="uid://dvdlbo3yqbaab" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
 [ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
-
 [ext_resource type="ArrayMesh" uid="uid://bgle6snisxc8o" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
 [ext_resource type="Texture2D" uid="uid://eb03ypuakdim" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
 [ext_resource type="ArrayMesh" uid="uid://bnu5j26kdokwq" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
@@ -22,13 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://cuq23kmo2oylm" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
 [ext_resource type="Texture2D" uid="uid://dlofaafjiqir3" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
 [ext_resource type="Texture2D" uid="uid://3aw3obofv5qs" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
-
 [ext_resource type="Shader" uid="uid://crph8283mhdfy" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
-[ext_resource type="Texture2D" uid="uid://c38i0ll3kyup" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
-[ext_resource type="Texture2D" uid="uid://cmf4otbc5ngtp" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
-[ext_resource type="ArrayMesh" uid="uid://b8j8dr4tqteoy" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
+[ext_resource type="Texture2D" uid="uid://cjagey7aloly8" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
+[ext_resource type="Texture2D" uid="uid://d4ibpg38bvf5l" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
+[ext_resource type="ArrayMesh" uid="uid://df108wl4n1yel" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
 [ext_resource type="Shader" path="res://assets/custom_shaders/crt_monitor.gdshader" id="22_eqess"]
-
 [ext_resource type="AudioStream" uid="uid://bhi56aivtimua" path="res://assets/audio/sfx/motor_start.wav" id="25_7hwa6"]
 [ext_resource type="Texture2D" uid="uid://d2ay3xnnhvqbd" path="res://assets/textures/tex_wunderbaum_col.png" id="25_mjduw"]
 [ext_resource type="AudioStream" uid="uid://kyc44snl3brr" path="res://assets/audio/sfx/motor_running.wav" id="26_mjhlx"]
@@ -41,7 +36,6 @@
 [ext_resource type="ArrayMesh" uid="uid://cw503jnepmq3u" path="res://assets/models/submarine/glass.obj" id="31_rktof"]
 [ext_resource type="Script" path="res://scripts/player_ship/alarm.gd" id="31_w2xe0"]
 [ext_resource type="AudioStream" uid="uid://d4ivyynixcgu2" path="res://assets/audio/sfx/warning.mp3" id="32_aweg8"]
-
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -104,21 +98,6 @@ _data = {
 "RESET": SubResource("Animation_kd8wi")
 }
 
-[sub_resource type="Animation" id="Animation_suvuv"]
-resource_name = "fadeOut"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_wrptb"]
 length = 0.001
 tracks/0/type = "value"
@@ -132,6 +111,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_suvuv"]
+resource_name = "fadeOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rc2j4"]
@@ -315,11 +309,11 @@ albedo_texture = ExtResource("25_mjduw")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f21hg"]
 render_priority = 0
 shader = ExtResource("30_0frnw")
-shader_parameter/tint = Color(0.752941, 0.890196, 0.996078, 1)
+shader_parameter/tint = Color(0.862745, 0.937255, 0.996078, 1)
 shader_parameter/wave_speed = 2.0
 shader_parameter/wave_freq = 10.0
 shader_parameter/wave_width = 0.35
-shader_parameter/blur = 0.35
+shader_parameter/blur = 0.15
 
 [node name="PlayerShip" type="CharacterBody3D" node_paths=PackedStringArray("start_player", "running_player", "stop_player", "idle_player", "rumble_player", "collision_player") groups=["player"]]
 collision_layer = 3
@@ -575,12 +569,11 @@ mesh = ExtResource("31_rktof")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.987735, 0.156141, 0, -0.156141, 0.987735, 0, -0.975066, -1.49469)
-light_energy = 10.0
-light_volumetric_fog_energy = 0.2
+light_energy = 18.0
+light_volumetric_fog_energy = 0.05
 shadow_enabled = true
-spot_range = 110.155
+spot_range = 500.0
 spot_attenuation = 0.366022
-spot_angle = 36.2138
 
 [node name="MotorStart" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("25_7hwa6")
