@@ -15,6 +15,12 @@ func _process(delta: float) -> void:
 		spotlight.rotate_y(-delta * rotation_speed)
 	for child in repair_container.get_children():
 		if child.current_status == "critical":
+			if !$Alarm.is_playing():
+				$Alarm.play()
 			spotlight.visible = true
 		else: 
 			spotlight.visible = false
+			if $Alarm.is_playing():
+				$Alarm.stop()
+
+

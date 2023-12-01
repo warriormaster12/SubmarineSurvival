@@ -6,6 +6,8 @@ var progress: Array = []
 func _ready() -> void:
 	set_process(false)
 	visible = false
+	if !OS.has_feature("editor"):
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func change_scene(path: String) -> void:
 	if path.length() > 0:

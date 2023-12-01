@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=11 format=3 uid="uid://m88kptx5oaje"]
+[gd_resource type="VisualShader" load_steps=15 format=3 uid="uid://m88kptx5oaje"]
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_y4vgh"]
 operator = 2
@@ -12,6 +12,21 @@ hint = 1
 max = 16.0
 default_value_enabled = true
 default_value = 1.0
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_fpjow"]
+parameter_name = "Albedo"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_2jiwe"]
+source = 5
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_d6gvq"]
+parameter_name = "NormalMap"
+texture_type = 2
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_xtsc6"]
+source = 5
 
 [sub_resource type="VisualShaderNodeFresnel" id="VisualShaderNodeFresnel_bxv82"]
 default_input_values = [2, false, 3, 5.0]
@@ -44,14 +59,21 @@ default_value_enabled = true
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
+uniform sampler2D Albedo : source_color;
 uniform vec4 FersnelColor : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
 uniform float FersnelPower : hint_range(0, 20) = 5;
 uniform bool FersnelEnabled = false;
 uniform float EmissionPower : hint_range(0, 16) = 1;
+uniform sampler2D NormalMap : hint_normal;
 
 
 
 void fragment() {
+	vec4 n_out14p0;
+// Texture2D:14
+	n_out14p0 = texture(Albedo, UV);
+
+
 // ColorParameter:7
 	vec4 n_out7p0 = FersnelColor;
 
@@ -92,12 +114,20 @@ void fragment() {
 	vec3 n_out11p0 = n_out4p0 * vec3(n_out12p0);
 
 
+	vec4 n_out16p0;
+// Texture2D:16
+	n_out16p0 = texture(NormalMap, UV);
+
+
 // Output:0
+	ALBEDO = vec3(n_out14p0.xyz);
 	EMISSION = n_out11p0;
+	NORMAL_MAP = vec3(n_out16p0.xyz);
 
 
 }
 "
+graph_offset = Vector2(-115.293, -187.984)
 nodes/fragment/0/position = Vector2(880, 180)
 nodes/fragment/2/node = SubResource("VisualShaderNodeFresnel_bxv82")
 nodes/fragment/2/position = Vector2(-200, 340)
@@ -119,5 +149,13 @@ nodes/fragment/11/node = SubResource("VisualShaderNodeVectorOp_yb11f")
 nodes/fragment/11/position = Vector2(620, 240)
 nodes/fragment/12/node = SubResource("VisualShaderNodeFloatParameter_q4t7i")
 nodes/fragment/12/position = Vector2(280, 400)
-nodes/fragment/connections = PackedInt32Array(5, 0, 2, 0, 6, 0, 2, 1, 7, 0, 4, 0, 8, 0, 2, 3, 2, 0, 10, 0, 10, 0, 4, 1, 9, 0, 10, 1, 4, 0, 11, 0, 11, 0, 0, 5, 12, 0, 11, 1)
+nodes/fragment/13/node = SubResource("VisualShaderNodeTexture2DParameter_fpjow")
+nodes/fragment/13/position = Vector2(20, -180)
+nodes/fragment/14/node = SubResource("VisualShaderNodeTexture_2jiwe")
+nodes/fragment/14/position = Vector2(420, -20)
+nodes/fragment/15/node = SubResource("VisualShaderNodeTexture2DParameter_d6gvq")
+nodes/fragment/15/position = Vector2(-80, 780)
+nodes/fragment/16/node = SubResource("VisualShaderNodeTexture_xtsc6")
+nodes/fragment/16/position = Vector2(460, 760)
+nodes/fragment/connections = PackedInt32Array(5, 0, 2, 0, 6, 0, 2, 1, 7, 0, 4, 0, 8, 0, 2, 3, 2, 0, 10, 0, 10, 0, 4, 1, 9, 0, 10, 1, 4, 0, 11, 0, 11, 0, 0, 5, 12, 0, 11, 1, 13, 0, 14, 2, 14, 0, 0, 0, 15, 0, 16, 2, 16, 0, 0, 9)
 metadata/_edit_res_path = "res://assets/custom_shaders/object_interaction.tres"
