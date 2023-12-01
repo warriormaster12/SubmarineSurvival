@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://crph8283mhdfy"]
+[gd_resource type="VisualShader" load_steps=20 format=3 uid="uid://crph8283mhdfy"]
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_81oft"]
 parameter_name = "MaskTexture"
@@ -29,6 +29,23 @@ op_type = 5
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_ahhgn"]
 parameter_name = "AlbedoTexture"
 texture_type = 1
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_0j13v"]
+parameter_name = "EmissionColor"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_2qdym"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_eq7u3"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_7v10e"]
+parameter_name = "EmissionPower"
+hint = 1
+max = 16.0
+default_value_enabled = true
+default_value = 2.0
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_rw8oj"]
 parameter_name = "NormalTexture"
@@ -66,6 +83,8 @@ uniform sampler2D MaskTexture : source_color, hint_default_black;
 uniform sampler2D ViewportTexture : source_color, hint_default_black;
 uniform sampler2D AlbedoTexture : source_color;
 uniform vec4 Albedo : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+uniform vec4 EmissionColor : source_color = vec4(1.000000, 1.000000, 1.000000, 1.000000);
+uniform float EmissionPower : hint_range(0, 16) = 2;
 uniform sampler2D NormalTexture : hint_normal;
 uniform float NormalStrength : hint_range(-2, 2) = 1;
 
@@ -110,6 +129,22 @@ void fragment() {
 	vec3 n_out15p0 = vec3(n_out19p0.xyz) + n_out5p0;
 
 
+// ColorParameter:21
+	vec4 n_out21p0 = EmissionColor;
+
+
+// VectorOp:22
+	vec3 n_out22p0 = vec3(n_out19p0.xyz) * vec3(n_out21p0.xyz);
+
+
+// FloatParameter:24
+	float n_out24p0 = EmissionPower;
+
+
+// VectorOp:23
+	vec3 n_out23p0 = n_out22p0 * vec3(n_out24p0);
+
+
 	vec4 n_out7p0;
 // Texture2D:7
 	n_out7p0 = texture(NormalTexture, UV);
@@ -125,12 +160,13 @@ void fragment() {
 
 // Output:0
 	ALBEDO = n_out15p0;
+	EMISSION = n_out23p0;
 	NORMAL_MAP = n_out8p0;
 
 
 }
 "
-nodes/fragment/0/position = Vector2(1560, 260)
+nodes/fragment/0/position = Vector2(1720, 260)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_ahhgn")
 nodes/fragment/2/position = Vector2(-160, 60)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_rw8oj")
@@ -161,4 +197,12 @@ nodes/fragment/18/node = SubResource("VisualShaderNodeVectorDecompose_im6d0")
 nodes/fragment/18/position = Vector2(1240, -420)
 nodes/fragment/19/node = SubResource("VisualShaderNodeMix_mun3d")
 nodes/fragment/19/position = Vector2(1380, -240)
-nodes/fragment/connections = PackedInt32Array(2, 0, 4, 2, 4, 0, 5, 0, 6, 0, 5, 1, 3, 0, 7, 2, 7, 0, 8, 0, 8, 0, 0, 9, 9, 0, 8, 1, 13, 0, 14, 2, 15, 0, 0, 0, 5, 0, 15, 1, 10, 0, 17, 2, 17, 0, 18, 0, 18, 0, 19, 2, 17, 0, 19, 0, 14, 0, 19, 1, 19, 0, 15, 0)
+nodes/fragment/21/node = SubResource("VisualShaderNodeColorParameter_0j13v")
+nodes/fragment/21/position = Vector2(860, 380)
+nodes/fragment/22/node = SubResource("VisualShaderNodeVectorOp_2qdym")
+nodes/fragment/22/position = Vector2(1340, 340)
+nodes/fragment/23/node = SubResource("VisualShaderNodeVectorOp_eq7u3")
+nodes/fragment/23/position = Vector2(1460, 420)
+nodes/fragment/24/node = SubResource("VisualShaderNodeFloatParameter_7v10e")
+nodes/fragment/24/position = Vector2(1100, 580)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 2, 4, 0, 5, 0, 6, 0, 5, 1, 3, 0, 7, 2, 7, 0, 8, 0, 8, 0, 0, 9, 9, 0, 8, 1, 13, 0, 14, 2, 5, 0, 15, 1, 10, 0, 17, 2, 17, 0, 18, 0, 18, 0, 19, 2, 17, 0, 19, 0, 14, 0, 19, 1, 19, 0, 15, 0, 21, 0, 22, 1, 22, 0, 23, 0, 23, 0, 0, 5, 24, 0, 23, 1, 15, 0, 0, 0, 19, 0, 22, 0)

@@ -15,6 +15,8 @@ class_name PlayerShip # exposes this as its own node when in the "create node" m
 @export var sea_level:Marker3D = null
 @export var safe_height: float = 500
 @export var death_height: float = 800
+@export var drop_of_zones: Array[Node3D] = []
+var currentDropOffZone:Vector3 = Vector3.ZERO
 
 ## In degrees
 @export_range(0.0, 90.0) var camera_look_around_angle: float = 40.0
@@ -234,25 +236,11 @@ func _on_repair_status_changed(node_name: String, status: String) -> void:
 
 
 # objectives
-var currentTarget:int = 0
-var currentDropOffZone:Vector3 = Vector3.ZERO
-var dropOffZone1:Vector3 = Vector3(178.50,445.60,-2400.50)
-var dropOffZone2:Vector3 = Vector3(0,0,0)
-var dropOffZone3:Vector3 = Vector3(0,0,0)
-func GetNextCoordinates() -> Vector3:
-	if currentTarget == 0:
-		currentTarget = 1
-		currentDropOffZone = dropOffZone1
-		return dropOffZone1
-		
-	elif currentTarget == 1:
-		currentTarget = 2
-		currentDropOffZone = dropOffZone2
-		return dropOffZone2
-		
-	elif currentTarget == 2:
-		currentTarget = 3
-		currentDropOffZone = dropOffZone3
-		return dropOffZone3
-	
-	return Vector3.ZERO
+func GetNextCoordinates() -> void:
+	if drop_of_zones.size() == 0:
+		$"PlayerUI/2DHUD/AnimationPlayer".play("fadeOut")
+		await $"PlayerUI/2DHUD/AnimationPlayer".animation_finished
+		LoadingScreen.change_scene("res://levels/main_menu.tscn")
+		return
+	currentDropOffZone = drop_of_zones[0].global_position
+	drop_of_zones.pop_at(0)

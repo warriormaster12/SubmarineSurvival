@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bc8igea6al38r"]
 
-[ext_resource type="Texture2D" uid="uid://dynfrc8vwaeok" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_0evh2"]
+[ext_resource type="Texture2D" uid="uid://cydvxn61blj2" path="res://assets/third-party/kenney-particle-pack/PNG (Transparent)/trace_07.png" id="1_0evh2"]
 
 [sub_resource type="Gradient" id="Gradient_o6goh"]
 offsets = PackedFloat32Array(0, 0.60396, 1)
@@ -11,8 +11,8 @@ gradient = SubResource("Gradient_o6goh")
 
 [sub_resource type="Curve" id="Curve_r0vga"]
 max_value = 5.0
-_data = [Vector2(0, 5), 0.0, 0.0, 0, 0, Vector2(0.991304, 0), -2.1664, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 5), 0.0, 0.0, 0, 0, Vector2(0.5, 4.5), -1.28311, -1.28311, 0, 0, Vector2(0.991304, 0), -2.1664, 0.0, 0, 0]
+point_count = 3
 metadata/_snap_enabled = true
 
 [sub_resource type="CurveTexture" id="CurveTexture_hjn2l"]
@@ -32,14 +32,15 @@ lifetime_randomness = 0.7
 particle_flag_align_y = true
 emission_shape = 1
 emission_sphere_radius = 1.0
-direction = Vector3(0, 1, 0)
+direction = Vector3(0, 0, 1)
 spread = 10.0
-initial_velocity_min = 40.0
-initial_velocity_max = 80.0
-gravity = Vector3(0, -100, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, -98, 0)
 linear_accel_min = 10.0
 linear_accel_max = 50.0
-scale_max = 2.0
+scale_min = 0.1
+scale_max = 0.15
 scale_curve = SubResource("CurveTexture_afgmd")
 color_ramp = SubResource("GradientTexture1D_iuqvp")
 emission_curve = SubResource("CurveTexture_hjn2l")
@@ -66,11 +67,12 @@ sections = 2
 section_segments = 4
 
 [node name="particle_sparks" type="GPUParticles3D"]
-amount = 100
+amount = 200
 lifetime = 2.0
 preprocess = 0.04
 explosiveness = 0.97
 randomness = 0.37
+visibility_aabb = AABB(-29.4431, -108.575, -11.7911, 50.2353, 110.411, 45.995)
 trail_lifetime = 3.0
 process_material = SubResource("ParticleProcessMaterial_eptfh")
 draw_pass_1 = SubResource("RibbonTrailMesh_whnbn")
