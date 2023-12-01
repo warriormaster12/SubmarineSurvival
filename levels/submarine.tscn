@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dxyqeq8ut4a2j"]
+[gd_scene load_steps=44 format=3 uid="uid://dxyqeq8ut4a2j"]
 
 [ext_resource type="Texture2D" uid="uid://cglj25ed4we2p" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_tlst2"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_68cuj"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://dsc48thwuj7nf" path="res://assets/textures/tex_laptop_col.png" id="19_cirah"]
 [ext_resource type="Texture2D" uid="uid://dahat2vd0ob5g" path="res://assets/textures/tex_laptop_normal.png" id="20_q2r64"]
 [ext_resource type="ArrayMesh" uid="uid://dxj41ickcjad5" path="res://assets/models/oxygen_pump/laptop.obj" id="21_u41sv"]
+[ext_resource type="Texture2D" uid="uid://c3cjmx7x7m0fx" path="res://assets/textures/tex_wunderbaum_col.png" id="22_m6akv"]
+[ext_resource type="ArrayMesh" uid="uid://bfn2p5ishlcxx" path="res://assets/models/wunderbaum/wunderbaum.obj" id="23_41kcp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -151,6 +153,10 @@ albedo_texture = ExtResource("19_cirah")
 normal_enabled = true
 normal_texture = ExtResource("20_q2r64")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqvop"]
+transparency = 1
+albedo_texture = ExtResource("22_m6akv")
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -243,3 +249,8 @@ mesh = ExtResource("18_8b16t")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508506, 0.89886, -2.31161)
 material_override = SubResource("StandardMaterial3D_ijht4")
 mesh = ExtResource("21_u41sv")
+
+[node name="Wunderbaum" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0871557, 0, 0.996195, 0, 1, 0, -0.996195, 0, 0.0871557, -0.150294, 1.25512, 3.9414)
+material_override = SubResource("StandardMaterial3D_aqvop")
+mesh = ExtResource("23_41kcp")
