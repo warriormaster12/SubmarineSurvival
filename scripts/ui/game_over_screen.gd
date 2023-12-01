@@ -5,7 +5,6 @@ extends Control
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var explosion_player: AudioStreamPlayer = $ExplosionPlayer
 @onready var game_over_player: AudioStreamPlayer = $GameOverPlayer
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$VBoxContainer.visible = false

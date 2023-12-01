@@ -3,7 +3,7 @@ extends CanvasLayer
 
 var player: PlayerShip = null
 @export var ui_elements: Array[UIEventResource] = []
-
+@export var deletable_resources: Array[Node] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,3 +28,5 @@ func _on_health_depleted() -> void:
 			if ui_node.has_method(ui.execute_function):
 				ui_node.call(ui.execute_function)
 	player.queue_free()
+	for resource in deletable_resources:
+		resource.queue_free()
