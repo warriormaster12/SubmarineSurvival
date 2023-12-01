@@ -1,2 +1,0 @@
-remove this file when this folder has actual files. Git will ignore this
-folder if it is empty.

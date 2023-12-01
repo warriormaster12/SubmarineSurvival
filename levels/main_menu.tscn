@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://b8ox0l4qs4imq" path="res://ui/objects/main_menu_ui.tscn" id="3_c8ttn"]
 [ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="4_nc4me"]
 [ext_resource type="PackedScene" uid="uid://d1g2jyfdeests" path="res://game_objects/particleEffects/particle_bubbles.tscn" id="4_p7v5r"]
+
+[ext_resource type="AudioStream" uid="uid://buhqjuncq3jaw" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
 [ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="5_dwm7t"]
-[ext_resource type="AudioStream" uid="uid://dvcylilpk1twb" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
 [ext_resource type="PackedScene" uid="uid://d1an0xhnt3qg3" path="res://assets/models/submarine/submarine.tscn" id="7_0qooa"]
+
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)

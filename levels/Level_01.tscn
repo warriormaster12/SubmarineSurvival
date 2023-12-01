@@ -1,22 +1,26 @@
+
 [gd_scene load_steps=42 format=3 uid="uid://cj72igpbnyd1p"]
 
 [ext_resource type="Texture2D" uid="uid://55mijdy51qsa" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_178m7"]
+
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_m40j8"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_nmn8i"]
 [ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_8lys7"]
 [ext_resource type="Script" path="res://levels/DropOffZone.gd" id="4_j0usv"]
 [ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_d2ubu"]
 [ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="6_vn1tk"]
+
 [ext_resource type="PackedScene" uid="uid://c7q46aoilu0a2" path="res://assets/models/smallRocks/smallRock_01.gltf" id="7_240ru"]
 [ext_resource type="PackedScene" uid="uid://buuoc7ur06avw" path="res://assets/models/smallRocks/smallRock_02.gltf" id="8_u25nd"]
 [ext_resource type="PackedScene" uid="uid://bupg1kw4cxvut" path="res://assets/models/smallRocks/smallRock_03.gltf" id="9_7msly"]
 [ext_resource type="PackedScene" uid="uid://cgvegihoa6qak" path="res://assets/models/smallRocks/smallRock_04.gltf" id="10_ni2bt"]
 [ext_resource type="PackedScene" uid="uid://celhg15sb5g48" path="res://assets/models/smallRocks/smallRock_05.gltf" id="11_m7l1e"]
+
 [ext_resource type="PackedScene" uid="uid://cqxmbphlqp7ae" path="res://game_objects/rocksAndSandFloor/rocks_pillar01.tscn" id="12_r33s1"]
-[ext_resource type="PackedScene" uid="uid://vtynv1wcebcl" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
-[ext_resource type="PackedScene" uid="uid://06hhehxkg30r" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
+[ext_resource type="PackedScene" uid="uid://diauunji1o66d" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
+[ext_resource type="PackedScene" uid="uid://c4y5uko4pv7ju" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
 [ext_resource type="PackedScene" uid="uid://dqpjs37rh8tl8" path="res://game_objects/rocksAndSandFloor/rocks_pillar02.tscn" id="15_o5hki"]
-[ext_resource type="PackedScene" uid="uid://b44f7b51d6j76" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
+[ext_resource type="PackedScene" uid="uid://dd6vvyntmaquo" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
 [ext_resource type="PackedScene" uid="uid://di35xnk6xvcdh" path="res://game_objects/rocksAndSandFloor/rocks_slab01.tscn" id="17_e1okg"]
 [ext_resource type="PackedScene" uid="uid://6vgyu4je2h6c" path="res://game_objects/rocksAndSandFloor/rocks_pillar04.tscn" id="18_n15yk"]
 [ext_resource type="PackedScene" uid="uid://c4sjulpqygvag" path="res://game_objects/rocksAndSandFloor/rocks_pillar03.tscn" id="19_b3786"]
@@ -25,7 +29,9 @@
 [ext_resource type="PackedScene" uid="uid://d20qa3rdobi1f" path="res://game_objects/houses/house_doubleConnected01.tscn" id="22_gw4i0"]
 [ext_resource type="PackedScene" uid="uid://ckn4mcnqnfran" path="res://game_objects/houses/house_warehouse01.tscn" id="23_s1oib"]
 [ext_resource type="PackedScene" uid="uid://c8ey7ndetm4xs" path="res://game_objects/houses/house_domeTop01.tscn" id="24_cd7hc"]
+
 [ext_resource type="PackedScene" uid="uid://dcks8g6kjtbu0" path="res://game_objects/rocksAndSandFloor/rocks_cliff01.tscn" id="28_qcp1v"]
+
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -943,6 +949,15 @@ collision_layer = 3
 transform = Transform3D(0.72733, 0, -0.686288, 0, 1, 0, 0.686288, 0, 0.72733, 218.073, 89.2978, -2442.1)
 collision_layer = 3
 
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_3ndjd")
+bus = &"Music"
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("background_music")]
+script = ExtResource("29_ejc6u")
+background_music = NodePath("../AudioStreamPlayer")
+
 [node name="RocksPillar01" parent="other_enviro" instance=ExtResource("28_qcp1v")]
 transform = Transform3D(0.00272559, 0.29709, -0.0415939, -0.299094, -0.000517364, -0.0232945, -0.0231403, 0.0416799, 0.296188, -57.1012, 16.5223, 145.094)
 
@@ -1094,3 +1109,4 @@ transform = Transform3D(-2.13427e-07, 4.70735e-08, 5, 4.88265, -1.07692, 2.18557
 transform = Transform3D(0.38664, 3.72529e-08, 4.98503, 4.86242, -1.10213, -0.37713, 1.09883, 4.87702, -0.0852252, -2610.59, 458.707, -1752.3)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
+
