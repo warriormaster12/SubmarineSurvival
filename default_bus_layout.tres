@@ -1,11 +1,15 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://de3xvk2dkcwv7"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://de3xvk2dkcwv7"]
 
 [sub_resource type="AudioEffectEQ" id="AudioEffectEQ_0csok"]
 resource_name = "EQ"
-band_db/32_hz = -37.0
-band_db/100_hz = -13.7
-band_db/3200_hz = 7.8
-band_db/10000_hz = 9.8
+band_db/32_hz = -23.4
+band_db/100_hz = -8.3
+band_db/3200_hz = 4.4
+band_db/10000_hz = 0.3
+
+[sub_resource type="AudioEffectStereoEnhance" id="AudioEffectStereoEnhance_a3buj"]
+resource_name = "StereoEnhance"
+surround = 0.29
 
 [resource]
 bus/0/volume_db = -1.32149
@@ -19,10 +23,12 @@ bus/2/name = &"Music"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = -8.79822
+bus/2/volume_db = -10.9863
 bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectEQ_0csok")
-bus/2/effect/0/enabled = true
+bus/2/effect/0/enabled = false
+bus/2/effect/1/effect = SubResource("AudioEffectStereoEnhance_a3buj")
+bus/2/effect/1/enabled = false
 bus/3/name = &"Other VFX"
 bus/3/solo = false
 bus/3/mute = false

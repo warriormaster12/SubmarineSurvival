@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://c8ey7ndetm4xs" path="res://game_objects/houses/house_domeTop01.tscn" id="24_cd7hc"]
 [ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="26_5mwku"]
 [ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="27_eluck"]
-[ext_resource type="AudioStream" uid="uid://c7oe5drsgnlp0" path="res://assets/audio/music/main_theme.ogg" id="28_wsory"]
+[ext_resource type="AudioStream" uid="uid://b33yuvvw533as" path="res://assets/audio/music/main_theme.ogg" id="28_3ndjd"]
 [ext_resource type="Script" path="res://scripts/audio/fade_in.gd" id="29_ejc6u"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
@@ -1897,7 +1897,7 @@ transform = Transform3D(0.72733, 0, -0.686288, 0, 1, 0, 0.686288, 0, 0.72733, 21
 collision_layer = 3
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("28_wsory")
+stream = ExtResource("28_3ndjd")
 bus = &"Music"
 
 [node name="Node" type="Node" parent="." node_paths=PackedStringArray("background_music")]

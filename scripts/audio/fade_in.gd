@@ -7,7 +7,7 @@ var volume_change_per_second: float
 func _ready()-> void:
 
 	# Start playing the background music at a very low volume
-	background_music.volume_db = -80  # Set to a very low volume
+	background_music.volume_db = -50  # Set to a very low volume
 	background_music.play()
 
 	# Call the fade-in function

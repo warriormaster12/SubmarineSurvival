@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=59 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -30,6 +30,7 @@
 [ext_resource type="AudioStream" uid="uid://cw4ksd5ekf6y4" path="res://assets/audio/sfx/idle_submarine.wav" id="28_ohj7b"]
 [ext_resource type="AudioStream" uid="uid://bl5sg1ua4p1f3" path="res://assets/audio/sfx/rumble.wav" id="29_em8vu"]
 [ext_resource type="AudioStream" uid="uid://dit2t3jeklb43" path="res://assets/audio/sfx/rumblethump.wav" id="30_tcget"]
+[ext_resource type="AudioStream" uid="uid://o6vepy4fte8f" path="res://assets/audio/sfx/continuous_sparks.wav" id="31_jbghf"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -503,4 +504,9 @@ bus = &"Other VFX"
 
 [node name="Collision" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("30_tcget")
+bus = &"Other VFX"
+
+[node name="Sparks" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("31_jbghf")
+pitch_scale = 0.84
 bus = &"Other VFX"
