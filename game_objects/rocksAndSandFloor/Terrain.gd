@@ -28,7 +28,3 @@ func update_terrain(_height_ratio: float, _colShape_size_ratio: float) -> void:
 	shape.map_data = data
 	var scale_ratio := chunk_size/float(img.get_width())
 	colShape.scale = Vector3(scale_ratio, 1, scale_ratio)
-
-
-func _process(_delta: float) -> void:
-	pass
