@@ -1,0 +1,31 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://de3xvk2dkcwv7"]
+
+[sub_resource type="AudioEffectEQ" id="AudioEffectEQ_0csok"]
+resource_name = "EQ"
+band_db/32_hz = -37.0
+band_db/100_hz = -13.7
+band_db/3200_hz = 7.8
+band_db/10000_hz = 9.8
+
+[resource]
+bus/0/volume_db = -1.32149
+bus/1/name = &"Submarine"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = -4.25003
+bus/1/send = &"Master"
+bus/2/name = &"Music"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -8.79822
+bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectEQ_0csok")
+bus/2/effect/0/enabled = true
+bus/3/name = &"Other VFX"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -2.91688
+bus/3/send = &"Master"

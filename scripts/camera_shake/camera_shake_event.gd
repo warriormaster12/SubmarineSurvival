@@ -17,6 +17,7 @@ func _process(delta: float) -> void:
 	trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
 	if (trauma > 0.0):
 		time += delta
+		
 		var current_camera: Camera3D = get_viewport().get_camera_3d()
 		current_camera.rotation_degrees = Vector3(
 			init_rot.x + max_angle.x * get_shake_intensity() * get_noise_from_seed(0),
