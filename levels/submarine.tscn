@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dxyqeq8ut4a2j"]
+[gd_scene load_steps=41 format=3 uid="uid://dxyqeq8ut4a2j"]
 
 [ext_resource type="Texture2D" uid="uid://cglj25ed4we2p" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_tlst2"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_68cuj"]
@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://cycr36q2t46va" path="res://assets/textures/tex_pump_normal.png" id="16_6cruy"]
 [ext_resource type="ArrayMesh" uid="uid://bebgqqx5hkv8k" path="res://assets/models/oxygen_pump/pump.obj" id="17_fjgvh"]
 [ext_resource type="ArrayMesh" uid="uid://jpfcjwq8gp7f" path="res://assets/models/submarine/glass.obj" id="18_8b16t"]
+[ext_resource type="Texture2D" uid="uid://dsc48thwuj7nf" path="res://assets/textures/tex_laptop_col.png" id="19_cirah"]
+[ext_resource type="Texture2D" uid="uid://dahat2vd0ob5g" path="res://assets/textures/tex_laptop_normal.png" id="20_q2r64"]
+[ext_resource type="ArrayMesh" uid="uid://dxj41ickcjad5" path="res://assets/models/oxygen_pump/laptop.obj" id="21_u41sv"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f52w0"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -143,6 +146,11 @@ albedo_texture = ExtResource("15_vrtbb")
 normal_enabled = true
 normal_texture = ExtResource("16_6cruy")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijht4"]
+albedo_texture = ExtResource("19_cirah")
+normal_enabled = true
+normal_texture = ExtResource("20_q2r64")
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -230,3 +238,8 @@ mesh = ExtResource("17_fjgvh")
 [node name="Glass" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141393, 1.55855, 0.534094)
 mesh = ExtResource("18_8b16t")
+
+[node name="Laptop" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.508506, 0.89886, -2.31161)
+material_override = SubResource("StandardMaterial3D_ijht4")
+mesh = ExtResource("21_u41sv")
