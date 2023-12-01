@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=51 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -12,17 +12,19 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
 [ext_resource type="Texture2D" uid="uid://byga0mctgmen2" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
 [ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
-[ext_resource type="ArrayMesh" uid="uid://byjqjf1f6sf8i" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
-[ext_resource type="Texture2D" uid="uid://unjycp322uvr" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
-[ext_resource type="ArrayMesh" uid="uid://3jsdro1x8nd0" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
-[ext_resource type="Texture2D" uid="uid://dwlfds5lxm8aa" path="res://assets/textures/chair_tex_col.png" id="14_j2xnu"]
-[ext_resource type="Texture2D" uid="uid://dicclmr3gxg3" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
-[ext_resource type="Texture2D" uid="uid://d1kav2lc2s3dq" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
-[ext_resource type="Texture2D" uid="uid://dtd03g3lrnj1j" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
-[ext_resource type="Shader" uid="uid://crph8283mhdfy" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
-[ext_resource type="Texture2D" uid="uid://c38i0ll3kyup" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
-[ext_resource type="Texture2D" uid="uid://cmf4otbc5ngtp" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
-[ext_resource type="ArrayMesh" uid="uid://b8j8dr4tqteoy" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
+
+[ext_resource type="ArrayMesh" uid="uid://bgle6snisxc8o" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
+[ext_resource type="Texture2D" uid="uid://eb03ypuakdim" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
+[ext_resource type="ArrayMesh" uid="uid://bnu5j26kdokwq" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
+[ext_resource type="Texture2D" uid="uid://dpw3wb6kww7ei" path="res://assets/textures/chair_tex_col.png" id="14_j2xnu"]
+[ext_resource type="Texture2D" uid="uid://da8sw8dif15qp" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
+[ext_resource type="Texture2D" uid="uid://dlofaafjiqir3" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
+[ext_resource type="Texture2D" uid="uid://3aw3obofv5qs" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
+[ext_resource type="Shader" uid="uid://dnjbpjceaksbs" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
+[ext_resource type="Texture2D" uid="uid://cjagey7aloly8" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
+[ext_resource type="Texture2D" uid="uid://d4ibpg38bvf5l" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
+[ext_resource type="ArrayMesh" uid="uid://df108wl4n1yel" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
+[ext_resource type="Shader" path="res://assets/custom_shaders/crt_monitor.gdshader" id="22_eqess"]
 
 [sub_resource type="Curve" id="Curve_eh0kh"]
 _data = [Vector2(0.0143541, 0.0219779), 0.0, 0.0, 0, 0, Vector2(0.923445, 0.395604), 1.55583, 1.55583, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -190,6 +192,30 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_d7t22")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_egxws"]
+shader = ExtResource("22_eqess")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(1024, 1024)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 3.0
+shader_parameter/roll_size = 80.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 0.5
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.157
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_solfh"]
 viewport_path = NodePath("Submarine/monitor_03/monitor_022/SubViewport")
 
@@ -341,22 +367,38 @@ mesh = SubResource("ArrayMesh_67wr4")
 skeleton = NodePath("")
 script = ExtResource("8_qv5sm")
 repair_object_container = NodePath("../../../RepairObjectContainer")
-root_control = NodePath("SubViewport/ShipStats")
+root_control = NodePath("SubViewport/Container/ShipStats")
 
 [node name="SubViewport" type="SubViewport" parent="Submarine/monitor_02/monitor_022"]
 transparent_bg = true
 size = Vector2i(1024, 1024)
 
-[node name="ShipStats" type="VBoxContainer" parent="Submarine/monitor_02/monitor_022/SubViewport"]
+[node name="Container" type="Control" parent="Submarine/monitor_02/monitor_022/SubViewport"]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 360.0
 offset_top = 830.0
 offset_right = 660.0
 offset_bottom = 920.0
 
-[node name="Label" type="Label" parent="Submarine/monitor_02/monitor_022/SubViewport/ShipStats"]
+[node name="ShipStats" type="VBoxContainer" parent="Submarine/monitor_02/monitor_022/SubViewport/Container"]
+offset_right = 300.0
+offset_bottom = 90.0
+
+[node name="Label" type="Label" parent="Submarine/monitor_02/monitor_022/SubViewport/Container/ShipStats"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Ship Status"
+
+[node name="CRT" type="ColorRect" parent="Submarine/monitor_02/monitor_022/SubViewport/Container"]
+material = SubResource("ShaderMaterial_egxws")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="monitor_03" type="Node3D" parent="Submarine"]
 transform = Transform3D(0.143838, 0, -0.989601, 0, 1, 0, 0.989601, 0, 0.143838, -2.55523, 0.105474, 5.03493)
@@ -367,30 +409,49 @@ material_override = SubResource("ShaderMaterial_jsa4q")
 mesh = SubResource("ArrayMesh_67wr4")
 skeleton = NodePath("")
 script = ExtResource("10_0t26h")
-root_control = NodePath("SubViewport/OtherStats")
-label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa"), SubResource("Resource_2kk5b")])
+
+root_control = NodePath("SubViewport/Container/OtherStats")
+label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
 
 [node name="SubViewport" type="SubViewport" parent="Submarine/monitor_03/monitor_022"]
 transparent_bg = true
 size = Vector2i(1024, 1024)
 
-[node name="OtherStats" type="VBoxContainer" parent="Submarine/monitor_03/monitor_022/SubViewport"]
+[node name="Container" type="Control" parent="Submarine/monitor_03/monitor_022/SubViewport"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 360.0
+offset_top = 830.0
+offset_right = 660.0
+offset_bottom = 920.0
+
+[node name="OtherStats" type="VBoxContainer" parent="Submarine/monitor_03/monitor_022/SubViewport/Container"]
+layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -152.0
-offset_top = -194.0
-offset_right = 148.0
-offset_bottom = -104.0
+offset_left = -150.0
+offset_top = -90.0
+offset_right = 150.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Label" type="Label" parent="Submarine/monitor_03/monitor_022/SubViewport/OtherStats"]
+[node name="Label" type="Label" parent="Submarine/monitor_03/monitor_022/SubViewport/Container/OtherStats"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Stats"
+
+[node name="CRT" type="ColorRect" parent="Submarine/monitor_03/monitor_022/SubViewport/Container"]
+material = SubResource("ShaderMaterial_egxws")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Rudder" type="MeshInstance3D" parent="Submarine"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.111523, 0.850839, 3.01507)
