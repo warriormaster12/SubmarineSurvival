@@ -1,22 +1,22 @@
-[gd_scene load_steps=43 format=3 uid="uid://cj72igpbnyd1p"]
+[gd_scene load_steps=45 format=3 uid="uid://cj72igpbnyd1p"]
 
-[ext_resource type="Texture2D" uid="uid://cglj25ed4we2p" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_178m7"]
+[ext_resource type="Texture2D" uid="uid://bdieb4sgl5tx6" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_178m7"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_m40j8"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_nmn8i"]
 [ext_resource type="Script" path="res://scripts/ui/ui_canvas_layer.gd" id="4_8lys7"]
 [ext_resource type="Script" path="res://levels/DropOffZone.gd" id="4_j0usv"]
 [ext_resource type="Script" path="res://scripts/resources/ui_to_event_resource.gd" id="5_d2ubu"]
 [ext_resource type="PackedScene" uid="uid://om1dn4kokhlj" path="res://ui/objects/game_over_screen.tscn" id="6_vn1tk"]
-[ext_resource type="PackedScene" uid="uid://cavl6207eenn2" path="res://assets/models/smallRocks/smallRock_01.gltf" id="7_240ru"]
-[ext_resource type="PackedScene" uid="uid://bn5uy5iaash31" path="res://assets/models/smallRocks/smallRock_02.gltf" id="8_u25nd"]
-[ext_resource type="PackedScene" uid="uid://c3hha6pkjawwn" path="res://assets/models/smallRocks/smallRock_03.gltf" id="9_7msly"]
-[ext_resource type="PackedScene" uid="uid://bwd33dtl3aawo" path="res://assets/models/smallRocks/smallRock_04.gltf" id="10_ni2bt"]
-[ext_resource type="PackedScene" uid="uid://b0h87lpaqjyrm" path="res://assets/models/smallRocks/smallRock_05.gltf" id="11_m7l1e"]
+[ext_resource type="PackedScene" uid="uid://cnqyap7m6t0wj" path="res://assets/models/smallRocks/smallRock_01.gltf" id="7_240ru"]
+[ext_resource type="PackedScene" uid="uid://cewrdkv1g4p15" path="res://assets/models/smallRocks/smallRock_02.gltf" id="8_u25nd"]
+[ext_resource type="PackedScene" uid="uid://biex2os6hqhac" path="res://assets/models/smallRocks/smallRock_03.gltf" id="9_7msly"]
+[ext_resource type="PackedScene" uid="uid://b013lndbi2xxi" path="res://assets/models/smallRocks/smallRock_04.gltf" id="10_ni2bt"]
+[ext_resource type="PackedScene" uid="uid://oen6pxjxcqut" path="res://assets/models/smallRocks/smallRock_05.gltf" id="11_m7l1e"]
 [ext_resource type="PackedScene" uid="uid://cqxmbphlqp7ae" path="res://game_objects/rocksAndSandFloor/rocks_pillar01.tscn" id="12_r33s1"]
-[ext_resource type="PackedScene" uid="uid://vtynv1wcebcl" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
-[ext_resource type="PackedScene" uid="uid://06hhehxkg30r" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
+[ext_resource type="PackedScene" uid="uid://diauunji1o66d" path="res://assets/models/houses/residential_2.glb" id="13_0df50"]
+[ext_resource type="PackedScene" uid="uid://c4y5uko4pv7ju" path="res://assets/models/houses/residential_3.glb" id="14_7wt37"]
 [ext_resource type="PackedScene" uid="uid://dqpjs37rh8tl8" path="res://game_objects/rocksAndSandFloor/rocks_pillar02.tscn" id="15_o5hki"]
-[ext_resource type="PackedScene" uid="uid://b44f7b51d6j76" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
+[ext_resource type="PackedScene" uid="uid://dd6vvyntmaquo" path="res://assets/models/houses/residential_1.glb" id="16_wg1tc"]
 [ext_resource type="PackedScene" uid="uid://di35xnk6xvcdh" path="res://game_objects/rocksAndSandFloor/rocks_slab01.tscn" id="17_e1okg"]
 [ext_resource type="PackedScene" uid="uid://6vgyu4je2h6c" path="res://game_objects/rocksAndSandFloor/rocks_pillar04.tscn" id="18_n15yk"]
 [ext_resource type="PackedScene" uid="uid://c4sjulpqygvag" path="res://game_objects/rocksAndSandFloor/rocks_pillar03.tscn" id="19_b3786"]
@@ -27,6 +27,8 @@
 [ext_resource type="PackedScene" uid="uid://c8ey7ndetm4xs" path="res://game_objects/houses/house_domeTop01.tscn" id="24_cd7hc"]
 [ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="26_5mwku"]
 [ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="27_eluck"]
+[ext_resource type="AudioStream" uid="uid://c7oe5drsgnlp0" path="res://assets/audio/music/main_theme.ogg" id="28_wsory"]
+[ext_resource type="Script" path="res://scripts/audio/fade_in.gd" id="29_ejc6u"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -1893,3 +1895,11 @@ collision_layer = 3
 [node name="house_domeTop03" parent="other_enviro" instance=ExtResource("24_cd7hc")]
 transform = Transform3D(0.72733, 0, -0.686288, 0, 1, 0, 0.686288, 0, 0.72733, 218.073, 89.2978, -2442.1)
 collision_layer = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("28_wsory")
+bus = &"Music"
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("background_music")]
+script = ExtResource("29_ejc6u")
+background_music = NodePath("../AudioStreamPlayer")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cpoa56jp3gy3a"]
+[gd_scene load_steps=17 format=3 uid="uid://cpoa56jp3gy3a"]
 
 [ext_resource type="Texture2D" uid="uid://bdieb4sgl5tx6" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
@@ -97,8 +97,6 @@ deletable_resources = [NodePath("../Fade In"), NodePath("../AudioStreamPlayer")]
 
 [node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource("5_sy43o")]
 
-[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_brga4")
 volume_db = -80.0
@@ -107,3 +105,5 @@ bus = &"Music"
 [node name="Fade In" type="Node" parent="." node_paths=PackedStringArray("background_music")]
 script = ExtResource("8_xchsf")
 background_music = NodePath("../AudioStreamPlayer")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
