@@ -15,7 +15,7 @@ func _ready()-> void:
 
 func fade_in_music() -> void:
 	# Target volume to achieve (0 dB is maximum volume)
-	var fade_duration: float = 2  # Duration for fading in (in seconds)
+	var fade_duration: float = 3  # Duration for fading in (in seconds)
 
 	# Calculate the change in volume per second to achieve the fade effect
 	volume_change_per_second = -background_music.volume_db / fade_duration
