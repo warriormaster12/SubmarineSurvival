@@ -29,6 +29,7 @@ text = "Move ship with WASD + E & Q for up and down
 Look around with mouse
 Interact with left mouse button
 Exit cockpit with R key
+Alt+f4 to quit while in the gam, no pause menu
 "
 horizontal_alignment = 1
 

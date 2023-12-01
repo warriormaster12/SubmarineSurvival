@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix, unshaded;
+render_mode blend_mix, unshaded, cull_front;
 
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform vec4 tint : source_color; // tint effect
