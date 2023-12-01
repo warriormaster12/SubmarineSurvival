@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://ccoyj870j5nfy"]
+[gd_scene load_steps=52 format=3 uid="uid://ccoyj870j5nfy"]
 
 [ext_resource type="Script" path="res://scripts/player_ship/player_input_manager.gd" id="1_6s5wv"]
 [ext_resource type="Script" path="res://scripts/player_ship/player_ship.gd" id="1_kbb78"]
@@ -6,13 +6,12 @@
 [ext_resource type="Script" path="res://scripts/player_ship/ship_health_system.gd" id="3_aeskj"]
 [ext_resource type="PackedScene" uid="uid://wx8aa7hw5rus" path="res://game_objects/fixable_object_placeholder/fixable_object_placeholder.tscn" id="3_m5kls"]
 [ext_resource type="Script" path="res://scripts/camera_shake/camera_shake_event.gd" id="4_euj64"]
-[ext_resource type="Texture2D" uid="uid://21b6acnlika0" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
+[ext_resource type="Texture2D" uid="uid://lhygm063wcaf" path="res://assets/third-party/kenneys-crosshair-pack/White/crosshair001.png" id="5_32iis"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_stats_monitor.gd" id="8_qv5sm"]
-[ext_resource type="Texture2D" uid="uid://853lcs603j5v" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
+[ext_resource type="Texture2D" uid="uid://lmfmka3d7dyx" path="res://assets/textures/submarine_col_texture.png" id="9_qn1tv"]
 [ext_resource type="Script" path="res://scripts/player_ship/ship_instrument_stats.gd" id="10_0t26h"]
-[ext_resource type="Texture2D" uid="uid://byga0mctgmen2" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
+[ext_resource type="Texture2D" uid="uid://dvdlbo3yqbaab" path="res://assets/textures/submarine_normal_texture.png" id="10_050st"]
 [ext_resource type="Script" path="res://scripts/resources/label_resource.gd" id="11_5bw4h"]
-
 [ext_resource type="ArrayMesh" uid="uid://bgle6snisxc8o" path="res://assets/models/submarine/submarine.obj" id="11_hjqoc"]
 [ext_resource type="Texture2D" uid="uid://eb03ypuakdim" path="res://assets/textures/floor_tex_col.png" id="12_upbec"]
 [ext_resource type="ArrayMesh" uid="uid://bnu5j26kdokwq" path="res://assets/models/submarine/floor.obj" id="13_ymsfn"]
@@ -20,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://da8sw8dif15qp" path="res://assets/textures/chair_tex_normal.png" id="15_gvqtl"]
 [ext_resource type="Texture2D" uid="uid://dlofaafjiqir3" path="res://assets/textures/tex_monitor_02_col.png" id="16_4kcnh"]
 [ext_resource type="Texture2D" uid="uid://3aw3obofv5qs" path="res://assets/textures/tex_monitor_02_normal.png" id="17_vvloh"]
-[ext_resource type="Shader" uid="uid://dnjbpjceaksbs" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
+[ext_resource type="Shader" uid="uid://crph8283mhdfy" path="res://assets/custom_shaders/monitor_shader.tres" id="18_jxx4g"]
 [ext_resource type="Texture2D" uid="uid://cjagey7aloly8" path="res://assets/textures/masks/mask_for_monitor_02.png" id="19_incl2"]
 [ext_resource type="Texture2D" uid="uid://d4ibpg38bvf5l" path="res://assets/textures/rudder_col_tex.png" id="20_pisrg"]
 [ext_resource type="ArrayMesh" uid="uid://df108wl4n1yel" path="res://assets/models/rudder/rudder.obj" id="21_0rll5"]
@@ -242,7 +241,7 @@ label_name = "Position"
 variable = "global_position"
 is_length = false
 
-[sub_resource type="Resource" id="Resource_2kk5b"]
+[sub_resource type="Resource" id="Resource_ujn37"]
 script = ExtResource("11_5bw4h")
 label_name = "Destination"
 variable = "currentDropOffZone"
@@ -382,6 +381,7 @@ offset_right = 660.0
 offset_bottom = 920.0
 
 [node name="ShipStats" type="VBoxContainer" parent="Submarine/monitor_02/monitor_022/SubViewport/Container"]
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 90.0
 
@@ -409,9 +409,8 @@ material_override = SubResource("ShaderMaterial_jsa4q")
 mesh = SubResource("ArrayMesh_67wr4")
 skeleton = NodePath("")
 script = ExtResource("10_0t26h")
-
 root_control = NodePath("SubViewport/Container/OtherStats")
-label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa")])
+label_resources = Array[ExtResource("11_5bw4h")]([SubResource("Resource_wehvb"), SubResource("Resource_dhnpa"), SubResource("Resource_ujn37")])
 
 [node name="SubViewport" type="SubViewport" parent="Submarine/monitor_03/monitor_022"]
 transparent_bg = true
@@ -420,10 +419,10 @@ size = Vector2i(1024, 1024)
 [node name="Container" type="Control" parent="Submarine/monitor_03/monitor_022/SubViewport"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 360.0
-offset_top = 830.0
-offset_right = 660.0
-offset_bottom = 920.0
+offset_left = 385.0
+offset_top = 873.335
+offset_right = 685.001
+offset_bottom = 963.335
 
 [node name="OtherStats" type="VBoxContainer" parent="Submarine/monitor_03/monitor_022/SubViewport/Container"]
 layout_mode = 1
@@ -437,6 +436,7 @@ offset_top = -90.0
 offset_right = 150.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.8, 0.8)
 
 [node name="Label" type="Label" parent="Submarine/monitor_03/monitor_022/SubViewport/Container/OtherStats"]
 layout_mode = 2
@@ -449,7 +449,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 60.0
+offset_left = -46.105
+offset_top = -42.745
+offset_right = 53.8942
+offset_bottom = 267.255
 grow_horizontal = 2
 grow_vertical = 2
 
