@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://wx8aa7hw5rus"]
+[gd_scene load_steps=17 format=3 uid="uid://wx8aa7hw5rus"]
 
 [ext_resource type="Script" path="res://scripts/fixable_object/fixable_object.gd" id="1_raadg"]
 [ext_resource type="Shader" uid="uid://m88kptx5oaje" path="res://assets/custom_shaders/object_interaction.tres" id="2_efist"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cdmr1dfqkpmc0" path="res://assets/textures/tex_laptop_normal.png" id="7_84r1b"]
 [ext_resource type="ArrayMesh" uid="uid://c1ud2kd6h7hry" path="res://assets/models/oxygen_pump/laptop.obj" id="8_afhqh"]
 [ext_resource type="PackedScene" uid="uid://bc8igea6al38r" path="res://game_objects/particleEffects/particle_sparkBurst.tscn" id="8_nkker"]
+[ext_resource type="AudioStream" uid="uid://ql3a000q8pyo" path="res://assets/audio/sfx/spark.wav" id="9_tuvls"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_egtjf"]
 resource_local_to_scene = true
@@ -109,4 +110,13 @@ mesh = ExtResource("8_afhqh")
 
 [node name="particle_sparks" parent="." instance=ExtResource("8_nkker")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.811667, 0.196919)
-emitting = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_tuvls")
+bus = &"Other VFX"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="finished" from="particle_sparks" to="." method="_on_particle_sparks_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

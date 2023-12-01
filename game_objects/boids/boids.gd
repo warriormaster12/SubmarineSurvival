@@ -45,7 +45,6 @@ func _ready() -> void:
 	pipeline = rd.compute_pipeline_create(shader)
 	
 	calculating = true
-	await get_tree().create_timer(3).timeout
 	
 	StartCalculations()
 

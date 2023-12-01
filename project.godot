@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Submarine Survival"
+config/name="VomitCoffin"
 run/main_scene="res://levels/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
