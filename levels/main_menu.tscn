@@ -1,11 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2gh5c6i0k1oy"]
+[gd_scene load_steps=17 format=3 uid="uid://c2gh5c6i0k1oy"]
 
 [ext_resource type="Script" path="res://scripts/audio/fade_in.gd" id="1_jqls0"]
 [ext_resource type="Material" uid="uid://cs7nfms6w1de5" path="res://assets/third-party/poly-haven/rock_ground_02/materials/rock_ground_02.material" id="1_xwi3p"]
 [ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="2_wyaac"]
 [ext_resource type="PackedScene" uid="uid://b8ox0l4qs4imq" path="res://ui/objects/main_menu_ui.tscn" id="3_c8ttn"]
+[ext_resource type="Script" path="res://game_objects/boids/boids.gd" id="4_nc4me"]
 [ext_resource type="PackedScene" uid="uid://d1g2jyfdeests" path="res://game_objects/particleEffects/particle_bubbles.tscn" id="4_p7v5r"]
+
 [ext_resource type="AudioStream" uid="uid://buhqjuncq3jaw" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
+[ext_resource type="PackedScene" uid="uid://dkand3bj28mbr" path="res://game_objects/boids/boid.tscn" id="5_dwm7t"]
+[ext_resource type="PackedScene" uid="uid://d1an0xhnt3qg3" path="res://assets/models/submarine/submarine.tscn" id="7_0qooa"]
+
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,13 +34,19 @@ volumetric_fog_detail_spread = 1.36604
 material = ExtResource("1_xwi3p")
 size = Vector2(20, 20)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ncy8"]
+size = Vector3(1, 21.9703, 20.1882)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ajvg6"]
 shader = ExtResource("2_wyaac")
-shader_parameter/tint = Color(0, 0.582581, 0.898438, 1)
+shader_parameter/tint = Color(2.5028e-06, 0.511894, 0.792732, 1)
 shader_parameter/wave_speed = 0.5
 shader_parameter/wave_freq = 15.0
 shader_parameter/wave_width = 0.5
 shader_parameter/blur = 0.15
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7fv6q"]
+size = Vector3(7.48193, 3.24945, 3.23938)
 
 [node name="MainMenu" type="Node"]
 
@@ -64,7 +75,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.901, 4.013)
 shaded = true
 no_depth_test = true
-text = "Sumarine Survival"
+text = "Vomit Coffin"
 font_size = 60
 outline_size = 0
 uppercase = true
@@ -80,8 +91,104 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.18079, 1.19209e-07, 0.29659
 [node name="ParticleBubbles3" parent="Node3D/ParticleEffects" instance=ExtResource("4_p7v5r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.69462, 1.19209e-07, 1.94142)
 
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.6913, 0, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21002, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.08662, 0, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21002, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.573365, 0, 9.58315)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21002, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.573365, 0, -9.92444)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.21002, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 5.36798, 11.0744, 0.51456)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.48392, 4.75917, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="StaticBody3D6" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 5.36798, -4.52338, 0.51456)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.48392, 4.75917, 0.128983)
+shape = SubResource("BoxShape3D_8ncy8")
+
+[node name="Boids" type="Node" parent="Node3D"]
+script = ExtResource("4_nc4me")
+
+[node name="Boid" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.22943, 0)
+
+[node name="Boid2" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75161, 5.22943, 0)
+
+[node name="Boid3" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13009, 5.22943, 0)
+
+[node name="Boid4" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.63623, 5.21122, 0.0195875)
+
+[node name="Boid5" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.22943, 4.84058)
+
+[node name="Boid6" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75161, 5.22943, 4.84058)
+
+[node name="Boid7" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13009, 5.22943, 4.84058)
+
+[node name="Boid8" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.63623, 5.21122, 4.86017)
+
+[node name="Boid9" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.22943, -4.77084)
+
+[node name="Boid10" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75161, 5.22943, -4.77084)
+
+[node name="Boid11" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13009, 5.22943, -4.77084)
+
+[node name="Boid12" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.63623, 5.21122, -4.75125)
+
+[node name="Boid13" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.22943, 9.51916)
+
+[node name="Boid14" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.75161, 5.22943, 9.51916)
+
+[node name="Boid15" parent="Node3D/Boids" instance=ExtResource("5_dwm7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.13009, 5.22943, 9.51916)
+
 [node name="MainMenuUI" parent="." instance=ExtResource("3_c8ttn")]
-starting_level = "res://levels/test_level.tscn"
+starting_level = "res://levels/Level_01.tscn"
 
 [node name="PostProcessEffects3D" type="Control" parent="."]
 layout_mode = 3
@@ -105,3 +212,14 @@ mouse_filter = 2
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hsmcd")
 bus = &"Music"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12111, 0.430859, -1.6265)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.697909, -0.317507, 0.641968, 0.316873, 0.940745, 0.120798, -0.642281, 0.119116, 0.757156, -0.526959, 1.12473, -0.776288)
+shape = SubResource("BoxShape3D_7fv6q")
+
+[node name="Submarine" parent="." instance=ExtResource("7_0qooa")]
+transform = Transform3D(0.165981, -0.623566, -0.763948, 0.44154, 0.739693, -0.507836, 0.881755, -0.253023, 0.398104, 1.12111, -0.173403, -1.6265)

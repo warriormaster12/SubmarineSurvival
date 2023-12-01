@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cpoa56jp3gy3a"]
 
-[ext_resource type="Texture2D" uid="uid://bdieb4sgl5tx6" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
+[ext_resource type="Texture2D" uid="uid://55mijdy51qsa" path="res://assets/third-party/kenneys-prototype-textures/Vector/texture_02.svg" id="1_1pagy"]
 [ext_resource type="PackedScene" uid="uid://ccoyj870j5nfy" path="res://game_objects/player_ship/player_ship.tscn" id="2_iappa"]
 [ext_resource type="Script" path="res://game_objects/path3D_extended/Path3DExtended.gd" id="3_rpivr"]
 [ext_resource type="Script" path="res://levels/DropOffZone.gd" id="4_d4bhy"]
@@ -63,10 +63,12 @@ collision_layer = 3
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 size = Vector3(200, 0.2, 200)
 
-[node name="PlayerShip" parent="." instance=ExtResource("2_iappa")]
+[node name="PlayerShip" parent="." node_paths=PackedStringArray("sea_level", "drop_of_zones") instance=ExtResource("2_iappa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.36907, 21.7648, 57.3505)
+sea_level = NodePath("../SeaLevel")
 safe_height = 30.0
 death_height = 80.0
+drop_of_zones = [NodePath("../SeaLevel")]
 
 [node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("triggerer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6179, 28.7453, 0)
@@ -98,7 +100,6 @@ deletable_resources = [NodePath("../Fade In"), NodePath("../AudioStreamPlayer")]
 [node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource("5_sy43o")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_brga4")
 volume_db = -80.0
 bus = &"Music"
 

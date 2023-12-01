@@ -19,7 +19,7 @@ func play_game_over() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	pass # Replace with function body.
+	LoadingScreen.change_scene("res://levels/main_menu.tscn")
 
 
 func _on_restart_button_pressed() -> void:

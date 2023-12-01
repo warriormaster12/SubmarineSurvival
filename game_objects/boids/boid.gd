@@ -60,16 +60,16 @@ func UpdateBoid() -> void:
 		var collisionAvoidForce := SteerTowards(collisionAvoidDir) * avoidCollisionWeight
 		acceleration += collisionAvoidForce
 	
-	var pow := rng.randf_range(1.0, 3.0)
+	var _pow := rng.randf_range(1.0, 3.0)
 	var rand := rng.randf_range(0.0, 100.0)
 	if (rand > 99.75):
-		velocity += transform.basis.y * (pow * 1.3)
+		velocity += transform.basis.y * (_pow * 1.3)
 	elif (rand > 99.50):
-		velocity += transform.basis.x * pow
+		velocity += transform.basis.x * _pow
 	elif (rand > 99.25):
-		velocity -= transform.basis.x * pow
+		velocity -= transform.basis.x * _pow
 	elif (rand > 99):
-		velocity -= transform.basis.y * pow
+		velocity -= transform.basis.y * _pow
 	
 	
 	velocity += acceleration * get_physics_process_delta_time()
@@ -80,7 +80,7 @@ func UpdateBoid() -> void:
 	look_at(lerp(_position - transform.basis.z, _position - dir, vapinanPaino))
 	#Arrow.transform.interpolate_with(new_transform, speed * delta)
 	move_and_slide()
-	CheckForBounds()
+	#CheckForBounds()
 
 
 func IsHeadingForCollision() -> bool:

@@ -25,7 +25,7 @@ signal on_health_changed(node_name: String, health: float)
 
 func _ready() -> void:
 	for child in get_children():
-		if child is MeshInstance3D && child.name != "ProgressBar":
+		if child is MeshInstance3D && child.name != "ProgressBar" && child.name !="Laptop":
 			mesh_instance = child
 		elif child is MeshInstance3D && child.name == "ProgressBar":
 			progress_bar_mesh = child
@@ -64,6 +64,14 @@ func repair_object(state: bool)->void:
 	else: 
 		progress_bar_mesh.visible = false
 
+func _process(_delta: float) -> void:
+	if current_status == "critical":
+		if $Timer.is_stopped():
+			$Timer.start()
+	else:
+		$Timer.stop()
+		$AudioStreamPlayer.stop()
+		$particle_sparks.emitting = false
 ## HealthSystem Signals
 func _on_health_changed(value: float, depleting: bool) -> void:
 	if !repairing && depleting:
@@ -79,3 +87,12 @@ func _on_health_changed(value: float, depleting: bool) -> void:
 	on_health_changed.emit(name, health)
 
 ## ~HealthSystem Signals
+
+
+
+
+
+
+func _on_timer_timeout() -> void:
+	$particle_sparks.emitting = true
+	$AudioStreamPlayer.play()
