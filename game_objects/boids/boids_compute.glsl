@@ -1,7 +1,7 @@
 #[compute]
 #version 450
 
-layout(local_size_x = 100, local_size_y = 1, local_size_z = 1) in;
+layout(local_size_x = 15, local_size_y = 1, local_size_z = 1) in;
 
 struct Boid {
     vec4 position;
@@ -30,7 +30,7 @@ void main()
     vec3 _avoidH = vec3(boidA.avoidanceHeadingAndFlockmates.x, boidA.avoidanceHeadingAndFlockmates.y, boidA.avoidanceHeadingAndFlockmates.z);
     float _flockmates = 0;
 
-    for (int indexB = 0; indexB < 100; indexB ++) {
+    for (int indexB = 0; indexB < 15; indexB ++) {
         if (gl_GlobalInvocationID.x != indexB) {
             Boid boidB = my_buffer.boids[indexB];
             vec3 boidB_pos = vec3(boidB.position.x, boidB.position.y, boidB.position.z);

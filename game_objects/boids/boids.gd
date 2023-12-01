@@ -45,10 +45,12 @@ func _ready() -> void:
 	pipeline = rd.compute_pipeline_create(shader)
 	
 	calculating = true
+	await get_tree().create_timer(3).timeout
+	
 	StartCalculations()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if calculating:
 		return
 	
@@ -77,10 +79,9 @@ func StartCalculations() -> void:
 
 func boid_calculations() -> void:
 	# create storage buffer
-	var input := []
 	var boidDataList := PackedByteArray()
-	boidDataList.resize(100 * 80)
-	for i in range(0, 100):
+	boidDataList.resize(15 * 80)
+	for i in range(0, 15):
 		boidDataList.encode_float(i * 80, boidData[i].position.x)
 		boidDataList.encode_float(i * 80 + 4, boidData[i].position.y)
 		boidDataList.encode_float(i * 80 + 8, boidData[i].position.z)
@@ -105,7 +106,7 @@ func boid_calculations() -> void:
 	var compute_list := rd.compute_list_begin()
 	rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
 	rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
-	rd.compute_list_dispatch(compute_list, 100, 1, 1)
+	rd.compute_list_dispatch(compute_list, 15, 1, 1)
 	rd.compute_list_end()
 	
 	var byte_data := rd.buffer_get_data(storage_buffer)

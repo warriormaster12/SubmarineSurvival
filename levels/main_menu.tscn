@@ -5,7 +5,7 @@
 [ext_resource type="Shader" path="res://assets/custom_shaders/under_water_window_shader_full_quad.gdshader" id="2_wyaac"]
 [ext_resource type="PackedScene" uid="uid://b8ox0l4qs4imq" path="res://ui/objects/main_menu_ui.tscn" id="3_c8ttn"]
 [ext_resource type="PackedScene" uid="uid://d1g2jyfdeests" path="res://game_objects/particleEffects/particle_bubbles.tscn" id="4_p7v5r"]
-[ext_resource type="AudioStream" uid="uid://dtjimdh1qu5ob" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
+[ext_resource type="AudioStream" uid="uid://bud8ebv10wlne" path="res://assets/audio/music/menu_song.ogg" id="6_hsmcd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_88ekv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
